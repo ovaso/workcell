@@ -1,0 +1,50 @@
+{
+  "schema_version": "0.1",
+  "snapshot": {
+    "id": "host-20260731T000000Z",
+    "status": "verified",
+    "observed_at": "2026-07-31T00:00:00Z",
+    "context": "ai-execution",
+    "collector": "inspect-host-environment/scripts/inspect_host.py",
+    "network_probe_requested": false
+  },
+  "facts": {
+    "commands": [
+      {
+        "id": "command:ai-execution:git",
+        "kind": "command",
+        "source_type": "discovered",
+        "source": "process PATH resolution",
+        "observed_at": "2026-07-31T00:00:00Z",
+        "context": "ai-execution",
+        "confidence": "high",
+        "sensitivity": "private",
+        "name": "git",
+        "available": true,
+        "resolved_path": "/usr/bin/git",
+        "version": "git version 2.x",
+        "version_probe": "completed",
+        "version_probe_exit_code": 0,
+        "version_probe_argv": ["git", "--version"]
+      }
+    ],
+    "toolchains": [],
+    "environment_variables": [
+      {
+        "id": "environment-variable:ai-execution:EXAMPLE_TOKEN",
+        "kind": "environment-variable",
+        "source_type": "runtime",
+        "source": "current process environment name table",
+        "observed_at": "2026-07-31T00:00:00Z",
+        "context": "ai-execution",
+        "confidence": "high",
+        "sensitivity": "secret",
+        "name": "EXAMPLE_TOKEN",
+        "is_set": true,
+        "value_recorded": false,
+        "classification_source": "credential-like-name"
+      }
+    ],
+    "network": []
+  }
+}

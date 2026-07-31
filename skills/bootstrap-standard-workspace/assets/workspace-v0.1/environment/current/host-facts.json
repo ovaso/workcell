@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.1",
+  "snapshot": {
+    "id": "uninitialized",
+    "status": "uninitialized",
+    "context": "ai-execution",
+    "collector": "not-run",
+    "network_probe_requested": false
+  },
+  "facts": {
+    "commands": [],
+    "toolchains": [],
+    "environment_variables": [],
+    "network": []
+  }
+}

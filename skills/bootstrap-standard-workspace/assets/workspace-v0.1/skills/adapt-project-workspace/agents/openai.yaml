@@ -1,0 +1,4 @@
+interface:
+  display_name: "Adapt Project Workspace"
+  short_description: "Verify project facts and generate a project plugin"
+  default_prompt: "Use $adapt-project-workspace to inspect this local project and propose a verified project plugin."

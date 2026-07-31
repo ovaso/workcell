@@ -1,0 +1,4 @@
+remotes = []
+
+[registry]
+status = "uninitialized"

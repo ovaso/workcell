@@ -1,0 +1,5 @@
+tasks = []
+
+[index]
+status = "empty"
+active_task = ""

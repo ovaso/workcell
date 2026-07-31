@@ -1,0 +1,18 @@
+.DS_Store
+*.tmp
+*.swp
+*.bak
+__pycache__/
+*.py[cod]
+
+# 构建和测试产物
+dist/
+.test-output/
+.bootstrap-cache/
+evolution/inbox/
+
+# 本地环境和敏感覆盖
+.env
+.env.*
+!.env.example
+local-overrides.toml

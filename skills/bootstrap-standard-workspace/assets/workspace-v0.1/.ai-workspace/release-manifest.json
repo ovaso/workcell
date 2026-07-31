@@ -1,0 +1,551 @@
+{
+  "schema_version": "0.1",
+  "release_version": "0.1.0",
+  "files": [
+    {
+      "path": ".ai-workspace/distribution.manifest",
+      "owner": "distribution",
+      "sha256": "a2742e1e679168d217a0da10bbd464549db3e21ac4b42628c395b902c48e7c7e"
+    },
+    {
+      "path": ".ai-workspace/generated/context-index.md",
+      "owner": "generated",
+      "sha256": "262fc092837e452131c5f881e6a239f471aaad10d2c2102821b377f9a3012ae9"
+    },
+    {
+      "path": ".ai-workspace/ownership.toml",
+      "owner": "distribution",
+      "sha256": "e9779ec4185d786c9df1bf815996a6661d7514033ceaddc1e43927cc2722a36c"
+    },
+    {
+      "path": ".ai-workspace/policies/core.toml",
+      "owner": "distribution",
+      "sha256": "f90c8ea58bd6b9602e19513c9811a98e2974929758603ebca82e9c563f47b5ff"
+    },
+    {
+      "path": ".ai-workspace/policies/diagnostics.toml",
+      "owner": "generated",
+      "sha256": "26125a517b4c3f1f2824a195120d3fa2c472dce1873a85bf9dcc89db72f9e43a"
+    },
+    {
+      "path": ".ai-workspace/schemas/bundle.schema.json",
+      "owner": "distribution",
+      "sha256": "32feed7edc4cd0786c2c9034e2577958af2324a0541b716cb6141e502dd07aaa"
+    },
+    {
+      "path": ".ai-workspace/schemas/diagnostic-profile.schema.json",
+      "owner": "distribution",
+      "sha256": "516659fc8e7f47015cc2af691958a544f7c2a3dc6ef390a23744d69ff9878a04"
+    },
+    {
+      "path": ".ai-workspace/schemas/environment-facts.schema.json",
+      "owner": "distribution",
+      "sha256": "3b7650da0f39da3661f4f3b30a7a6104bba885d5d41c942772686c7641f7d8c0"
+    },
+    {
+      "path": ".ai-workspace/schemas/examples/bundle.example.json",
+      "owner": "distribution",
+      "sha256": "327bc3251f7fb217cbf3be19593504a59e4e01b2f0a5574f350936c4fdac050d"
+    },
+    {
+      "path": ".ai-workspace/schemas/examples/diagnostic-profile.example.json",
+      "owner": "distribution",
+      "sha256": "663d5794b5cb96c0dd4eb65ab0bde70bd5d3b50ad0faffc4900c3bdba32c5fbb"
+    },
+    {
+      "path": ".ai-workspace/schemas/examples/environment-facts.example.json",
+      "owner": "distribution",
+      "sha256": "1e3e09dafc38806427a691c37b11f12a47face182294f858aa39150f665fa176"
+    },
+    {
+      "path": ".ai-workspace/schemas/examples/feedback-report.example.json",
+      "owner": "distribution",
+      "sha256": "322c098a1baebdc295c515abbc709002a7f8dd59b5a15a07c364dbad42b63589"
+    },
+    {
+      "path": ".ai-workspace/schemas/examples/project-plugin.example.json",
+      "owner": "distribution",
+      "sha256": "d86e487e054e6754550fbb26ae5a4f3165c7a3ce5bbf8104bee2c0d3cc9b7126"
+    },
+    {
+      "path": ".ai-workspace/schemas/examples/release-manifest.example.json",
+      "owner": "distribution",
+      "sha256": "4863453d746390b10443648b9ff05616c6c8fde209bc03a68ee0a3e9419f7f7c"
+    },
+    {
+      "path": ".ai-workspace/schemas/examples/task.example.json",
+      "owner": "distribution",
+      "sha256": "6d6c937b64abeda05ce5f71ccbc40264d152c93709bf8ef6a0e04334ddbdac11"
+    },
+    {
+      "path": ".ai-workspace/schemas/examples/workspace.example.json",
+      "owner": "distribution",
+      "sha256": "4f604ae70a2e350c7f960dfc0fa82c53498cdb3a29280ec0195cb5643315f74e"
+    },
+    {
+      "path": ".ai-workspace/schemas/feedback-report.schema.json",
+      "owner": "distribution",
+      "sha256": "7f07d5066d0abd4b7be28a748077fc183ddb48ccb29e223dd9c32ec597c351d0"
+    },
+    {
+      "path": ".ai-workspace/schemas/project-plugin.schema.json",
+      "owner": "distribution",
+      "sha256": "552833d3f6089872f5fc598312df850f760455c80a064909a333013b4541cd54"
+    },
+    {
+      "path": ".ai-workspace/schemas/release-manifest.schema.json",
+      "owner": "distribution",
+      "sha256": "69d014d58aeb7bd6cdf0685af891e5b90f388d11f78204844119c20896c2ee43"
+    },
+    {
+      "path": ".ai-workspace/schemas/task.schema.json",
+      "owner": "distribution",
+      "sha256": "84d87f2f5a60bdffd3d0f906897607159be2557783f8323b8e318d4a2c85297e"
+    },
+    {
+      "path": ".ai-workspace/schemas/workspace.schema.json",
+      "owner": "distribution",
+      "sha256": "081b4ab2194f7a030587a05f7f0596e6a60a57e2fc3df0fcf96c8b937dee88bd"
+    },
+    {
+      "path": ".ai-workspace/specs/agents-generation-spec-v0.1.md",
+      "owner": "distribution",
+      "sha256": "662fe5234e5a5605a6c78078d8948a80d7d0e7d05e04959f4bdc7131b50214a0"
+    },
+    {
+      "path": ".ai-workspace/specs/diagnostic-capability-spec-v0.1.md",
+      "owner": "distribution",
+      "sha256": "8d54792ad4731149fe4219f80f906000ef5227417683266c93973de5f1f14f9a"
+    },
+    {
+      "path": ".ai-workspace/specs/distribution-upgrade-spec-v0.1.md",
+      "owner": "distribution",
+      "sha256": "96273a79252516f762ede32519cee246dfd4c079d1b9b85d48dc1b1ba0136ab9"
+    },
+    {
+      "path": ".ai-workspace/specs/environment-fact-spec-v0.1.md",
+      "owner": "distribution",
+      "sha256": "fbbc3cad73cd743e7a799cda3600ce8393fa38cd20cf21d20bcdce1133579440"
+    },
+    {
+      "path": ".ai-workspace/specs/project-plugin-spec-v0.1.md",
+      "owner": "distribution",
+      "sha256": "4e7ab5da192c97f34cc4d802465330577d9a8380614862ec6c52e9ec4cdc5279"
+    },
+    {
+      "path": ".ai-workspace/specs/serialization-spec-v0.1.md",
+      "owner": "distribution",
+      "sha256": "097ecead8f24aabc56bf65c905c472454d5e1aecc28647dc8c81df9b223f878c"
+    },
+    {
+      "path": ".ai-workspace/specs/task-spec-v0.1.md",
+      "owner": "distribution",
+      "sha256": "53f4435e09e8d6ebad96d559b5e2bbbd38202e88f5f6e47fe6d64c043bea5444"
+    },
+    {
+      "path": ".ai-workspace/specs/workspace-evolution-spec-v0.1.md",
+      "owner": "distribution",
+      "sha256": "ddb8b6ea4628ae9517eeac682f92a4d3052f081fe7e460d200272672f69e2698"
+    },
+    {
+      "path": ".ai-workspace/specs/workspace-spec-v0.1.md",
+      "owner": "distribution",
+      "sha256": "a4152c2bf872342d35dbdb306559f5bea58ed49059e68557d445056af8d877fb"
+    },
+    {
+      "path": ".ai-workspace/state/.gitkeep",
+      "owner": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".ai-workspace/templates/AGENTS.md",
+      "owner": "distribution",
+      "sha256": "f45d7cf6274c44b48ec8d68b432c6dacbb69184b8808fec9856b26898c705b92"
+    },
+    {
+      "path": ".ai-workspace/templates/diagnostic-profile.toml",
+      "owner": "distribution",
+      "sha256": "1218d8edcae6aa845ee5125503393b2c6bd98aff6dba4949b804d19b54074c11"
+    },
+    {
+      "path": ".ai-workspace/templates/host-facts.json",
+      "owner": "distribution",
+      "sha256": "ae9fcc8b62ddfc41f669e7521e5ae7b8f662d8291d416e938ad043cd576979d4"
+    },
+    {
+      "path": ".ai-workspace/templates/project-plugin.json",
+      "owner": "distribution",
+      "sha256": "60b67faf5eb94e04a109e3d9785fe7f448c9d56e2e7e8659bd5c83798b2ff86d"
+    },
+    {
+      "path": ".ai-workspace/templates/task.toml",
+      "owner": "distribution",
+      "sha256": "c23ff1ff300508063cebf5f608fd5b7462d750134d1646c07c79cc91e53ab57a"
+    },
+    {
+      "path": ".ai-workspace/templates/versions.lock",
+      "owner": "distribution",
+      "sha256": "f11eb8e31b12ac46922035c6a9269544f9ea0372422a58e15289347a0101c9dc"
+    },
+    {
+      "path": ".ai-workspace/templates/workspace.toml",
+      "owner": "distribution",
+      "sha256": "3c6e54833e9785fbaa9841aa2efd340e890c160b54ff4d05d32c1cb4015483fb"
+    },
+    {
+      "path": ".ai-workspace/versions.lock",
+      "owner": "workspace",
+      "sha256": "f11eb8e31b12ac46922035c6a9269544f9ea0372422a58e15289347a0101c9dc"
+    },
+    {
+      "path": ".ai-workspace/workspace.toml",
+      "owner": "workspace",
+      "sha256": "3c6e54833e9785fbaa9841aa2efd340e890c160b54ff4d05d32c1cb4015483fb"
+    },
+    {
+      "path": ".editorconfig",
+      "owner": "workspace",
+      "sha256": "a712d665600093a2fb3ff1d22d536cd90638d0b47237345633a15887084d354d"
+    },
+    {
+      "path": ".gitattributes",
+      "owner": "workspace",
+      "sha256": "ef03f65f41ba07306238cb27f669d8e799c6cfbc0ccc355e2500768f85f37a77"
+    },
+    {
+      "path": ".gitignore",
+      "owner": "workspace",
+      "sha256": "e96c285b025380dbd916d283d074b78fa9ec2bc7b9f8cf1ae7636cf85cf57d91"
+    },
+    {
+      "path": "AGENTS.md",
+      "owner": "generated",
+      "sha256": "a656417ccc4e9ba9562fa3bac2117a5723a66aeaf435ef095da26ef1e2e98bff"
+    },
+    {
+      "path": "AI_WORKSPACE.md",
+      "owner": "distribution",
+      "sha256": "fae79dc3eddc5ec4931102c23bb352aff3c72e24cd8481193f0d95ded16fcdcb"
+    },
+    {
+      "path": "README.md",
+      "owner": "workspace",
+      "sha256": "05827d3e68337c689fcd993413779d158938e9fd826dddec7e2d33229cfaa2f1"
+    },
+    {
+      "path": "diagnostics/knowledge/.gitkeep",
+      "owner": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/providers.toml",
+      "owner": "workspace",
+      "sha256": "6ce099f9aa0b2b5f06cc6c252148e0fa6dc711d01ee134e4cfe07f821aaf7923"
+    },
+    {
+      "path": "diagnostics/providers/.gitkeep",
+      "owner": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/targets/.gitkeep",
+      "owner": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/getting-started.md",
+      "owner": "distribution",
+      "sha256": "78d6cfc82045eb7791b5e8c11451da15e5dfd3e0f17c9a3d441f17db5ba2e866"
+    },
+    {
+      "path": "docs/standard/architecture.md",
+      "owner": "distribution",
+      "sha256": "265a5a6f539ca393237e0c7254efde2f8a390982d7efefbf886d9d5e53692359"
+    },
+    {
+      "path": "docs/standard/lifecycle.md",
+      "owner": "distribution",
+      "sha256": "8215f8d4b36148b8d62f4591b548626f5f78be6f47662d4004b4482c4ca774d9"
+    },
+    {
+      "path": "docs/standard/product-vision.md",
+      "owner": "distribution",
+      "sha256": "cf0e8bd16706a5b6d4f423b1729d10dcb762bbe9bff4edd46c297b0f2ac401af"
+    },
+    {
+      "path": "docs/standard/roadmap.md",
+      "owner": "distribution",
+      "sha256": "95f91942de0098fe5b80105090b61d25eb6360812eb10a2997926fc9ad235c3e"
+    },
+    {
+      "path": "environment/current/capabilities.json",
+      "owner": "generated",
+      "sha256": "04fe611d68d0b1223713ae6ff84e160ea6d54ae4911670f31b170dd254a83661"
+    },
+    {
+      "path": "environment/current/host-facts.json",
+      "owner": "generated",
+      "sha256": "ae9fcc8b62ddfc41f669e7521e5ae7b8f662d8291d416e938ad043cd576979d4"
+    },
+    {
+      "path": "environment/snapshots/.gitkeep",
+      "owner": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "feedback/candidates/.gitkeep",
+      "owner": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "knowledge/index.md",
+      "owner": "workspace",
+      "sha256": "9e7d59dd5950980593ccc730e973ff7b142a5e31cca52161a93753ca2036135f"
+    },
+    {
+      "path": "knowledge/tool-capabilities.toml",
+      "owner": "distribution",
+      "sha256": "b00479abd1ce3f91f6c2f314dd607d9c4df970abd8e7f1b406db0b99fa7de04a"
+    },
+    {
+      "path": "memory/.gitkeep",
+      "owner": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "mirror/.gitkeep",
+      "owner": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "project/diagnostics/diagnostic-profile.toml",
+      "owner": "workspace",
+      "sha256": "1218d8edcae6aa845ee5125503393b2c6bd98aff6dba4949b804d19b54074c11"
+    },
+    {
+      "path": "project/plugin/.gitkeep",
+      "owner": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "project/project-instance.toml",
+      "owner": "workspace",
+      "sha256": "f782a108bd384ee727a2e3c634ce0f2faf88ca08096ad63fe53b4aec0f926862"
+    },
+    {
+      "path": "remotes/remotes.toml",
+      "owner": "workspace",
+      "sha256": "78d6c2637a984c83a54eb13da8f52f2238e873f7bc1f9ec24560cd0c5d253369"
+    },
+    {
+      "path": "requirements/task-index.toml",
+      "owner": "generated",
+      "sha256": "40c085f8ab97818d88494c61d20e87954657b709511c84bbdb7c0571e93d8381"
+    },
+    {
+      "path": "skills/adapt-project-workspace/SKILL.md",
+      "owner": "distribution",
+      "sha256": "b63fe8f2a5ff5eda9325878070e3b2bede722675bd675f63ff87f7bb04c944b0"
+    },
+    {
+      "path": "skills/adapt-project-workspace/agents/openai.yaml",
+      "owner": "distribution",
+      "sha256": "a394d2a3185c80be2383c0ab6ca3b791a75988164b3281cfdfb94767031f65ad"
+    },
+    {
+      "path": "skills/adapt-project-workspace/references/project-adaptation-contract.md",
+      "owner": "distribution",
+      "sha256": "ff27528f44accc7dc7d0941ba73edd6cacc3d1651f1b24d582122534fb49f837"
+    },
+    {
+      "path": "skills/adapt-project-workspace/scripts/build_project_plugin.py",
+      "owner": "distribution",
+      "sha256": "16196aa36caa8a81a9486af8eefd514564ebf3cf562a127516c265627f2bfaf7"
+    },
+    {
+      "path": "skills/adapt-project-workspace/scripts/test_build_project_plugin.py",
+      "owner": "distribution",
+      "sha256": "3ef801f71a3fcac09cf16c335f14278b0aea0b709a30d9822829caded83c240e"
+    },
+    {
+      "path": "skills/configure-project-diagnostics/SKILL.md",
+      "owner": "distribution",
+      "sha256": "64b0e2207499f08fe1ca992d689238fd73791ebd3de05489231cffd3540c67ee"
+    },
+    {
+      "path": "skills/configure-project-diagnostics/agents/openai.yaml",
+      "owner": "distribution",
+      "sha256": "7532f6f7e1e9141964d33dfcb69a634f9534bc192214ffe2cfa62bd44477d647"
+    },
+    {
+      "path": "skills/configure-project-diagnostics/references/configuration-contract.md",
+      "owner": "distribution",
+      "sha256": "34e5034faa6ca87890be944e652e1f0ea5bc917f7b6ab88e6af085a408c69e14"
+    },
+    {
+      "path": "skills/configure-project-diagnostics/references/questionnaire.md",
+      "owner": "distribution",
+      "sha256": "c170f1e523a440d7880ae54e70866a11abbd47cda38842121240625e74134f84"
+    },
+    {
+      "path": "skills/configure-project-diagnostics/references/target-profiles.md",
+      "owner": "distribution",
+      "sha256": "d7b59ba70bd7c1acf74c9ea6dc4f09b1d34b9d68167b5b618f8e140a338f11ff"
+    },
+    {
+      "path": "skills/extract-standard-feedback/SKILL.md",
+      "owner": "distribution",
+      "sha256": "b1bf49ef52d3525bbb8cf387a20c36889417bb1a642daaf3652981a8b37e673f"
+    },
+    {
+      "path": "skills/extract-standard-feedback/agents/openai.yaml",
+      "owner": "distribution",
+      "sha256": "7a307ddcc356b8dc0838cdb8636f5ddfd1da4acbcb0be27ea2434cf6a1038f6a"
+    },
+    {
+      "path": "skills/extract-standard-feedback/references/feedback-contract.md",
+      "owner": "distribution",
+      "sha256": "41cd99e0429883202a734c6b7e78e13c1796fe077d485ddf72f0772635604391"
+    },
+    {
+      "path": "skills/extract-standard-feedback/scripts/new_feedback_report.py",
+      "owner": "distribution",
+      "sha256": "204061dfcbdd13d5777ce074ea4b5fcc8d6812d07a74d4f3091c94957cb32189"
+    },
+    {
+      "path": "skills/extract-standard-feedback/scripts/test_feedback_report.py",
+      "owner": "distribution",
+      "sha256": "5f0f4302b6d3185c211e48157c9f3155b67771e041af07887a84aaa2d1efab3a"
+    },
+    {
+      "path": "skills/extract-standard-feedback/scripts/validate_feedback_report.py",
+      "owner": "distribution",
+      "sha256": "61eac802d050dc36ab1039fe880f5be27dfa917dedf1f4bd3a94769269d95eb6"
+    },
+    {
+      "path": "skills/initialize-standard-workspace/SKILL.md",
+      "owner": "distribution",
+      "sha256": "902b69fea6e3234b439e2eacfd11619f775c28f8db08ddd5c18b34f9136d84d8"
+    },
+    {
+      "path": "skills/initialize-standard-workspace/agents/openai.yaml",
+      "owner": "distribution",
+      "sha256": "7f0ebad51b745d8df45eaa5bbce5d61a03bfb7419f1dd82cb7857c0bcaf9446f"
+    },
+    {
+      "path": "skills/initialize-standard-workspace/references/initialization-contract.md",
+      "owner": "distribution",
+      "sha256": "c9c56a8593061d9256c5debcf94a8e87676537fea9535927c4a88a73ff91de0f"
+    },
+    {
+      "path": "skills/inspect-host-environment/SKILL.md",
+      "owner": "distribution",
+      "sha256": "8b3298d5b6313fefe55b100fd38e019b5902c96caf86cc013fa4d5ec734475d7"
+    },
+    {
+      "path": "skills/inspect-host-environment/agents/openai.yaml",
+      "owner": "distribution",
+      "sha256": "ccb2e2f2f10872e4cf0bb20ce3aa19aad738c949200b51a9e3633776f5448c12"
+    },
+    {
+      "path": "skills/inspect-host-environment/references/environment-fact-contract.md",
+      "owner": "distribution",
+      "sha256": "a01ab4b74fc8e32a70702eace022a43d01738a37da5b82aa1e03fb223e169623"
+    },
+    {
+      "path": "skills/inspect-host-environment/scripts/inspect_host.py",
+      "owner": "distribution",
+      "sha256": "33d8cceb109dcfba5c0341ba59d12a071f5461448df571008c9bb0521a6ea742"
+    },
+    {
+      "path": "skills/inspect-host-environment/scripts/test_inspect_host.py",
+      "owner": "distribution",
+      "sha256": "a21b26eaace146609980cd425900205fe37fa9ebbe6c22d7c88f6acf25775395"
+    },
+    {
+      "path": "skills/standard-workspace-doctor/SKILL.md",
+      "owner": "distribution",
+      "sha256": "53f78b2c7da8f5cc8fe3e96e2470a2d065c7cf04f86c1a85a24cd31b459b513c"
+    },
+    {
+      "path": "skills/standard-workspace-doctor/agents/openai.yaml",
+      "owner": "distribution",
+      "sha256": "549191ec687b6003664ce89319ac6cc51da6697d20d5477e79321d64f6576236"
+    },
+    {
+      "path": "skills/standard-workspace-doctor/references/checks.md",
+      "owner": "distribution",
+      "sha256": "4c966802d0f9ff531ac4d25875b4bf58818996d016cec132a23f9c66a10eb832"
+    },
+    {
+      "path": "skills/standard-workspace-doctor/scripts/doctor.py",
+      "owner": "distribution",
+      "sha256": "1cbe7dcee244fd5339117343468980763df8027d2cc4a54d1ad44776d841d582"
+    },
+    {
+      "path": "skills/standard-workspace-doctor/scripts/json_schema_subset.py",
+      "owner": "distribution",
+      "sha256": "17478b2da16188bae85ef5f2e9269226a338e0a57797056d6f9ab90b49fb062b"
+    },
+    {
+      "path": "skills/standard-workspace-doctor/scripts/test_doctor.py",
+      "owner": "distribution",
+      "sha256": "c8b197e5ae13b859158938509053ddaeda28672c7468469cc3115b97038f01e5"
+    },
+    {
+      "path": "skills/start-standard-task/SKILL.md",
+      "owner": "distribution",
+      "sha256": "52caf36d190d5be1f3085414799e62c0f2bddfdf43c8cdabd25188d6d356f8d8"
+    },
+    {
+      "path": "skills/start-standard-task/agents/openai.yaml",
+      "owner": "distribution",
+      "sha256": "e17dfe296a88646f6218b042b82ae29d9b9fd3a864365c46b0d3f84a498a4349"
+    },
+    {
+      "path": "skills/start-standard-task/references/lifecycle-and-gates.md",
+      "owner": "distribution",
+      "sha256": "c010f7459d49ddd03480811b6c071bc70e8845909eeda35547d464a43bc83fbd"
+    },
+    {
+      "path": "skills/start-standard-task/references/task-contract.md",
+      "owner": "distribution",
+      "sha256": "332be3dc550149c16f58451c635879e0452f40cc420a42e7b45af7119817426c"
+    },
+    {
+      "path": "skills/upgrade-standard-workspace/SKILL.md",
+      "owner": "distribution",
+      "sha256": "54ead43a0e069e6aa4d2a06792fad437621220e467285f08cd54aeac437cc6c0"
+    },
+    {
+      "path": "skills/upgrade-standard-workspace/agents/openai.yaml",
+      "owner": "distribution",
+      "sha256": "34443872aca6f61f9a007f0f88ec905806416d2e68452430d7849484069fcce8"
+    },
+    {
+      "path": "skills/upgrade-standard-workspace/references/upgrade-protocol.md",
+      "owner": "distribution",
+      "sha256": "1d63162e2501508b3eef08c8407e16337226540e1dd1703fdfb2bf6c43cf36fe"
+    },
+    {
+      "path": "skills/upgrade-standard-workspace/scripts/preview_upgrade.py",
+      "owner": "distribution",
+      "sha256": "2b1c24f2d075dbc79e5561d62c50f3702a2ab0612514cb2342825e0fa654e0eb"
+    },
+    {
+      "path": "skills/upgrade-standard-workspace/scripts/test_preview_upgrade.py",
+      "owner": "distribution",
+      "sha256": "19d89aa1cd6c30b855932393d4db831cfe191d0b765a405aefb37eca02a4e0f8"
+    },
+    {
+      "path": "tools/.gitkeep",
+      "owner": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "workspaces/.gitkeep",
+      "owner": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

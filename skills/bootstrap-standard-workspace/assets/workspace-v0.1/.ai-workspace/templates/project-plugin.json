@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1",
+  "plugin": {
+    "id": "example-project",
+    "display_name": "Example Project",
+    "version": "0.1.0",
+    "api_version": "0.1",
+    "repository_model": "single"
+  },
+  "repositories": [
+    {"id": "core", "path": "repositories/core", "default_branch": "main"}
+  ],
+  "modules": [
+    {"id": "core-app", "repository": "core", "path": ".", "role": "edit", "technology_adapters": ["git"]}
+  ],
+  "workflows": {
+    "build": [],
+    "test": [],
+    "verify": [],
+    "review": [],
+    "release": [],
+    "rollback": [],
+    "close": []
+  },
+  "risk_areas": [],
+  "knowledge": [],
+  "capabilities": {"enabled": []},
+  "facts": [],
+  "inferences": [],
+  "policies": [],
+  "unresolved_questions": []
+}

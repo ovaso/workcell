@@ -1,0 +1,4 @@
+interface:
+  display_name: "Upgrade Standard Workspace"
+  short_description: "预览、快照并安全升级标准工作区，同时完整保护用户和项目内容"
+  default_prompt: "使用 $upgrade-standard-workspace 预览并安全规划此工作区的版本升级，先保护用户内容再请求确认。"

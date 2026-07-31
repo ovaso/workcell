@@ -1,0 +1,25 @@
+gates = []
+risk_tags = []
+environment_snapshot_ref = ""
+evidence = []
+
+[task]
+id = "uninitialized-task"
+display_name = ""
+title = "Uninitialized Task"
+type = "requirement"
+status = "INBOX"
+project_plugin_ref = ""
+
+[scope]
+edit = []
+verify = []
+reference = []
+excluded = []
+
+[workflow]
+current_plan = ""
+superseded_plans = []
+next_action = "Clarify task scope"
+next_gate = "SCOPED"
+branch = ""

@@ -1,0 +1,62 @@
+{
+  "schema_version": "0.1",
+  "plugin": {
+    "id": "example-project",
+    "display_name": "Example Project",
+    "version": "0.1.0",
+    "api_version": "0.1",
+    "repository_model": "single"
+  },
+  "repositories": [
+    {"id": "core", "path": "repositories/core", "default_branch": "main"}
+  ],
+  "modules": [
+    {
+      "id": "core-app",
+      "repository": "core",
+      "path": ".",
+      "role": "edit",
+      "technology_adapters": ["git"]
+    }
+  ],
+  "workflows": {
+    "build": [{"id": "build-core", "working_directory": "repositories/core", "argv": ["make"]}],
+    "test": [],
+    "verify": [],
+    "review": [],
+    "release": [],
+    "rollback": [],
+    "close": []
+  },
+  "risk_areas": [],
+  "knowledge": [],
+  "capabilities": {"enabled": []},
+  "facts": [
+    {
+      "id": "fact-repository",
+      "kind": "repository",
+      "source_type": "discovered",
+      "source": ".git/config",
+      "observed_at": "2026-07-31T00:00:00Z",
+      "context": "project",
+      "confidence": "high",
+      "sensitivity": "private"
+    }
+  ],
+  "inferences": [
+    {
+      "id": "inference-build",
+      "statement": "The core repository owns the build.",
+      "fact_refs": ["fact-repository"],
+      "confidence": "medium"
+    }
+  ],
+  "policies": [
+    {
+      "id": "policy-read-only-default",
+      "statement": "Remote actions require explicit authorization.",
+      "source_type": "user-confirmed"
+    }
+  ],
+  "unresolved_questions": []
+}

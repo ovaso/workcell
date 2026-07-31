@@ -1,0 +1,4 @@
+interface:
+  display_name: "Inspect Host Environment"
+  short_description: "Collect safe, read-only host environment facts"
+  default_prompt: "Use $inspect-host-environment to preview commands, toolchains, variable names, and approved network facts."

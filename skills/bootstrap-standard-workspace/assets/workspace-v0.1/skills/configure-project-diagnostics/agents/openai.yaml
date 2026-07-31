@@ -1,0 +1,4 @@
+interface:
+  display_name: "Configure Project Diagnostics"
+  short_description: "交互配置项目诊断目标、Provider、事实证据与安全授权边界"
+  default_prompt: "使用 $configure-project-diagnostics 通过强制问询、代码查证和事实验证配置本项目的诊断能力与安全边界。"

@@ -1,0 +1,22 @@
+[diagnostics]
+configured = false
+default_action = "deny"
+unknown_target = "deny"
+stale_fact = "deny"
+
+[remote]
+shell = "deny"
+write = "deny"
+file_collection = "deny"
+api_query = "deny"
+
+[local]
+read_code = true
+read_existing_files = true
+inspect_processes = "ask"
+run_reproduction = "ask"
+
+[evidence]
+credential_output = false
+redaction_required = true
+task_directory_required = true

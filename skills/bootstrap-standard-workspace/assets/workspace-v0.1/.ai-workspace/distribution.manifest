@@ -1,0 +1,20 @@
+# V0.1 只列不可变的 distribution 文件。可变实例必须通过模板生成，禁止 byte repair。
+AI_WORKSPACE.md
+.ai-workspace/distribution.manifest
+.ai-workspace/release-manifest.json
+.ai-workspace/ownership.toml
+.ai-workspace/policies/core.toml
+.ai-workspace/schemas
+.ai-workspace/specs
+.ai-workspace/templates
+docs/getting-started.md
+docs/standard
+knowledge/tool-capabilities.toml
+skills/initialize-standard-workspace
+skills/inspect-host-environment
+skills/adapt-project-workspace
+skills/configure-project-diagnostics
+skills/standard-workspace-doctor
+skills/start-standard-task
+skills/upgrade-standard-workspace
+skills/extract-standard-feedback

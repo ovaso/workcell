@@ -1,0 +1,32 @@
+{
+  "workspace": {
+    "id": "personal-ai-workspace",
+    "name": "Personal AI Workspace",
+    "status": "CREATED",
+    "managed_by": "ai-native-standard-workspace",
+    "created_at": "2026-07-31T00:00:00Z",
+    "updated_at": "2026-07-31T00:00:00Z"
+  },
+  "versions": {
+    "product": "0.1.0",
+    "workspace_schema": "0.1",
+    "release_manifest_schema": "0.1",
+    "environment_facts_schema": "0.1",
+    "project_plugin_schema": "0.1",
+    "diagnostic_profile_schema": "0.1",
+    "task_schema": "0.1",
+    "feedback_report_schema": "0.1"
+  },
+  "paths": {
+    "environment": "environment",
+    "project": "project",
+    "requirements": "requirements",
+    "workspaces": "workspaces",
+    "skills": "skills"
+  },
+  "safety": {
+    "remote_operations_default": "deny",
+    "bootstrap_network": "deny",
+    "overwrite_non_empty": false
+  }
+}

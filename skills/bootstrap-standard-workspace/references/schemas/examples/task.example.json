@@ -1,0 +1,31 @@
+{
+  "task": {
+    "id": "dev_20260731_example",
+    "display_name": "Example",
+    "title": "Example requirement",
+    "type": "requirement",
+    "status": "SCOPED",
+    "project_plugin_ref": "project/plugin/project-plugin.json",
+    "created_at": "2026-07-31T00:00:00Z",
+    "updated_at": "2026-07-31T00:00:00Z"
+  },
+  "scope": {
+    "edit": ["app"],
+    "verify": ["api"],
+    "reference": [],
+    "excluded": []
+  },
+  "workflow": {
+    "current_plan": null,
+    "superseded_plans": [],
+    "next_action": "Create a versioned implementation plan",
+    "next_gate": "PLANNED",
+    "branch": "dev_20260731_example"
+  },
+  "gates": [
+    {"id": "scope-confirmed", "status": "passed", "evidence_refs": []}
+  ],
+  "risk_tags": [],
+  "environment_snapshot_ref": "environment/snapshots/host-20260731T000000Z.json",
+  "evidence": []
+}

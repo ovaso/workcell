@@ -1,0 +1,20 @@
+# 本地缓存与临时输出
+.DS_Store
+*.tmp
+*.swp
+__pycache__/
+*.py[cod]
+.cache/
+
+# 凭证与私密覆盖文件不得进入版本库
+.env
+.env.*
+!.env.example
+*.secret
+*.secrets
+.ai-workspace/private/
+
+# 发行与测试输出
+dist/
+reports/
+feedback/export/

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Extract Standard Feedback"
+  short_description: "从工作区实践生成脱敏、可审核、可汇总的标准反馈候选包"
+  default_prompt: "使用 $extract-standard-feedback 从当前工作区的已授权证据生成脱敏反馈候选包，不自动回传或修改标准。"

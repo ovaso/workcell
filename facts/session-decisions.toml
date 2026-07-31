@@ -1,0 +1,45 @@
+[meta]
+date = "2026-07-31"
+source = "current-session"
+status = "confirmed-design-decisions"
+
+[[decisions]]
+id = "platform-neutral-bootstrap"
+statement = "产品本体采用平台尽量无关、全文本、自包含的 Bootstrap Skill，而不是绑定 Codex Plugin。"
+
+[[decisions]]
+id = "workspace-self-hosting"
+statement = "Bootstrap 只负责展开、校验、修复和升级；展开后的工作区携带自己的运行时 Skills 并自托管。"
+
+[[decisions]]
+id = "facts-before-project-action"
+statement = "工作区初始化时先建立宿主环境事实，再接入项目并生成项目插件。"
+
+[[decisions]]
+id = "project-plugin-boundary"
+statement = "通用工作流不包含项目事实；不同项目通过项目插件声明属性、模块、规则、知识和特化能力。"
+
+[[decisions]]
+id = "diagnostics-as-capability"
+statement = "诊断是项目能力插件，必须通过交互问询、事实发现和代码查证配置。"
+
+[[decisions]]
+id = "diagnostics-target-neutral"
+statement = "诊断目标覆盖本地 CLI、桌面客户端、代码库、裸机、容器、集群和 Observability 系统。"
+
+[[decisions]]
+id = "agents-generated-adapter"
+statement = "结构化策略和事实是真相源，AGENTS 等 AI 文件是编译适配结果；诊断硬约束必须实时进入有效 AI 指令。"
+
+[[decisions]]
+id = "capability-not-authorization"
+statement = "机器具备某工具不代表允许执行相应操作；操作必须同时满足能力、Provider、项目策略和任务授权。"
+
+[[decisions]]
+id = "distribution-model"
+statement = "唯一 Git 仓库维护源码，稳定 Tag 构建 Skill ZIP、Manifest 和校验值，用于分发和安装。"
+
+[[decisions]]
+id = "self-update-deferred"
+statement = "自更新在生产标准、唯一仓库和正式 Release 流程定版后实现；默认只自动检查，不自动应用。"
+

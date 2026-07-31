@@ -1,0 +1,59 @@
+{
+  "schema_version": "0.1",
+  "profile": {
+    "id": "example-local-diagnostics",
+    "api_version": "0.1",
+    "status": "draft",
+    "configured_by_interview": true,
+    "verified_at": "2026-07-31T00:00:00Z"
+  },
+  "policies": {
+    "default_action": "deny",
+    "remote_shell": "deny",
+    "remote_write": "deny",
+    "credential_output": "deny",
+    "unknown_target": "deny",
+    "production_access": "deny",
+    "secret_values_allowed": false,
+    "allowed_collection_modes": ["local-read"],
+    "forbidden_actions": ["read-unregistered-path"]
+  },
+  "targets": [
+    {
+      "id": "local-cli",
+      "type": "local-cli",
+      "environment": "local",
+      "fact_status": "code-verified",
+      "endpoint_refs": [],
+      "log_locations": ["logs/"]
+    }
+  ],
+  "providers": [
+    {
+      "id": "local-files",
+      "kind": "local-files",
+      "enabled": true,
+      "authorization": "read-only",
+      "target_refs": ["local-cli"],
+      "credential_refs": []
+    }
+  ],
+  "correlations": [],
+  "authorizations": [
+    {
+      "action": "collect.local-logs",
+      "target_refs": ["local-cli"],
+      "environments": ["local"],
+      "mode": "read-only",
+      "source": "user-confirmed",
+      "confirmed_at": "2026-07-31T00:00:00Z",
+      "expires_at": null
+    }
+  ],
+  "facts": [],
+  "retention": {
+    "evidence_directory": "requirements",
+    "retention_days": null,
+    "redaction_required": true
+  }
+}

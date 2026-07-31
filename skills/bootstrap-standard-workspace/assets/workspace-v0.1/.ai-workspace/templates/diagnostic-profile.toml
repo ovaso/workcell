@@ -1,0 +1,27 @@
+schema_version = "0.1"
+targets = []
+providers = []
+correlations = []
+authorizations = []
+facts = []
+
+[profile]
+id = "unconfigured-diagnostics"
+api_version = "0.1"
+status = "unconfigured"
+configured_by_interview = false
+
+[policies]
+default_action = "deny"
+remote_shell = "deny"
+remote_write = "deny"
+credential_output = "deny"
+unknown_target = "deny"
+production_access = "deny"
+secret_values_allowed = false
+allowed_collection_modes = ["local-read"]
+forbidden_actions = []
+
+[retention]
+evidence_directory = "requirements"
+redaction_required = true

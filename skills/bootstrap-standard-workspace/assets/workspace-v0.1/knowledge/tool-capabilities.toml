@@ -1,0 +1,82 @@
+[catalog]
+version = "0.1"
+kind = "seed-knowledge"
+note = "本文件描述如何识别工具及其能力，不代表当前机器已经安装。"
+
+[[commands]]
+name = "git"
+version_args = ["--version"]
+capabilities = ["source-control.git"]
+level = "required"
+
+[[commands]]
+name = "rg"
+version_args = ["--version"]
+capabilities = ["text-search.fast"]
+level = "recommended"
+
+[[commands]]
+name = "jq"
+version_args = ["--version"]
+capabilities = ["json.parse", "json.query", "json.transform"]
+level = "recommended"
+
+[[commands]]
+name = "ast-grep"
+version_args = ["--version"]
+capabilities = ["source-search.ast", "source-refactor.ast"]
+level = "recommended"
+
+[[commands]]
+name = "mise"
+version_args = ["--version"]
+capabilities = ["toolchain.manage", "environment.scope"]
+level = "optional"
+
+[[commands]]
+name = "rsync"
+version_args = ["--version"]
+capabilities = ["file-transfer.readonly-capable"]
+level = "optional"
+
+[[commands]]
+name = "fd"
+version_args = ["--version"]
+capabilities = ["file-search.fast"]
+level = "recommended"
+
+[[commands]]
+name = "fzf"
+version_args = ["--version"]
+capabilities = ["selection.fuzzy", "file-discovery.interactive"]
+level = "optional"
+
+[[commands]]
+name = "ffmpeg"
+version_args = ["-version"]
+capabilities = ["media.inspect", "media.convert"]
+level = "optional"
+
+[[commands]]
+name = "git-cliff"
+version_args = ["--version"]
+capabilities = ["changelog.generate"]
+level = "optional"
+
+[[commands]]
+name = "jd"
+version_args = ["-version"]
+capabilities = ["json.diff"]
+level = "optional"
+
+[[commands]]
+name = "sqlite3"
+version_args = ["--version"]
+capabilities = ["database.sqlite.inspect", "database.sqlite.query"]
+level = "optional"
+
+[[commands]]
+name = "wrk"
+version_args = ["--version"]
+capabilities = ["http.load-test"]
+level = "optional"

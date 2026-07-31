@@ -1,0 +1,39 @@
+{
+  "bundle": {
+    "id": "bootstrap-standard-workspace",
+    "version": "0.1.0",
+    "status": "draft",
+    "format": "text-only-skill-bundle"
+  },
+  "versions": {
+    "workspace": "0.1",
+    "release_manifest": "0.1",
+    "environment_facts": "0.1",
+    "project_plugin": "0.1",
+    "diagnostic_profile": "0.1",
+    "task": "0.1",
+    "feedback_report": "0.1",
+    "project_plugin_api": "0.1",
+    "diagnostic_plugin_api": "0.1"
+  },
+  "payload": {
+    "workspace_asset": "assets/workspace-v0.1",
+    "required_entries": [
+      "AI_WORKSPACE.md",
+      "AGENTS.md",
+      ".ai-workspace/workspace.toml",
+      ".ai-workspace/versions.lock",
+      ".ai-workspace/release-manifest.json",
+      ".ai-workspace/distribution.manifest",
+      ".ai-workspace/ownership.toml",
+      "skills"
+    ]
+  },
+  "safety": {
+    "network_default": "deny",
+    "install_tools": false,
+    "modify_shell": false,
+    "overwrite_non_empty": false,
+    "self_update": false
+  }
+}

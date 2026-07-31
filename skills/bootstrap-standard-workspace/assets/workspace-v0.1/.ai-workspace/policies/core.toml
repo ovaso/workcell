@@ -1,0 +1,27 @@
+[policy]
+id = "core-safety"
+version = "0.1"
+default_action = "deny"
+
+[local]
+read_workspace = true
+write_workspace = "task-scoped"
+overwrite_non_empty = false
+install_tools = "ask"
+modify_shell = "ask"
+
+[remote]
+network_probe = "ask"
+read = "ask"
+write = "deny"
+shell = "deny"
+
+[secrets]
+record_values = false
+emit_values = false
+commit_values = false
+
+[git]
+automatic_commit = false
+automatic_push = false
+destructive_history_rewrite = false

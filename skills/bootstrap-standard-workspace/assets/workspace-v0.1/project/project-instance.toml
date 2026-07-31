@@ -1,0 +1,13 @@
+[project]
+attached = false
+plugin_ref = ""
+plugin_version = ""
+root = ""
+attached_at = ""
+last_verified_at = ""
+
+[facts]
+status = "uninitialized"
+repositories = []
+local_paths = []
+remote_refs = []

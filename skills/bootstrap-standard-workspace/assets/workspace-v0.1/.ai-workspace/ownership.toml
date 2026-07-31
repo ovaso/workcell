@@ -1,0 +1,180 @@
+[ownership]
+version = "0.1"
+default = "workspace"
+resolution = "first-match"
+
+[[rules]]
+pattern = "AI_WORKSPACE.md"
+owner = "distribution"
+
+[[rules]]
+pattern = ".ai-workspace/distribution.manifest"
+owner = "distribution"
+
+[[rules]]
+pattern = ".ai-workspace/release-manifest.json"
+owner = "distribution"
+
+[[rules]]
+pattern = ".ai-workspace/ownership.toml"
+owner = "distribution"
+
+[[rules]]
+pattern = ".ai-workspace/specs"
+owner = "distribution"
+
+[[rules]]
+pattern = ".ai-workspace/specs/**"
+owner = "distribution"
+
+[[rules]]
+pattern = ".ai-workspace/schemas"
+owner = "distribution"
+
+[[rules]]
+pattern = ".ai-workspace/schemas/**"
+owner = "distribution"
+
+[[rules]]
+pattern = ".ai-workspace/templates"
+owner = "distribution"
+
+[[rules]]
+pattern = ".ai-workspace/templates/**"
+owner = "distribution"
+
+[[rules]]
+pattern = ".ai-workspace/policies/core.toml"
+owner = "distribution"
+
+[[rules]]
+pattern = "docs/standard"
+owner = "distribution"
+
+[[rules]]
+pattern = "docs/standard/**"
+owner = "distribution"
+
+[[rules]]
+pattern = "docs/getting-started.md"
+owner = "distribution"
+
+[[rules]]
+pattern = "knowledge/tool-capabilities.toml"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/initialize-standard-workspace"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/initialize-standard-workspace/**"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/inspect-host-environment"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/inspect-host-environment/**"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/adapt-project-workspace"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/adapt-project-workspace/**"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/configure-project-diagnostics"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/configure-project-diagnostics/**"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/standard-workspace-doctor"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/standard-workspace-doctor/**"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/start-standard-task"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/start-standard-task/**"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/upgrade-standard-workspace"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/upgrade-standard-workspace/**"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/extract-standard-feedback"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/extract-standard-feedback/**"
+owner = "distribution"
+
+[[rules]]
+pattern = "AGENTS.md"
+owner = "generated"
+
+[[rules]]
+pattern = ".ai-workspace/generated/**"
+owner = "generated"
+
+[[rules]]
+pattern = ".ai-workspace/workspace.toml"
+owner = "workspace"
+
+[[rules]]
+pattern = ".ai-workspace/versions.lock"
+owner = "workspace"
+
+[[rules]]
+pattern = ".ai-workspace/policies/diagnostics.toml"
+owner = "generated"
+
+[[rules]]
+pattern = "environment/current/**"
+owner = "generated"
+
+[[rules]]
+pattern = "environment/snapshots/**"
+owner = "workspace"
+
+[[rules]]
+pattern = "environment/**"
+owner = "workspace"
+
+[[rules]]
+pattern = "project/**"
+owner = "workspace"
+
+[[rules]]
+pattern = "requirements/task-index.toml"
+owner = "generated"
+
+[[rules]]
+pattern = "requirements/**"
+owner = "workspace"
+
+[[rules]]
+pattern = "feedback/**"
+owner = "workspace"
+
+[[rules]]
+pattern = "workspaces/**"
+owner = "workspace"
