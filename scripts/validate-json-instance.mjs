@@ -4,7 +4,7 @@ import fs from "node:fs";
 import process from "node:process";
 import { validateValue } from "./validate-schema-examples.mjs";
 
-/** 打印命令用法并以参数错误退出。 */
+/** Print command usage and exit with an argument error. */
 function usage() {
   process.stderr.write("Usage: validate-json-instance.mjs <schema.json> <instance.json>\n");
   process.exit(2);

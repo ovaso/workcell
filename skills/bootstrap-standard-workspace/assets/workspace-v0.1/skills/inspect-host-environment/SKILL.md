@@ -86,7 +86,7 @@ With authorization:
 
 ## Use the deterministic collector when available
 
-When Python 3 is already verified in the current context, resolve this Skill directory and run `scripts/inspect_host.py` by absolute path. The script writes JSON to standard output by default.
+When Python 3 is already verified in the current context, resolve this Skill directory and run `scripts/inspect_host.py` by absolute path. Use `python3` on POSIX, `py -3` on Windows when the Python Launcher is available, or the verified Python 3 command for the current context. The script writes JSON to standard output by default.
 
 Example read-only preview:
 
@@ -106,6 +106,8 @@ python3 <skill-dir>/scripts/inspect_host.py \
 ```
 
 Add `--probe-network` only after explicit authorization. Add `--output <path>` only after approving persistence; the script refuses to overwrite an existing file unless `--force` is also explicitly chosen.
+
+PowerShell uses the same arguments without POSIX line continuations, for example: `py -3 <skill-dir>/scripts/inspect_host.py --context ai-execution --command git --command node`.
 
 The collector marks a normally completed snapshot as `verified`. After comparing the result with caller-declared required facts, the caller may request `--status degraded` when required items are missing. Do not use `degraded` to hide collection errors or unsupported contexts.
 

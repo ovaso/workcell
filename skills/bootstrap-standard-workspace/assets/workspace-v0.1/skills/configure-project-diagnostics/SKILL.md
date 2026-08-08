@@ -1,43 +1,43 @@
 ---
 name: configure-project-diagnostics
-description: 通过强制交互问询、代码查证和事实验证，为标准工作区配置项目诊断目标、Provider、安全边界与采集流程。用于首次启用或重新配置本地 CLI、桌面应用、本地进程或批任务、裸机服务、容器、Kubernetes、Observability 或混合系统诊断，以及端点、凭证引用、权限、部署模型或诊断流程发生变化时。
+description: Configure project diagnostic targets, Providers, security boundaries, and collection workflows for a Standard Workspace through a mandatory interactive questionnaire, code inspection, and fact verification. Use when first enabling or reconfiguring diagnostics for a local CLI, desktop application, local process, batch job, bare-metal service, container, Kubernetes workload, observability-backed system, or hybrid system, and whenever endpoints, credential references, permissions, deployment models, or diagnostic workflows change.
 ---
 
 # Configure Project Diagnostics
 
-为项目建立可审查、可验证、默认拒绝的诊断能力。把结构化配置作为真相源；能力存在不代表获得操作授权。
+Establish a reviewable, verifiable, deny-by-default diagnostic capability for a project. Treat structured configuration as authoritative; capability does not imply authorization.
 
-## 强制边界
+## Enforce the boundary
 
-- 先读取 `AI_WORKSPACE.md`、`.ai-workspace/workspace.toml`、项目插件、环境事实和现有诊断配置。
-- 仅在工作区至少完成 `PROJECT_ADAPTED` 后配置诊断；否则停止并转回项目适配。
-- 每次首次配置或安全边界变化时都进行显式交互问询。历史文档、旧配置和工具可用性不能替代用户确认。
-- 在用户回答第一组安全问题前，不探测远端、不验证端点、不读取凭证、不启动复现、不执行采集。
-- 按以下条件逐项判定动作：环境能力满足、Provider 支持、项目策略允许、当前任务明确授权。任一条件未知或不满足即拒绝。
-- 只保存凭证引用，不保存 token、密码、私钥或 kubeconfig 内容。
-- 将未配置、验证失败、事实过期或权限冲突视为失败关闭。此时只允许分析本地代码和已有文件。
+- Read `AI_WORKSPACE.md`, `.ai-workspace/workspace.toml`, the project plugin, environment facts, and existing diagnostic configuration first.
+- Configure diagnostics only after the workspace reaches at least `PROJECT_ADAPTED`; otherwise stop and return to project adaptation.
+- Run an explicit questionnaire for initial configuration and every security-boundary change. Historical documentation, old configuration, and tool availability do not replace user confirmation.
+- Before the user answers the first safety questions, do not probe remote systems, validate endpoints, read credentials, start reproductions, or collect evidence.
+- Evaluate each action separately: environment capability is present, the Provider supports it, project policy permits it, and the current task explicitly authorizes it. Deny the action when any condition is unknown or unmet.
+- Store credential references only; never store tokens, passwords, private keys, or kubeconfig content.
+- Treat unconfigured state, failed validation, stale facts, and permission conflicts as fail-closed. Only local code and existing files may be analyzed in that state.
 
-## 配置流程
+## Configure
 
-1. 读取 [questionnaire.md](references/questionnaire.md)，提出第一组安全与权限问题并等待明确回答。
-2. 立即把确认的禁止项、默认动作、环境边界和授权有效期写入预览；先让用户核对，不执行诊断动作。
-3. 根据目标类型读取 [target-profiles.md](references/target-profiles.md) 中对应章节，继续询问运行、部署、证据来源、关联标识、脱敏和保留要求。
-4. 对项目代码和配置进行只读查证：定位启动入口、日志配置、遥测 SDK、健康检查、崩溃处理、容器或集群清单、业务关联标识和环境选择逻辑。
-5. 区分声明与事实。为每项事实记录来源、证据、观测时间、敏感级别、可信度和过期条件。不得把历史文档直接提升为当前运行事实。
-6. 仅在用户已授权对应验证动作时执行最小只读验证。优先本地静态检查；远端元数据、端点探测、采样采集或轮询分别取得授权。
-7. 选择满足要求的 Provider，验证其 `discover/questionnaire/requirements/validate/plan/collect/poll/correlate/sanitize/index/summarize/health` 能力。缺少必要能力时停止，不临时绕过策略。
-8. 按 [configuration-contract.md](references/configuration-contract.md) 生成配置变更预览，列出 `project/diagnostics/diagnostic-profile.toml`、诊断策略、未验证事实、过期条件和禁止动作。
-9. 获得用户对预览的明确确认后，写入符合 Schema 的诊断 Profile 和 `.ai-workspace/policies/diagnostics.toml`；让项目插件的诊断 capability 引用 `project/diagnostics/diagnostic-profile.toml`，再重新编译项目级 AI 适配规则，使硬约束进入实际生效的 `AGENTS.md` 等入口。
-10. 执行配置校验和一次获授权的最小 dry run。不得用成功连通性推导额外授权。
-11. 运行 `$standard-workspace-doctor`。只有配置、生成规则和 Doctor 均通过后，才把工作区推进到 `DIAGNOSTICS_CONFIGURED`；是否进入 `READY` 仍由完整 Doctor 门禁决定。
+1. Read [questionnaire.md](references/questionnaire.md), ask the first safety and permission questions, and wait for explicit answers.
+2. Immediately preview confirmed prohibitions, default actions, environment boundaries, and authorization lifetimes. Ask the user to review them before any diagnostic action.
+3. Read the applicable section of [target-profiles.md](references/target-profiles.md) and continue asking about runtime, deployment, evidence sources, correlation identifiers, redaction, and retention.
+4. Inspect project code and configuration read-only. Locate launch points, logging configuration, telemetry SDKs, health checks, crash handling, container or cluster manifests, business correlation identifiers, and environment-selection logic.
+5. Separate declarations from facts. Record source, evidence, observation time, sensitivity, confidence, and expiration conditions for every fact. Do not promote historical documentation directly to a current runtime fact.
+6. Run the minimum read-only verification only when the user authorizes that specific verification. Prefer local static checks. Obtain separate authorization for remote metadata, endpoint probes, sample collection, and polling.
+7. Select a Provider that meets the requirements and verify its `discover/questionnaire/requirements/validate/plan/collect/poll/correlate/sanitize/index/summarize/health` capabilities. Stop when a required capability is missing; do not bypass policy temporarily.
+8. Follow [configuration-contract.md](references/configuration-contract.md) to preview changes to `project/diagnostics/diagnostic-profile.toml`, diagnostic policy, unverified facts, expiration conditions, and prohibited actions.
+9. After explicit approval of the preview, write a schema-valid diagnostic profile and `.ai-workspace/policies/diagnostics.toml`. Make the project plugin's diagnostic capability reference `project/diagnostics/diagnostic-profile.toml`, then recompile project-level AI adapter rules so hard constraints reach effective entry points such as `AGENTS.md`.
+10. Validate the configuration and run one explicitly authorized minimal dry run. Successful connectivity does not grant additional authority.
+11. Run `$standard-workspace-doctor`. Advance to `DIAGNOSTICS_CONFIGURED` only after configuration, generated rules, and Doctor checks pass. The complete Doctor still gates entry into `READY`.
 
-## 代码与事实查证要求
+## Code and fact evidence
 
-- 给出每个代码结论的仓库、文件和符号位置。
-- 给出每个运行事实的目标、环境、来源、验证方式和观测时间。
-- 对代码声明与运行事实冲突的情况把 Profile 保持为 `draft` 或标记为 `stale`；关键能力受影响时将工作区标记为 `DEGRADED`，请求裁决或继续验证。
-- 对生产、写操作、远程 Shell、重启、扩缩容、部署、删除、配置变更和数据回放保持单独授权，不把“允许诊断”解释为这些权限。
+- Give the repository, file, and symbol location for every code conclusion.
+- Give the target, environment, source, verification method, and observation time for every runtime fact.
+- Keep the profile `draft` or mark it `stale` when code declarations conflict with runtime facts. Mark the workspace `DEGRADED` when critical capabilities are affected, then request a decision or continue verification.
+- Keep production access, writes, remote shell, restart, scaling, deployment, deletion, configuration changes, and data replay under separate authorization. Do not interpret permission to diagnose as permission for those actions.
 
-## 完成输出
+## Complete
 
-报告已配置目标和 Provider、有效授权、明确禁止项、代码证据、已验证事实、未验证或已过期事实、dry run 结果、Doctor 结果以及仍被失败关闭的动作。不要输出凭证值。
+Report configured targets and Providers, active authorization, explicit prohibitions, code evidence, verified facts, unverified or stale facts, dry-run results, Doctor results, and actions that remain fail-closed. Do not output credential values.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""校验 Skill 的 agents/openai.yaml 基础界面字段。"""
+"""Validate basic interface fields in a Skill's agents/openai.yaml."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ import sys
 
 
 def quoted_field(content: str, key: str) -> str:
-    """读取一个缩进两格且使用双引号的界面字段。"""
+    """Read a two-space-indented, double-quoted interface field."""
 
     match = re.search(rf'^  {re.escape(key)}: ("(?:[^"\\]|\\.)*")$', content, re.MULTILINE)
     if match is None:
@@ -19,7 +19,7 @@ def quoted_field(content: str, key: str) -> str:
 
 
 def main() -> int:
-    """检查显示名、短描述和默认提示与 Skill 名称一致。"""
+    """Check display name, short description, and default prompt against the Skill name."""
 
     if len(sys.argv) != 2:
         print("Usage: validate-openai-metadata.py <skill-directory>", file=sys.stderr)

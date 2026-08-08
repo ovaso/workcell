@@ -1,38 +1,40 @@
-# 路线图
+# Roadmap
 
-## V0.1：Bootstrap 与基础标准
+## V0.1: Bootstrap and foundation
 
-- Bootstrap Skill 与工作区模板。
-- 核心 Specs、Schemas 和事实决策。
-- Create、Validate 和基础 Doctor。
-- 环境事实、项目插件和诊断能力骨架。
-- 任务 Manifest、状态 Schema 和模块角色骨架。
-- 标准 AGENTS 与平台无关入口。
+- Bootstrap Skill and workspace template.
+- Core specifications, schemas, and product decisions.
+- Create, Validate, and foundational Doctor operations.
+- Environment-fact, project-plugin, and diagnostic-capability skeletons.
+- Task manifest, state schema, and module-role skeletons.
+- Standard AGENTS adapter and platform-neutral entry point.
+- Canonical English source and a controlled post-bootstrap localization workflow.
+- MIT-licensed open-source governance, GitHub contribution templates, and Linux/Windows CI.
 
-## V0.2：项目适配与任务工作流
+## V0.2: Project adaptation and task workflow
 
-- 单仓库和多仓库适配。
-- 主线镜像与远端登记。
-- 项目插件生成和校验。
-- 任务创建自动化、计划版本、证据索引和上下文装配。
+- Single-repository and multi-repository adaptation.
+- Mainline mirrors and remote registration.
+- Project-plugin generation and validation.
+- Automated task creation, versioned plans, evidence indexes, and context assembly.
 
-## V0.3：诊断能力
+## V0.3: Diagnostic capability
 
-- 诊断能力 API。
-- 本地 CLI、本地日志和裸机只读日志 Provider。
-- 交互式安全问询。
-- 诊断策略编译进入 AI 规则文件。
+- Diagnostic capability API.
+- Providers for local CLI, local logs, and read-only bare-metal logs.
+- Interactive security questionnaire.
+- Compilation of diagnostic policy into AI rule files.
 
-## V0.4：升级与智能编排
+## V0.4: Upgrade and intelligent orchestration
 
-- Repair 和 Migration。
-- 工作区升级和回滚。
-- 多代理任务所有权。
-- 项目知识提炼、QC 和归档。
+- Repair and Migration.
+- Workspace upgrade and rollback.
+- Multi-agent task ownership.
+- Project-knowledge extraction, quality control, and archival.
 
-## 稳定版之后
+## After stable release
 
-- 指定唯一发行仓库。
-- 建立不可变 Tag/Release、哈希或签名验证。
-- 增加 Bootstrap 自更新。
-- 增加更多 AI 平台适配入口。
+- Establish immutable tags/releases and hash or signature verification.
+- Add Bootstrap self-update.
+- Add more AI-platform adapter entry points.
+- Add reviewed locale packs and deterministic localization validation.

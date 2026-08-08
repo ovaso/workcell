@@ -1,4 +1,4 @@
-# 本地缓存与临时输出
+# Local caches and temporary output
 .DS_Store
 *.tmp
 *.swp
@@ -6,7 +6,7 @@ __pycache__/
 *.py[cod]
 .cache/
 
-# 凭证与私密覆盖文件不得进入版本库
+# Credentials and private override files must not enter version control
 .env
 .env.*
 !.env.example
@@ -14,7 +14,7 @@ __pycache__/
 *.secrets
 .ai-workspace/private/
 
-# 发行与测试输出
+# Release and test output
 dist/
 reports/
 feedback/export/

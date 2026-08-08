@@ -1,74 +1,82 @@
-# Doctor 检查目录
+# Doctor Check Catalog
 
-## 严重级别
+## Severity
 
-- `ERROR`：结构或真相源无效、安全策略放行、权限越界、所有权冲突，或者进入当前生命周期所需条件缺失。阻止 `READY`。
-- `WARN`：工作区仍可只读使用，但存在缺少证据、可选元数据、过期风险或维护问题。
-- `INFO`：已确认的正常事实。
+- `ERROR`: invalid structure or source of truth, permissive safety policy, authority escalation, ownership conflict, or a condition missing for the current lifecycle. Blocks `READY`.
+- `WARN`: the workspace remains usable read-only, but evidence, optional metadata, expiration protection, or maintenance is incomplete.
+- `INFO`: confirmed healthy facts.
 
-## 确定性结构检查
+## Deterministic structural checks
 
-- 必需入口存在且非空：`AI_WORKSPACE.md`、`AGENTS.md`、`.ai-workspace/workspace.toml`、`.ai-workspace/versions.lock`、`skills/`。
-- 标准目录存在：`environment`、`project`、`mirror`、`remotes`、`requirements`、`workspaces`、`diagnostics`、`tools`、`knowledge`、`docs`、`memory`。
-- TOML 与 JSON 真相源可解析；路径为安全的工作区相对路径。
-- 工作区状态属于规范状态；不得通过跳写 `READY` 掩盖缺失门禁。
-- 运行时 Skill 的目录名、frontmatter 名称和描述有效，不能保留模板 TODO。
-- `agents/openai.yaml` 等平台适配元数据不是通用工作区运行时健康条件；其发行完整性由对应平台或产品仓库级测试负责，Doctor 不因缺少某个平台适配器而告警。
-- `.ai-workspace/ownership.toml` 的规则必须唯一、路径安全，owner 属于 `distribution/generated/workspace`；`.ai-workspace/distribution.manifest` 中的路径必须存在、不能逃出工作区，并且每个路径都要有完全同名的 `distribution` 规则，不能只依赖 `/**` 等泛化规则。
+- Required non-empty entry points exist: `AI_WORKSPACE.md`, `AGENTS.md`, `.ai-workspace/workspace.toml`, `.ai-workspace/versions.lock`, and `skills/`.
+- Standard directories exist: `environment`, `project`, `mirror`, `remotes`, `requirements`, `workspaces`, `diagnostics`, `tools`, `knowledge`, `docs`, `memory`, `feedback`, and `locales`.
+- TOML and JSON sources of truth parse successfully; paths are safe workspace-relative paths.
+- Workspace state belongs to the standard state set; writing `READY` directly must not hide missing gates.
+- Runtime Skill directory names, frontmatter names, and descriptions are valid and contain no template TODOs.
+- Platform adapter metadata such as `agents/openai.yaml` is not a generic workspace runtime-health condition. The applicable platform or product-repository tests validate distribution integrity; the Doctor does not warn solely because a platform adapter is absent.
+- Rules in `.ai-workspace/ownership.toml` are unique and path-safe, and owners belong to `distribution/generated/workspace`. Paths in `.ai-workspace/distribution.manifest` exist, remain inside the workspace, and each have an exact `distribution` rule rather than depending only on a broad `/**` rule.
 
-## JSON Schema 一致性检查
+## JSON Schema consistency checks
 
-- Doctor 必须直接使用展开工作区随包的 `.ai-workspace/schemas/environment-facts.schema.json` 与 `.ai-workspace/schemas/project-plugin.schema.json`，不能依赖本机另装的 Schema 库或仓库外副本。
-- 环境事实 Schema 必须同时接受 `.ai-workspace/templates/host-facts.json` 与 `environment/current/host-facts.json`。
-- 项目插件 Schema 必须接受 `.ai-workspace/templates/project-plugin.json`；`project/plugin/project-plugin.json` 存在时也必须接受同一 Schema 校验。
-- V0.1 校验子集覆盖 `$ref`、`allOf`、`not`、`const`、`enum`、`type`、`required`、`properties`、`additionalProperties`、`items`、`minItems`、`uniqueItems`、`minLength`、`maxLength`、`pattern`、`format: date-time`、`propertyNames` 与 `minimum`。
-- `$ref` 只允许指向当前 Schema 文档的 JSON Pointer。Schema 缺失、JSON 不合法、对象键重复、引用无法解析、约束参数非法或出现未支持的关键字均报告 `ERROR`，避免升级后的新约束被旧 Doctor 静默忽略。
-- 模板与实例任一字段不符合随包 Schema 均报告 `schema.instance-invalid`；错误信息必须保留实例与 Schema 的 JSON Pointer，便于区分 Schema 漂移、模板漂移和运行时事实漂移。
-- 校验过程必须只读，不联网、不写缓存、不自动修复或改写 JSON。
+- Use the bundled `.ai-workspace/schemas/environment-facts.schema.json` and `.ai-workspace/schemas/project-plugin.schema.json` directly. Do not depend on a separately installed schema library or an external repository copy.
+- The environment-fact schema accepts both `.ai-workspace/templates/host-facts.json` and `environment/current/host-facts.json`.
+- The project-plugin schema accepts `.ai-workspace/templates/project-plugin.json` and, when present, `project/plugin/project-plugin.json`.
+- The V0.1 validation subset covers `$ref`, `allOf`, `not`, `const`, `enum`, `type`, `required`, `properties`, `additionalProperties`, `items`, `minItems`, `uniqueItems`, `minLength`, `maxLength`, `pattern`, `format: date-time`, `propertyNames`, and `minimum`.
+- `$ref` may point only to a JSON Pointer in the current schema document. Report `ERROR` for missing schemas, invalid JSON, duplicate object keys, unresolved references, invalid constraint parameters, and unsupported keywords, so an older Doctor cannot silently ignore new constraints after an upgrade.
+- Report `schema.instance-invalid` when any template or instance field violates its bundled schema. Preserve instance and schema JSON Pointers in errors to distinguish schema drift, template drift, and runtime-fact drift.
+- Schema validation is read-only, offline, cache-free, and performs no automatic repair or JSON rewrite.
 
-## 安装 Release 收据检查
+## Installed Release receipt checks
 
-- `.ai-workspace/release-manifest.json` 是展开工作区的必需自托管收据，必须接受 `.ai-workspace/schemas/release-manifest.schema.json` 校验。
-- 收据 `release_version` 必须与 `.ai-workspace/versions.lock` 的 `versions.product` 完全一致。
-- 对 `files[].owner = "distribution"` 的每个普通文件，Doctor 必须拒绝缺失路径、任一路径组件符号链接、目录或其他非普通文件，并流式核对当前 SHA-256。收据自身不参与自哈希。
-- `generated` 与 `workspace` 条目只记录安装基线，允许运行时生成、修改或删除，Doctor 不把其哈希变化报告为发行漂移。
-- 哈希校验期间若文件对象被替换或元数据发生变化，按竞态错误失败关闭；Doctor 不自动恢复发行文件。
+- `.ai-workspace/release-manifest.json` is a required self-hosting receipt and must satisfy `.ai-workspace/schemas/release-manifest.schema.json`.
+- Receipt `release_version` exactly matches `.ai-workspace/versions.lock` `versions.product`.
+- For every regular file with `files[].owner = "distribution"`, reject missing paths, any symlink component, directories or other non-regular files, and mismatched streaming SHA-256. The receipt does not hash itself.
+- `generated` and `workspace` entries record the installation baseline only. They may be created, modified, or removed at runtime; hash changes are not distribution drift.
+- If a file object or metadata changes during hashing, fail closed with a race error. The Doctor does not restore release files automatically.
 
-## 任务检查
+## Task checks
 
-- `requirements/<task-id>/task.toml` 可解析，任务 ID 与目录一致，状态只属于：`INBOX`、`SCOPED`、`PLANNED`、`READY`、`IMPLEMENTING`、`VERIFYING`、`DEV_FEEDBACK`、`TEST_FEEDBACK`、`QC_READY`、`RELEASE_READY`、`DONE`、`PAUSED`、`ARCHIVED`。
-- 模块角色只使用 `scope.edit/verify/reference/excluded`，同一模块不得重复出现。
-- `task.project_plugin_ref` 必须精确指向标准真相源 `project/plugin/project-plugin.json`；路径任一组件不得是符号链接，JSON 必须通过严格解析与项目插件 Schema 校验。
-- 任务角色不得宽于项目插件 `modules[].role`：`reference < verify < edit`。
-- 任务范围、授权、风险、门禁和证据路径应为机器可读；缺失时报告警告或按当前状态升级为错误。
-- `READY` 之后的任务必须已有确认范围和计划；`DONE` 必须已有验证证据；`ARCHIVED` 必须保留最终摘要和可追溯提交信息。
+- `requirements/<task-id>/task.toml` parses, its task ID matches the directory, and status belongs to `INBOX`, `SCOPED`, `PLANNED`, `READY`, `IMPLEMENTING`, `VERIFYING`, `DEV_FEEDBACK`, `TEST_FEEDBACK`, `QC_READY`, `RELEASE_READY`, `DONE`, `PAUSED`, or `ARCHIVED`.
+- Module roles use only `scope.edit/verify/reference/excluded`; a module cannot appear more than once.
+- `task.project_plugin_ref` points exactly to `project/plugin/project-plugin.json`; no path component is a symlink, and the JSON parses strictly and satisfies the project-plugin schema.
+- A task role cannot exceed project-plugin `modules[].role`: `reference < verify < edit`.
+- Task scope, authorization, risks, gates, and evidence paths are machine-readable. Missing data is a warning or an error depending on current state.
+- A task after `READY` has confirmed scope and a plan. `DONE` has verification evidence. `ARCHIVED` preserves a final summary and traceable commit information.
 
-## 诊断检查
+## Diagnostic checks
 
-- `unconfigured` 时只允许本地代码和已有文件分析，远端动作必须关闭。
-- `verified` 必须由交互问询配置，并使用 `default_action = "deny"`；凭证只能是引用。
-- 目标、Provider、授权和事实过期条件完整；引用文件存在且路径安全。
-- 诊断硬约束已进入实际生效的 AI 适配规则。
-- Provider 可用性、端点连通性和当前授权是三类事实，不能互相替代。
+- In `unconfigured`, only local code and existing-file analysis are allowed; remote actions are disabled.
+- A `verified` profile was configured interactively and uses `default_action = "deny"`; credentials are references only.
+- Target, Provider, authorization, and fact-expiration conditions are complete; referenced files exist and paths are safe.
+- Hard diagnostic constraints reached the effective AI adapter rules.
+- Provider availability, endpoint connectivity, and current authorization are three different facts and cannot substitute for each other.
 
-## 只读人工检查
+## Localization checks
 
-脚本无法独立证明以下事项，应在需要时补查：
+- Canonical control-plane content remains English and is not overwritten by locale output.
+- Locale directories use normalized identifiers and contain only workspace-owned or declared generated content.
+- Localized adapters preserve stable tokens and hard safety semantics, reference their canonical English source, and fail review when equivalence cannot be established.
+- Localization does not change lifecycle state, schemas, manifests, policies, commands, or stable IDs.
 
-- `AGENTS.md` 等生成适配器是否与结构化策略同源、是否已过期；
-- 项目模块、默认分支、构建、测试和高风险链路是否仍与代码一致；
-- Git 工作树、ahead/behind、远端 URL 和当前分支是否符合项目策略；
-- 环境事实是否在适用上下文和有效期内；
-- 升级候选是否来自不可变 Release，哈希或签名是否验证；
-- 任务证据是否真实对应当前提交和环境。
+## Read-only manual checks
 
-任何需要联网、刷新远端引用、运行服务或查询外部平台的验证都先说明动作并取得授权。
+The script cannot independently prove these matters; inspect them when applicable:
 
-## 修复优先级
+- whether generated adapters such as `AGENTS.md` share structured policy provenance and are current;
+- whether project modules, default branches, build, tests, and high-risk paths still match the code;
+- whether Git worktree state, ahead/behind, remote URLs, and the current branch comply with project policy;
+- whether environment facts remain valid in the applicable context and lifetime;
+- whether an upgrade candidate comes from an immutable Release and its hash or signature is valid;
+- whether task evidence corresponds to the current commit and environment;
+- whether localized safety language remains equivalent to canonical English.
 
-1. 先修安全默认值、解析失败、路径逃逸和角色越权。
-2. 再修生命周期门禁、所有权与生成文件漂移。
-3. 再补缺失事实、任务证据和 UI 元数据。
-4. 最后处理格式、说明性警告和可选维护项。
+Explain and obtain authorization before any check that accesses the network, refreshes remote references, runs a service, or queries an external platform.
 
-每次修复后重新执行全部检查，避免局部通过掩盖其他错误。
+## Repair priority
+
+1. Repair unsafe defaults, parse failures, path escape, and role escalation.
+2. Repair lifecycle gates, ownership, and generated-file drift.
+3. Add missing facts, task evidence, and UI metadata.
+4. Address formatting, informational warnings, and optional maintenance last.
+
+Run all checks after every repair so a local pass does not hide another error.

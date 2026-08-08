@@ -26,6 +26,7 @@ diagnostics = "diagnostics"
 knowledge = "knowledge"
 memory = "memory"
 feedback = "feedback"
+locales = "locales"
 
 [safety]
 remote_operations_default = "deny"

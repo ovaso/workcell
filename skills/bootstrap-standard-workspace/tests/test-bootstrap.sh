@@ -1,20 +1,20 @@
 #!/bin/sh
 set -eu
 
-# 输出测试失败信息并立即结束。
+# Print a test failure and exit immediately.
 fail() {
     echo "TEST FAILED: $*" >&2
     exit 1
 }
 
-# 仅清理由 mktemp 创建的隔离测试目录。
+# Clean only the isolated test directory created by mktemp.
 cleanup() {
     if [ -n "${test_root:-}" ] && [ -d "$test_root" ]; then
         rm -rf "$test_root"
     fi
 }
 
-# 判断测试目录是否仍为空，覆盖普通文件、隐藏文件和符号链接。
+# Determine whether the test directory is still empty, including hidden and symlink entries.
 is_empty_directory() {
     empty_check_directory=$1
     for empty_check_entry in \

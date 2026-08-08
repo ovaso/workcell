@@ -25,7 +25,12 @@ The Git repository is the editable source form. A packaged Skill directory is th
 
 ## Runtime requirements
 
-Use a POSIX-compatible `sh` plus standard file utilities (`awk`, `cmp`, `cp`, `diff`, `find`, `grep`, `sed`, and `sort`). Require either `sha256sum` or `shasum` for bundle integrity verification. Do not require Python, a package manager, network access, or a project-specific toolchain. Checking that these direct script dependencies exist is not host-environment initialization.
+Use either of these host-native execution profiles:
+
+- POSIX: a compatible `sh`, standard file utilities (`awk`, `cmp`, `cp`, `diff`, `find`, `grep`, `sed`, and `sort`), and either `sha256sum` or `shasum`.
+- Windows: Windows PowerShell 5.1 or PowerShell 7 using native filesystem, SHA-256, archive, and Reparse Point APIs.
+
+Every operator-facing `.sh` entry point has a `.ps1` counterpart with the same basename and contract. Bootstrap creation and validation do not require Python, Node.js, a package manager, network access, or a project-specific toolchain. Checking that the selected profile's direct dependencies exist is not host-environment initialization.
 
 ## Bundle metadata
 
@@ -53,11 +58,16 @@ Treat `bundle.toml` as release metadata, not as runtime project state. Keep it v
 
 ## Release checks
 
-Run, in order:
+Run the matching host profile in order:
 
 ```sh
 scripts/validate-bundle.sh
 tests/test-bootstrap.sh
+```
+
+```powershell
+& ./scripts/validate-bundle.ps1
+& ./tests/test-bootstrap.ps1
 ```
 
 Then run Skill Creator's `quick_validate.py` against the external Skill and every bundled runtime Skill. Stable releases must additionally be built from an immutable tag with a file manifest and SHA-256 checksums; those release-signing mechanics are outside the V0.1 Bootstrap runtime.

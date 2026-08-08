@@ -1,4 +1,4 @@
 interface:
   display_name: "Integrate Workspace Feedback"
-  short_description: "校验并汇总多个工作区的脱敏实践反馈，生成标准演进提案"
-  default_prompt: "使用 $integrate-workspace-feedback 校验已导入的反馈包并生成可审查的标准演进提案，不自动采纳变更。"
+  short_description: "Validate feedback and draft standard evolution proposals"
+  default_prompt: "Use $integrate-workspace-feedback to validate imported feedback and create a reviewable standard-evolution proposal without adopting changes automatically."

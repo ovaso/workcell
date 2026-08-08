@@ -1,13 +1,13 @@
 #!/bin/sh
 set -eu
 
-# 验证确定性运行时工具的实际输出符合仓库级 Schema。
+# Validate deterministic runtime-tool output against repository-level schemas.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
 asset_root="$repo_root/skills/bootstrap-standard-workspace/assets/workspace-v0.1"
 test_root=$(mktemp -d "${TMPDIR:-/tmp}/std-workspace-runtime-contracts.XXXXXX")
 
-# 清理运行时契约测试输出。
+# Clean runtime-contract test output.
 cleanup() {
   rm -rf "$test_root"
 }

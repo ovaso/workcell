@@ -1,6 +1,3 @@
 # Third-Party Notices
 
-当前 V0.1 产品骨架未复制第三方源码或二进制资产。
-
-随产品继续引入模板、脚本、Schema、图标或其他依赖时，必须在本目录登记其名称、版本、来源、许可证及是否被打包进入 Release。
-
+V0.1 currently contains no third-party source code or binary artifacts that require separate notices. Update this file before introducing any third-party component.

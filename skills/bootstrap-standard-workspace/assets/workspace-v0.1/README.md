@@ -1,21 +1,27 @@
 # AI Native Standard Workspace
 
-这是由 `bootstrap-standard-workspace` 创建的个人 AI 原生标准工作区。它提供通用工作流和事实协议，但尚未代表当前机器或任何项目的真实状态。
+This personal AI-native standard workspace was created by `bootstrap-standard-workspace`. It provides a generic workflow and fact protocols, but it does not yet represent the actual state of the current machine or any project.
 
-## 首次使用
+## First use
 
-1. 让 AI 读取 `AI_WORKSPACE.md` 与 `.ai-workspace/workspace.toml`。
-2. 使用 `initialize-standard-workspace` 完成初始化并建立宿主环境事实。
-3. 使用 `adapt-project-workspace` 接入代码、远端和项目规则。
-4. 如项目需要诊断能力，使用 `configure-project-diagnostics` 完成交互式配置。
-5. 使用 `standard-workspace-doctor` 检查事实、策略和结构；通过后才能进入 `READY`。
+1. Ask the AI to read `AI_WORKSPACE.md` and `.ai-workspace/workspace.toml`.
+2. Use `initialize-standard-workspace` to initialize the workspace and establish host environment facts.
+3. Use `adapt-project-workspace` to attach code, remotes, and project rules.
+4. If the project needs diagnostic capabilities, configure them interactively with `configure-project-diagnostics`.
+5. Use `standard-workspace-doctor` to inspect facts, policies, and structure. The workspace may enter `READY` only after it passes.
+6. Use `localize-standard-workspace` when reviewed documentation or AI guidance is needed in another language.
 
-## 重要边界
+Runtime deterministic tools written in Python use one cross-platform implementation. On Windows, invoke them with `py -3`, `python`, or another Python 3 command verified by `inspect-host-environment`; no POSIX shell is required inside the expanded workspace.
 
-- 初始状态为 `CREATED`，所有项目事实均未建立。
-- 本机存在某个命令，不代表允许用它访问外部系统。
-- 未配置诊断能力时，只允许分析本地代码和已有文件。
-- 结构化事实与策略是真相源，`AGENTS.md` 等平台文件是编译适配结果。
-- `requirements/` 保存任务档案，`workspaces/` 保存隔离执行目录，`mirror/` 保存只读参考镜像。
+## Important boundaries
 
-详细入口见 `AI_WORKSPACE.md`，标准协议见 `.ai-workspace/specs/`。
+- Initial state is `CREATED`; no project facts have been established.
+- The presence of a local command does not authorize its use against an external system.
+- When diagnostic capabilities are unconfigured, only local code and existing files may be analyzed.
+- Structured facts and policies are authoritative; platform files such as `AGENTS.md` are compiled adapters.
+- `requirements/` stores task records, `workspaces/` stores isolated execution directories, and `mirror/` stores read-only reference mirrors.
+- English is canonical. Localized content under `locales/` is a reviewed, non-authoritative reading aid.
+
+This workspace template is distributed under the terms in `LICENSE`.
+
+See `AI_WORKSPACE.md` for the detailed entry point and `.ai-workspace/specs/` for standard protocols.

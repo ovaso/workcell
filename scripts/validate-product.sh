@@ -1,14 +1,14 @@
 #!/bin/sh
 set -eu
 
-# 获取仓库与发行资产的确定路径。
+# Resolve deterministic repository and release-asset paths.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
 skill_root="$repo_root/skills/bootstrap-standard-workspace"
 asset_root="$skill_root/assets/workspace-v0.1"
 manifest="$asset_root/.ai-workspace/distribution.manifest"
 
-# 断言一个仓库相对路径存在。
+# Assert that a repository-relative path exists.
 require_path() {
   relative_path=$1
   if [ ! -e "$repo_root/$relative_path" ]; then
@@ -20,16 +20,35 @@ require_path() {
 for required_path in \
   README.md \
   LICENSE \
+  CONTRIBUTING.md \
+  CODE_OF_CONDUCT.md \
+  SECURITY.md \
+  SUPPORT.md \
+  GOVERNANCE.md \
   VERSION \
   product.toml \
+  .github/CODEOWNERS \
+  .github/dependabot.yml \
+  .github/workflows/ci.yml \
+  .github/workflows/codeql.yml \
+  .github/workflows/dependency-review.yml \
+  .github/workflows/release-candidate.yml \
   schemas/release-manifest.schema.json \
   schemas/examples/release-manifest.example.json \
   schemas/workspace.schema.json \
   specs/workspace-spec-v0.1.md \
+  scripts/build-bootstrap-assets.ps1 \
+  scripts/package-bootstrap-skill.ps1 \
+  scripts/validate-product.ps1 \
   skills/bootstrap-standard-workspace/SKILL.md \
   skills/bootstrap-standard-workspace/LICENSE \
+  skills/bootstrap-standard-workspace/scripts/create-workspace.ps1 \
+  skills/bootstrap-standard-workspace/scripts/plan-repair.ps1 \
+  skills/bootstrap-standard-workspace/scripts/validate-bundle.ps1 \
+  skills/bootstrap-standard-workspace/scripts/validate-workspace.ps1 \
   skills/bootstrap-standard-workspace/assets/workspace-v0.1/AI_WORKSPACE.md \
   skills/bootstrap-standard-workspace/assets/workspace-v0.1/AGENTS.md \
+  skills/bootstrap-standard-workspace/assets/workspace-v0.1/LICENSE \
   skills/bootstrap-standard-workspace/assets/workspace-v0.1/.ai-workspace/release-manifest.json \
   skills/bootstrap-standard-workspace/assets/workspace-v0.1/.ai-workspace/workspace.toml \
   skills/bootstrap-standard-workspace/assets/workspace-v0.1/.ai-workspace/versions.lock \
@@ -93,6 +112,7 @@ fi
 
 node "$repo_root/scripts/validate-schema-examples.mjs"
 python3 "$repo_root/scripts/validate-toml.py"
+PYTHONDONTWRITEBYTECODE=1 python3 "$repo_root/scripts/validate-github-config.py"
 release_version=$(tr -d '[:space:]' < "$repo_root/VERSION")
 PYTHONDONTWRITEBYTECODE=1 python3 "$repo_root/scripts/generate-release-manifest.py" \
   --asset-root "$asset_root" \
@@ -103,8 +123,8 @@ node "$repo_root/scripts/validate-json-instance.mjs" \
   "$asset_root/.ai-workspace/release-manifest.json" >/dev/null
 
 runtime_skill_count=$(find "$asset_root/skills" -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d '[:space:]')
-if [ "$runtime_skill_count" -ne 8 ]; then
-  printf 'Expected 8 runtime skills, found %s.\n' "$runtime_skill_count" >&2
+if [ "$runtime_skill_count" -ne 9 ]; then
+  printf 'Expected 9 runtime skills, found %s.\n' "$runtime_skill_count" >&2
   exit 1
 fi
 

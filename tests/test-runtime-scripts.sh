@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-# 执行工作区运行时 Skills 携带的确定性脚本单元测试。
+# Run unit tests for deterministic scripts carried by workspace runtime Skills.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
 skills_root="$repo_root/skills/bootstrap-standard-workspace/assets/workspace-v0.1/skills"

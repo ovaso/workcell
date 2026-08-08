@@ -1,5 +1,5 @@
-# 演进协议
+# Evolution Protocol
 
-原始报告只放入 `evolution/inbox/`，该目录不得提交。导入脚本会生成 `evolution/proposals/` 下不可覆盖的 Markdown 提案，且不会复制原始项目材料。
+Put raw reports only in `evolution/inbox/`, which must not be committed. The import script creates non-overwriting Markdown proposals under `evolution/proposals/` without copying original project material.
 
-采纳前，维护者必须聚合独立报告、评估反例和兼容性，并明确变更属于规范、Schema、运行时 Skill、Asset，还是不应进入标准的项目插件/本地实践。采纳后同步 Assets，执行全量测试和升级影响预览，再更新版本与发行记录。
+Before adoption, maintainers aggregate independent reports, assess counterexamples and compatibility, and decide whether a change belongs in a specification, schema, runtime Skill, asset, project plugin, or local practice. After adoption, synchronize assets, run the complete test suite and an upgrade-impact preview, then update versions and release records.

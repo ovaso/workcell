@@ -1,33 +1,33 @@
-# 产品愿景
+# Product Vision
 
-## 定义
+## Definition
 
-AI Native Standard Workspace 是一套 AI 平台尽量无关、全文本、版本化、可分发、可升级的个人 AI 开发工作区标准。V0.1 的确定性引导脚本面向 POSIX `sh` 宿主；宿主操作系统覆盖范围与 AI 平台兼容性是两条独立的产品维度。
+AI Native Standard Workspace is a personal AI development workspace standard that is as platform-neutral as possible, text-only, versioned, distributable, and upgradable. The deterministic V0.1 bootstrap layer supports POSIX `sh` and Windows PowerShell 5.1 or PowerShell 7; host operating-system coverage and AI-platform compatibility remain independent product dimensions.
 
-其核心交付物不是固定项目压缩包，也不是绑定某个 AI 平台的 Plugin，而是自包含 Bootstrap Skill：AI 读取其中的协议、脚本、规范与 Assets，将一个标准工作区展开到空目录。工作区随后通过自身携带的 Skills 建立环境、项目、诊断和任务事实。
+The primary deliverable is not a fixed project archive or a plugin bound to one AI platform. It is a self-contained Bootstrap Skill: an AI reads its protocols, scripts, specifications, and assets, then expands a standard workspace into an empty directory. The workspace uses its own Skills to establish environment, project, diagnostic, and task facts.
 
-## 目标
+## Goals
 
-- 让新工作区拥有一致的目录、事实模型、安全边界和生命周期。
-- 让 AI 在执行任务前知道当前机器能做什么、项目是什么、允许做什么以及下一道门禁是什么。
-- 让不同项目通过项目插件进行适配，而不污染通用工作流内核。
-- 让诊断、Review、发布等能力以项目能力插件组合。
-- 让规范、模板、Skills 和 Schema 可通过唯一代码仓库演进。
-- 让生成的工作区在展开后能够自托管，而不持续依赖外部安装器。
+- Give new workspaces a consistent directory structure, fact model, security boundary, and lifecycle.
+- Ensure that, before executing a task, an AI knows what the current machine can do, what the project is, what actions are allowed, and which gate comes next.
+- Adapt different projects through project plugins without contaminating the generic workflow kernel.
+- Compose diagnostics, review, release, and similar functionality as project capability plugins.
+- Evolve specifications, templates, Skills, and schemas through one canonical repository.
+- Let an expanded workspace self-host without an ongoing dependency on an external installer.
 
-## 非目标
+## Non-goals
 
-- 不建设企业审批、工单或组织治理平台。
-- 不把任何具体业务项目的规则写入通用内核。
-- 不默认自动安装工具、修改系统配置或访问远端环境。
-- 不让历史 memory 覆盖当前验证事实。
-- 不让模型每次自由手写目录、Manifest 和迁移结果。
+- Build an enterprise approval, ticketing, or organizational-governance platform.
+- Put the rules of any specific business project into the generic kernel.
+- Install tools, modify system configuration, or access remote environments automatically.
+- Let historical memory override currently verified facts.
+- Let the model freely invent directories, manifests, or migration results on every run.
 
-## AI 原生原则
+## AI-native principle
 
 ```text
-AI：理解、问询、分析、选择、编排和解释
-工具：复制、扫描、校验、编译、迁移、比较和回滚
+AI: understand, ask, analyze, choose, orchestrate, and explain
+tools: copy, inspect, validate, compile, migrate, compare, and roll back
 ```
 
-AI 原生并不等于提示词驱动一切，而是让 AI 成为标准流程的决策和交互入口，同时把脆弱操作交给确定性工具。
+AI-native does not mean driving everything with prompts. The AI is the decision and interaction entry point for a standard process, while fragile operations remain in deterministic tools.

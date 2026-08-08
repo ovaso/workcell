@@ -1,4 +1,4 @@
 interface:
   display_name: "Start Standard Task"
-  short_description: "创建机器可读任务档案、标准生命周期、模块角色与实施门禁"
-  default_prompt: "使用 $start-standard-task 将这个请求建立为具有生命周期、模块角色、授权和门禁的标准任务。"
+  short_description: "Create task records, module roles, and lifecycle gates"
+  default_prompt: "Use $start-standard-task to create a standard task for this request with lifecycle, module roles, authorization, and gates."

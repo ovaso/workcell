@@ -23,8 +23,8 @@ Read [references/operation-contract.md](references/operation-contract.md) before
 ### Create
 
 1. Resolve an explicit destination path and confirm the request authorizes creating it.
-2. Run `scripts/validate-bundle.sh`.
-3. Run `scripts/create-workspace.sh <target>`.
+2. Select the host-native entry point: use `scripts/*.sh` on POSIX hosts and `scripts/*.ps1` from Windows PowerShell 5.1 or PowerShell 7.
+3. Run `scripts/validate-bundle.sh` followed by `scripts/create-workspace.sh <target>`, or run `& ./scripts/validate-bundle.ps1` followed by `& ./scripts/create-workspace.ps1 <target>`.
 4. Report that the workspace is in `CREATED`, not `READY`.
 5. Direct the next AI session to read `AI_WORKSPACE.md` and run the workspace initialization Skill.
 
@@ -32,13 +32,13 @@ Never use the create operation to merge into, seed, or overwrite a non-empty dir
 
 ### Validate
 
-- Run `scripts/validate-bundle.sh` to validate this installed Skill and its release assets.
-- Run `scripts/validate-workspace.sh <target>` to validate an expanded workspace against this exact bundle version.
+- Run `scripts/validate-bundle.sh` or `& ./scripts/validate-bundle.ps1` to validate this installed Skill and its release assets.
+- Run `scripts/validate-workspace.sh <target>` or `& ./scripts/validate-workspace.ps1 <target>` to validate an expanded workspace against this exact bundle version.
 - Keep validation read-only. A successful structural validation does not grant operational permissions or prove that the workspace is `READY`.
 
 ### Repair
 
-1. Run `scripts/plan-repair.sh <target>` and inspect every reported path.
+1. Run `scripts/plan-repair.sh <target>` or `& ./scripts/plan-repair.ps1 <target>` and inspect every reported path.
 2. Classify the drift using `.ai-workspace/distribution.manifest` and the file-ownership rules.
 3. Present the exact replacements and backup location to the user.
 4. Obtain explicit approval before writing.

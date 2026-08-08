@@ -1,139 +1,139 @@
-# 会话总结：AI 原生标准工作区产品构想
+# Session Summary: AI Native Standard Workspace Product Concept
 
-## 1. 起点
+## 1. Starting point
 
-设计从对 AI 辅助软件工作流的共性问题分析开始：多仓库、需求档案、隔离工作区、计划、记忆、日志与诊断资料往往分散在不同载体中，状态主要隐含在 Markdown、Git 和个人记忆中，缺少统一控制面。
+The design began with recurring problems in AI-assisted software workflows. Multi-repository code, requirement records, isolated workspaces, plans, memory, logs, and diagnostic material are often scattered across different media. State is mostly implicit in Markdown, Git, and personal memory, with no unified control plane.
 
-产品目标因此被确定为：建设一套可跨项目使用、可持续升级的个人 AI 标准工作流，而非为任何既有项目定制工作区。
+The product objective therefore became a reusable, continuously upgradable personal AI workflow standard rather than a workspace customized for any existing project.
 
-## 2. 最终产品定义
+## 2. Final product definition
 
-产品最终被定义为：
+The product was ultimately defined as:
 
-> 一个版本化、自包含、全文本、AI 平台尽量无关的 Bootstrap Skill。它既是 AI 可读的安装协议，也是标准工作区的发行介质。AI 将其中的 Assets 展开到空目录；展开后的工作区携带自己的规范、Skills、工具、Schema 和事实管理能力，并通过初始化流程建立宿主环境、项目和诊断事实。V0.1 的确定性脚本以 POSIX `sh` 为宿主基线，其他宿主平台另行扩展。
+> A versioned, self-contained, text-only Bootstrap Skill that is as AI-platform-neutral as possible. It is both an AI-readable installation protocol and the distribution medium for a standard workspace. An AI expands its assets into an empty directory. The expanded workspace carries its own specifications, Skills, tools, schemas, and fact-management capabilities, then establishes host environment, project, and diagnostic facts through initialization. V0.1 deterministic scripts provide matching POSIX `sh` and PowerShell execution profiles.
 
-推荐工作模型：
+Recommended operating model:
 
 ```text
-唯一源码仓库
+single canonical source repository
   -> Tag / Release
-  -> Bootstrap Skill 目录或 ZIP
-  -> 展开标准工作区
-  -> 初始化宿主环境
-  -> 接入并适配项目
-  -> 配置诊断能力
+  -> Bootstrap Skill directory or ZIP
+  -> expand standard workspace
+  -> initialize host environment
+  -> attach and adapt project
+  -> configure diagnostic capabilities
   -> Doctor
   -> READY
 ```
 
-## 3. 核心分层
+## 3. Core layers
 
-一次任务的有效执行能力由以下部分组合：
-
-```text
-通用工作流内核
-+ 当前机器能力
-+ 通用技术适配器
-+ 项目插件
-+ 项目实例事实
-+ 项目能力插件
-+ 当前任务状态
-```
-
-### 3.1 Bootstrap 发行层
-
-负责创建、校验、修复和升级。生产标准、唯一仓库和 Release 流程稳定后，再增加安全自更新。Bootstrap 是安装介质，不承担项目日常开发。
-
-### 3.2 标准工作流内核
-
-不认识具体项目，统一定义工作区生命周期、任务生命周期、工作区隔离、上下文装配、证据模型、安全约束、多代理所有权及 Doctor/Repair/Upgrade 等能力。
-
-### 3.3 宿主环境事实层
-
-描述当前机器在当前执行上下文中实际能做什么。首期事实范围为：
-
-- 已安装命令；
-- 工具链和版本管理器；
-- 环境变量；
-- 网络环境和允许目标的可达性。
-
-### 3.4 通用技术适配器
-
-承载 Git、Maven、Spring Boot、Node、SQL、Docker、Kubernetes 等跨项目能力。项目插件只组合和配置，不复制通用实现。
-
-### 3.5 项目插件
-
-保存项目稳定差异，包括属性、仓库、模块、依赖、分支、构建、测试、Review、发布、高风险链路、项目知识和项目专属 Skills。
-
-项目插件是标准工作区内部协议，不等同于 Codex Plugin。
-
-### 3.6 项目实例
-
-保存当前机器上的动态绑定，包括本地路径、远端、环境变量引用、镜像、工作区和 Git 实时状态。
-
-### 3.7 项目能力插件
-
-诊断是第一种需要正式定义的项目能力插件。未来还可扩展 Review、发布、迁移、性能测试和安全检查。
-
-### 3.8 任务实例
-
-需求、缺陷、诊断和 Review 都是任务。任务保存类型、状态、当前计划、模块角色、下一步、门禁、风险、工作流版本、项目插件版本、环境快照和执行证据。
-
-## 4. 关键方案修正
-
-### 4.1 保持通用内核
-
-通用内核不包含任何项目的事实、术语、目录约定或运行假设。具体项目只能通过独立的项目插件、项目实例和集成测试接入。
-
-### 4.2 Codex Plugin 不作为产品本体
-
-Codex Plugin 绑定特定平台，只能作为未来可选安装渠道。产品本体采用平台尽量无关的 Bootstrap Skill；不支持 Skill 自动发现的 AI 也可显式读取 `SKILL.md`。
-
-### 4.3 不建设单一巨型 Skill
-
-外部 Bootstrap Skill 只负责 `create / validate / repair / upgrade`。展开后的工作区包含多个窄职责运行时 Skills，日常工作不持续依赖外部 Bootstrap。
-
-### 4.4 ZIP 只是不可变发行物
-
-静态 ZIP 不能承担初始化、适配和升级。正确组合是 Git 源码、Bootstrap Skill、版本化 Assets、Specs/Schemas、确定性脚本、Migration 和 ZIP Release。
-
-### 4.5 AGENTS 不是唯一真相源
-
-结构化策略和事实是真相源；`AI_WORKSPACE.md` 是平台无关入口；`AGENTS.md` 等是面向具体 AI 的编译产物。安全硬约束必须进入 AI 有效指令文件。
-
-### 4.6 诊断不等于服务器日志
-
-诊断被重新定义为收集、关联和分析某个软件目标运行事实的能力。目标包括本地 CLI、桌面客户端、本地进程、代码库、批处理、裸机、容器、Kubernetes、分布式系统和 Observability 系统。
-
-### 4.7 能力不等于授权
-
-某项操作可执行必须满足：
+The effective capability for a task is composed from:
 
 ```text
-宿主环境具备能力
-AND Provider 支持
-AND 项目策略允许
-AND 当前任务获得授权
+generic workflow kernel
++ current machine capabilities
++ generic technology adapters
++ project plugin
++ project instance facts
++ project capability plugins
++ current task state
 ```
 
-机器存在 SSH 命令不能推导出允许登录服务器。
+### 3.1 Bootstrap distribution layer
 
-## 5. Bootstrap 与自托管
+Responsible for creation, validation, repair, and upgrade. Secure self-update is added only after production standards, the canonical repository, and the Release process are stable. Bootstrap is installation media and does not perform daily project work.
 
-Bootstrap Skill 是种子包：
+### 3.2 Standard workflow kernel
+
+The kernel knows no specific project. It defines workspace and task lifecycles, workspace isolation, context assembly, the evidence model, security constraints, multi-agent ownership, and Doctor/Repair/Upgrade capabilities.
+
+### 3.3 Host environment fact layer
+
+Describes what the current machine can actually do in the current execution context. Initial facts cover:
+
+- installed commands;
+- toolchains and version managers;
+- environment variables;
+- network environment and reachability of approved targets.
+
+### 3.4 Generic technology adapters
+
+Provide cross-project support for Git, Maven, Spring Boot, Node, SQL, Docker, Kubernetes, and similar technologies. Project plugins compose and configure these adapters rather than copying generic implementations.
+
+### 3.5 Project plugin
+
+Stores stable project differences, including identity, repositories, modules, dependencies, branches, build, tests, review, release, high-risk paths, project knowledge, and project-specific Skills.
+
+A project plugin is an internal standard-workspace protocol, not a Codex Plugin.
+
+### 3.6 Project instance
+
+Stores dynamic bindings on the current machine, including local paths, remotes, environment-variable references, mirrors, workspaces, and live Git state.
+
+### 3.7 Project capability plugins
+
+Diagnostics are the first project capability that requires a formal plugin definition. Future capabilities may cover review, release, migration, performance tests, and security checks.
+
+### 3.8 Task instance
+
+Requirements, defects, diagnostics, and reviews are all tasks. A task stores type, status, current plan, module roles, next action, gates, risks, workflow version, project-plugin version, environment snapshot, and execution evidence.
+
+## 4. Important design corrections
+
+### 4.1 Keep the generic kernel generic
+
+The generic kernel contains no project facts, terms, directory conventions, or runtime assumptions. A specific project can enter only through a separate project plugin, project instance, and integration tests.
+
+### 4.2 Do not make a Codex Plugin the product
+
+A Codex Plugin is platform-specific and can only be an optional future installation channel. The product is a Bootstrap Skill that is as platform-neutral as possible. An AI without automatic Skill discovery can still read `SKILL.md` explicitly.
+
+### 4.3 Do not build one giant Skill
+
+The external Bootstrap Skill handles only `create / validate / repair / upgrade`. The expanded workspace contains multiple narrow runtime Skills, so daily work does not continuously depend on the external Bootstrap.
+
+### 4.4 A ZIP is only an immutable distribution artifact
+
+A static ZIP cannot perform initialization, adaptation, or upgrades by itself. The complete system combines a Git source repository, Bootstrap Skill, versioned assets, specifications and schemas, deterministic scripts, migrations, and a ZIP Release.
+
+### 4.5 AGENTS is not the sole source of truth
+
+Structured policy and fact files are authoritative. `AI_WORKSPACE.md` is the platform-neutral entry point. `AGENTS.md` and similar files are compiled adapters for specific AIs. Hard safety constraints must reach the effective AI instruction file.
+
+### 4.6 Diagnostics are not synonymous with server logs
+
+Diagnostics collect, correlate, and analyze runtime facts for a software target. Targets include local CLIs, desktop clients, local processes, codebases, batch jobs, bare-metal services, containers, Kubernetes, distributed systems, and observability systems.
+
+### 4.7 Capability is not authorization
+
+An action is executable only when:
 
 ```text
-Bootstrap Skill = 安装介质
-Standard Workspace = 安装后的运行系统
-Workspace Skills = 内置系统工具
-Project Plugin = 项目驱动和适配
+the host environment has the capability
+AND the Provider supports it
+AND project policy permits it
+AND the current task authorizes it
 ```
 
-Bootstrap 展开过程不能假设已经存在 Node、Python 或 mise。首期应支持 POSIX Shell、AI 文件工具直接复制和人工解压回退；未来增加 PowerShell或独立引导器。
+The presence of an SSH command does not imply permission to log in to a server.
 
-Bootstrap 默认不联网、不安装软件、不修改 Shell、只写明确指定的空目录、不覆盖已有内容。
+## 5. Bootstrap and self-hosting
 
-## 6. 工作区生命周期
+The Bootstrap Skill is a seed package:
+
+```text
+Bootstrap Skill = installation medium
+Standard Workspace = installed runtime system
+Workspace Skills = built-in system tools
+Project Plugin = project driver and adapter
+```
+
+Bootstrap expansion must not assume Node, Python, or mise is already present. The first release supports POSIX shell, Windows PowerShell 5.1 or PowerShell 7, direct copying through AI file tools, and manual archive extraction as a fallback. A future standalone bootstrapper remains optional.
+
+Bootstrap does not access the network, install software, modify the shell, write outside an explicitly specified empty directory, or overwrite existing content by default.
+
+## 6. Workspace lifecycle
 
 ```text
 EMPTY
@@ -141,35 +141,35 @@ EMPTY
   -> ENVIRONMENT_INITIALIZED
   -> PROJECT_ATTACHED
   -> PROJECT_ADAPTED
-  -> DIAGNOSTICS_CONFIGURED（可选）
+  -> DIAGNOSTICS_CONFIGURED (optional)
   -> READY
 ```
 
-### 6.1 展开
+### 6.1 Expansion
 
-复制标准 Assets，写入发行来源和版本，校验结构，不扫描环境、不接入项目。
+Copy standard assets, record the release source and version, and validate structure. Do not inspect the environment or attach a project.
 
-### 6.2 初始化环境
+### 6.2 Environment initialization
 
-发现命令、工具链、变量和网络，归一化为能力，生成首个快照和优化建议。
+Discover commands, toolchains, variables, and network targets; normalize them into capabilities; create the first snapshot and optimization recommendations.
 
-### 6.3 接入项目
+### 6.3 Project attachment
 
-确认单仓或多仓，引入只读主线镜像，登记远端、已有规范、文档、知识和需求资料。
+Confirm a single-repository or multi-repository model, attach a read-only mainline mirror, and register remotes, existing rules, documentation, knowledge, and requirement material.
 
-### 6.4 项目适配
+### 6.4 Project adaptation
 
-通过问询、代码发现和验证生成项目插件，建立模块、分支、构建、测试、Review、发布和风险模型。
+Generate a project plugin through questionnaires, code discovery, and validation. Establish module, branch, build, test, review, release, and risk models.
 
-### 6.5 诊断配置
+### 6.5 Diagnostic configuration
 
-需要时交互确认安全边界、目标类型、部署模型、Observability、业务标识和采集流程。未配置时所有远端诊断默认禁止。
+When needed, interactively confirm security boundaries, target types, deployment model, observability, business identifiers, and collection workflow. All remote diagnostics remain denied until configured.
 
-### 6.6 最终校验
+### 6.6 Final validation
 
-环境事实、项目插件、AI 规则、目录、策略和安全门禁全部通过后才能进入 READY。
+The workspace may enter `READY` only after environment facts, the project plugin, AI rules, directories, policies, and security gates all pass.
 
-## 7. 任务生命周期
+## 7. Task lifecycle
 
 ```text
 INBOX
@@ -185,51 +185,51 @@ INBOX
   -> ARCHIVED
 ```
 
-允许活动状态显式进入 PAUSED。发现和反馈修复作为状态内动作，不额外发明状态名。项目插件可以增加转换门禁，但不应发明互不兼容的项目状态机。
+An active state may explicitly enter `PAUSED`. Discovery and feedback repair are actions within states and do not require extra state names. A project plugin may add transition gates but should not invent an incompatible project-specific state machine.
 
-## 8. 环境事实模型
+## 8. Environment fact model
 
-必须区分：
-
-```text
-声明：项目要求 Java 17
-事实：当前上下文解析到 Java 17
-能力：当前上下文具备 JVM Runtime >= 17
-建议：使用 mise 固定项目工具链
-```
-
-种子包可以携带如何识别工具的知识，不能预置当前机器已安装某工具的事实。
-
-环境变量按 `public / private / secret / unknown` 分类，未知默认按 secret。V0.1 不持久化变量原始值。网络只探测允许清单中的目标并记录 TTL，不扫描未知地址或端口。
-
-事实必须带执行上下文，例如系统、登录 Shell、非交互 Shell、AI 执行环境、工作区、项目或任务。
-
-## 9. 通用事实模型
-
-事实类型包括：
-
-- `declared`：用户或项目明确声明；
-- `discovered`：从 Git、文件或配置发现；
-- `derived`：由代码和事实推导；
-- `runtime`：当前动态状态。
-
-通用元数据包括来源、观测时间、可信度、上下文、过期时间、取代关系和敏感级别。
-
-建议优先级：
+Distinguish:
 
 ```text
-安全禁止事项
-> 用户确认的权限和流程
-> 当前运行或端点验证
-> 当前项目配置
-> 项目插件声明
-> 代码推导
-> 历史计划、文档和 memory
+declaration: the project requires Java 17
+fact: the current context resolves Java 17
+capability: the current context provides JVM Runtime >= 17
+recommendation: pin the project toolchain with mise
 ```
 
-## 10. 项目插件
+The seed package may include knowledge about recognizing tools but cannot predeclare that a tool is installed on the current machine.
 
-项目插件统一扩展点建议为：
+Classify environment variables as `public / private / secret / unknown`, treating unknown as secret. V0.1 does not persist raw values. Probe only allowlisted network targets, record a TTL, and do not scan unknown addresses or ports.
+
+Facts include an execution context such as system, login shell, non-interactive shell, AI execution environment, workspace, project, or task.
+
+## 9. Generic fact model
+
+Fact source types include:
+
+- `declared`: explicitly stated by a user or project;
+- `discovered`: found in Git, files, or configuration;
+- `derived`: inferred from code and other facts;
+- `runtime`: current dynamic state.
+
+Common metadata includes source, observation time, confidence, context, expiration, supersession, and sensitivity.
+
+Recommended precedence:
+
+```text
+hard safety prohibitions
+> user-confirmed permissions and workflow
+> current runtime or endpoint verification
+> current project configuration
+> project-plugin declarations
+> code-derived conclusions
+> historical plans, documentation, and memory
+```
+
+## 10. Project plugin
+
+Recommended project-plugin extension points:
 
 ```text
 discover
@@ -244,80 +244,82 @@ release
 close
 ```
 
-模块角色统一为：
+Standard module roles:
 
-- `edit`：允许修改；
-- `verify`：只做契约、编译和链路验证；
-- `reference`：只读参考。
+- `edit`: modification allowed;
+- `verify`: contract, compilation, and integration-path verification only;
+- `reference`: read-only reference.
 
-这也是未来多代理并行的写入边界。
+These roles also define future multi-agent write boundaries.
 
-## 11. 诊断能力插件
+## 11. Diagnostic capability plugin
 
-诊断配置必须经过交互式问询，并结合用户声明、代码/配置发现和经授权端点验证。
+Diagnostic configuration requires an interactive questionnaire and combines user declarations, code/configuration discovery, and authorized endpoint verification.
 
-问询顺序：
+Question order:
 
-1. 绝对安全边界；
-2. 诊断目标类型；
-3. 部署和环境模型；
-4. Observability 能力；
-5. 业务关联标识；
-6. 采集、复现、保存、脱敏和保留流程。
+1. absolute security boundaries;
+2. diagnostic target type;
+3. deployment and environment model;
+4. observability capabilities;
+5. business correlation identifiers;
+6. collection, reproduction, storage, redaction, and retention workflow.
 
-诊断未配置时，只允许本地代码和已有文件分析。禁止远端动作、未登记端点和未知 Provider。
+When diagnostics are unconfigured, only local code and existing files may be analyzed. Remote actions, unregistered endpoints, and unknown Providers are prohibited.
 
-诊断结构化策略是真相源，禁止登录、禁止远程 Shell、只读下载、凭证保护等硬约束要实时编译进入项目级 AGENTS。
+Structured diagnostic policy is authoritative. Hard constraints such as prohibited login, prohibited remote shell, read-only download, credential protection, and endpoint allowlists are compiled into project-level AGENTS adapters.
 
-项目专属诊断资源应作为项目能力插件注册，而不是通用内核目录。
+Project-specific diagnostic resources register as project capability plugins rather than entering generic kernel directories.
 
-## 12. 文件所有权与升级
+## 12. File ownership and upgrade
 
-所有文件必须归类为：
+Every file is classified as:
 
-- `distribution`：发行版维护，可由 Migration 替换；
-- `generated`：由事实重新编译；
-- `workspace`：用户、项目和任务维护，升级必须保留。
+- `distribution`: release-maintained and replaceable by a Migration;
+- `generated`: recompiled from facts;
+- `workspace`: maintained by users, projects, and tasks and preserved by upgrades.
 
-工作区升级流程：
+Workspace upgrade flow:
 
 ```text
-读取版本
--> 选择 Migration
--> 展示差异和文件影响
--> 用户确认
--> 创建可恢复快照
--> 执行迁移
--> 重新编译生成文件
--> Doctor
--> 成功提交或失败回滚
+read versions
+-> select Migration
+-> show differences and file impact
+-> obtain user confirmation
+-> create a recoverable snapshot
+-> apply migration
+-> recompile generated files
+-> run Doctor
+-> commit success or roll back failure
 ```
 
-## 13. 分发与自更新
+## 13. Distribution and self-update
 
-正式发行模型：
+Formal release model:
 
 ```text
-唯一 Git 仓库
--> 稳定 Tag
--> 全量校验
--> 文件清单和哈希
--> 不可变 Release
+single canonical Git repository
+-> stable tag
+-> complete validation
+-> file manifest and hashes
+-> immutable Release
 -> Bootstrap Skill ZIP
 ```
 
-至少独立维护产品版本、工作区 Schema、环境事实 Schema、项目插件 API、诊断能力 API 和任务 Schema。
+Maintain product version, workspace schema, environment-fact schema, project-plugin API, diagnostic-capability API, and task schema independently.
 
-自更新延后到唯一仓库、正式 Release 和完整验证机制稳定后。默认允许自动检查，可配置自动下载，禁止默认自动应用；只允许升级到正式 Release，不能用 `main` 最新提交覆盖。
+Self-update is deferred until the canonical repository, formal Releases, and complete verification mechanisms are stable. Automatic checks may be enabled by default, automatic downloads may be configurable, and automatic application remains prohibited by default. Upgrade only to a formal Release; never overwrite from the latest `main` commit.
 
-## 14. 跨 AI 策略
+## 14. Cross-AI strategy
 
-标准本体由 `SKILL.md / bundle.toml / AI_WORKSPACE.md / references / schemas / assets / scripts / migrations` 构成。AGENTS、CLAUDE 等是派生适配文件。
+The standard consists of `SKILL.md / bundle.toml / AI_WORKSPACE.md / references / schemas / assets / scripts / migrations`. AGENTS, CLAUDE, and similar files are derived adapters.
 
-支持 Skill 的 AI 可自动触发；不支持的 AI 可以显式读取 `SKILL.md`。Codex Plugin 可以包装同一 Skill，但不能成为规范依赖。
+An AI with Skill support may trigger Skills automatically. Other AIs can read `SKILL.md` explicitly. A Codex Plugin may package the same Skill but cannot become a specification dependency.
 
-## 15. 当前实施边界
+English is canonical. Localized documentation and adapters are generated through an explicit localization Skill, retain links to their English sources, and never change stable identifiers or policy semantics.
 
-V0.1 只实现产品骨架、Bootstrap、基础事实/插件/诊断协议、标准模板、核心 Skills 和校验。完整 Migration、自更新、跨平台引导器、远端诊断和项目自动开发不在本轮范围。
+## 15. Current implementation boundary
 
-本总结记录产品决策，不代表任何当前机器、项目、端点或工具事实已经通过初始化验证。
+V0.1 implements the product skeleton, Bootstrap, foundational fact/plugin/diagnostic protocols, standard template, core Skills, and validation. Complete migrations, self-update, cross-platform bootstrappers, remote diagnostics, and automatic project development are outside this release.
+
+This summary records product decisions. It does not assert that facts about any current machine, project, endpoint, or tool have been validated through initialization.

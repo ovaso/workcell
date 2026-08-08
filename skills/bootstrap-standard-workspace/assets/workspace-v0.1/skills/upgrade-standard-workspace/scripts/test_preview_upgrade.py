@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""验证升级预览对用户内容和发行冲突的保护。"""
+"""Validate upgrade-preview protection for user content and release conflicts."""
 
 from __future__ import annotations
 
@@ -13,16 +13,16 @@ from preview_upgrade import UpgradePreviewError, preview_upgrade
 
 
 def checksum(content: bytes) -> str:
-    """计算测试清单使用的 SHA-256。"""
+    """Compute a SHA-256 used by test manifests."""
 
     return hashlib.sha256(content).hexdigest()
 
 
 class UpgradePreviewTest(unittest.TestCase):
-    """覆盖替换、保护、冲突、删除和路径逃逸场景。"""
+    """Cover replace, preserve, conflict, remove, and path-escape cases."""
 
     def write_manifest(self, path: Path, version: str, entries: list[dict[str, str]]) -> None:
-        """写入一个最小测试发行清单。"""
+        """Write a minimal test Release manifest."""
 
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(
@@ -31,7 +31,7 @@ class UpgradePreviewTest(unittest.TestCase):
         )
 
     def prepare(self, root: Path, old: bytes, new: bytes) -> tuple[Path, Path, Path, Path]:
-        """创建包含单个发行文件的当前和候选目录。"""
+        """Create current and candidate roots with one release file."""
 
         workspace = root / "workspace"
         candidate = root / "candidate"
@@ -56,7 +56,7 @@ class UpgradePreviewTest(unittest.TestCase):
         return workspace, current_manifest, candidate, candidate_manifest
 
     def test_unmodified_distribution_file_can_be_replaced(self) -> None:
-        """确认未修改发行文件生成安全替换动作。"""
+        """Confirm an unmodified release file produces a safe replacement."""
 
         with tempfile.TemporaryDirectory() as directory:
             paths = self.prepare(Path(directory), b"old", b"new")
@@ -67,7 +67,7 @@ class UpgradePreviewTest(unittest.TestCase):
             self.assertEqual(".ai-workspace/release-manifest.json", result["actions"][-1]["path"])
 
     def test_locally_modified_distribution_file_conflicts(self) -> None:
-        """确认本地修改不会被候选发行静默覆盖。"""
+        """Ensure a candidate Release does not silently overwrite local changes."""
 
         with tempfile.TemporaryDirectory() as directory:
             paths = self.prepare(Path(directory), b"old", b"new")
@@ -77,7 +77,7 @@ class UpgradePreviewTest(unittest.TestCase):
             self.assertEqual("conflict", result["actions"][0]["action"])
 
     def test_workspace_owned_file_is_preserved(self) -> None:
-        """确认工作区所有权文件只生成保留动作。"""
+        """Confirm a workspace-owned file produces only a preserve action."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -91,7 +91,7 @@ class UpgradePreviewTest(unittest.TestCase):
             self.assertEqual("preserve", result["actions"][0]["action"])
 
     def test_removed_unmodified_distribution_file_can_be_planned(self) -> None:
-        """确认候选删除只作用于未修改的发行文件。"""
+        """Confirm candidate removal affects only an unmodified release file."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -109,7 +109,7 @@ class UpgradePreviewTest(unittest.TestCase):
             self.assertEqual("remove", runtime_action["action"])
 
     def test_parent_path_escape_is_rejected(self) -> None:
-        """确认清单不能通过父级路径逃出工作区。"""
+        """Ensure a manifest cannot escape the workspace through a parent path."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -123,7 +123,7 @@ class UpgradePreviewTest(unittest.TestCase):
                 preview_upgrade(*paths)
 
     def test_candidate_extra_file_is_rejected(self) -> None:
-        """确认候选发行不能携带完整性清单未覆盖的普通文件。"""
+        """Ensure a candidate cannot contain regular files omitted from its manifest."""
 
         with tempfile.TemporaryDirectory() as directory:
             paths = self.prepare(Path(directory), b"old", b"new")
@@ -132,7 +132,7 @@ class UpgradePreviewTest(unittest.TestCase):
                 preview_upgrade(*paths)
 
     def test_manifest_cannot_hash_itself(self) -> None:
-        """确认安装收据路径不能出现在自身 files 数组中。"""
+        """Ensure the installed receipt path cannot appear in its own files array."""
 
         with tempfile.TemporaryDirectory() as directory:
             paths = self.prepare(Path(directory), b"old", b"new")
@@ -151,7 +151,7 @@ class UpgradePreviewTest(unittest.TestCase):
                 preview_upgrade(*paths)
 
     def test_schema_version_is_required(self) -> None:
-        """确认升级预览拒绝旧式无 schema_version 清单。"""
+        """Ensure the preview rejects a legacy manifest without schema_version."""
 
         with tempfile.TemporaryDirectory() as directory:
             paths = self.prepare(Path(directory), b"old", b"new")

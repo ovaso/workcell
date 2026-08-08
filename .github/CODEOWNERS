@@ -1,0 +1,12 @@
+# Default ownership
+* @ovaso
+
+# Security, release, and source-of-truth surfaces
+/.github/ @ovaso
+/LICENSE @ovaso
+/SECURITY.md @ovaso
+/GOVERNANCE.md @ovaso
+/product.toml @ovaso
+/schemas/ @ovaso
+/specs/ @ovaso
+/skills/bootstrap-standard-workspace/ @ovaso

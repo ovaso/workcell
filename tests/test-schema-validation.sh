@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-# 解析并验证全部 Schema 示例以及受管 TOML。
+# Parse and validate all schema examples and managed TOML.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
 

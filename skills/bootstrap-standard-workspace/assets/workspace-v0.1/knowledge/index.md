@@ -1,5 +1,5 @@
 # Knowledge Index
 
-此目录只保存经过查证、可跨任务复用的知识。每条知识应记录来源、验证时间、适用范围和失效条件；历史推测不得提升为当前事实。
+This directory contains only verified knowledge reusable across tasks. Every item should record provenance, verification time, scope, and invalidation conditions. Historical conjecture must not become a current fact.
 
-`tool-capabilities.toml` 是发行版携带的命令识别与能力映射种子，不是当前宿主机安装事实。环境初始化和刷新必须通过实际只读观测确认其可用性。
+`tool-capabilities.toml` is release-provided seed knowledge for command identification and capability mapping, not evidence that a tool is installed on the current host. Environment initialization and refresh must confirm availability through actual read-only observation.

@@ -3,7 +3,7 @@
 import assert from "node:assert/strict";
 import { validateValue } from "../scripts/validate-schema-examples.mjs";
 
-/** 返回一个简单 Schema 对给定值的校验错误。 */
+/** Return validation errors from a simple schema for a given value. */
 function errorsFor(value, schema) {
   const errors = [];
   validateValue(value, schema, schema, "$", errors);

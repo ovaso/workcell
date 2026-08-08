@@ -22,7 +22,9 @@
     "project": "project",
     "requirements": "requirements",
     "workspaces": "workspaces",
-    "skills": "skills"
+    "skills": "skills",
+    "feedback": "feedback",
+    "locales": "locales"
   },
   "safety": {
     "remote_operations_default": "deny",

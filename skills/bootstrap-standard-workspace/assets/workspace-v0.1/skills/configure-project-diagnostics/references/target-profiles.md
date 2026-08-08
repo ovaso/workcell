@@ -1,58 +1,58 @@
-# 诊断目标类型
+# Diagnostic Target Profiles
 
-只读取与当前目标相关的章节。混合系统分别建立目标，再声明它们之间的关联。
+Read only the sections relevant to the current target. Model each component of a hybrid system separately, then declare their relationships.
 
-## 本地 CLI、批任务和本地进程
+## Local CLI, batch job, and local process
 
-- 查证入口命令、参数解析、退出码、标准输出与错误输出、配置搜索顺序、工作目录和临时文件。
-- 验证实际二进制或脚本路径、版本、环境变量作用域和最小复现输入。
-- 单独授权进程启动、信号发送、调试器附加、性能采样和本地状态修改。
-- 默认禁止运行可能写数据库、发消息、调用生产端点或产生计费的命令。
+- Inspect entry commands, argument parsing, exit codes, standard output and error, configuration search order, working directories, and temporary files.
+- Verify the actual binary or script path, version, environment-variable scope, and minimal reproduction input.
+- Authorize process start, signal delivery, debugger attachment, performance sampling, and local-state modification separately.
+- By default, prohibit commands that may write a database, send messages, call production endpoints, or create charges.
 
-## 桌面应用
+## Desktop application
 
-- 查证应用包标识、启动入口、应用沙箱、系统日志、崩溃报告、自动更新和本地数据库位置。
-- 区分 UI 观察、应用启动、自动化点击、文件导出、屏幕录制和辅助功能控制的授权。
-- 验证操作系统、应用版本、窗口状态、账号环境和复现步骤。
-- 默认禁止读取未授权的个人目录、钥匙串、浏览器数据和其他应用沙箱。
+- Inspect bundle identity, launch entry point, application sandbox, system logs, crash reports, automatic update, and local database locations.
+- Distinguish authorization for UI observation, application launch, automated clicks, file export, screen recording, and accessibility control.
+- Verify operating system, application version, window state, account environment, and reproduction steps.
+- By default, prohibit reading unauthorized personal directories, keychains, browser data, and other application sandboxes.
 
-## 库和嵌入式组件
+## Library and embedded component
 
-- 查证调用方、版本解析、初始化顺序、日志桥接、线程或事件模型和错误传播。
-- 优先使用单元测试、最小宿主程序和已有 Trace；运行宿主程序前确认副作用。
-- 不把库具备网络或文件能力推导为允许访问对应资源。
+- Inspect callers, version resolution, initialization order, log bridging, thread or event model, and error propagation.
+- Prefer unit tests, a minimal host program, and existing traces. Confirm side effects before running a host program.
+- Do not infer permission to access a resource from a library's network or file capabilities.
 
-## 裸机或虚拟机服务
+## Bare-metal or virtual-machine service
 
-- 查证服务管理器、进程用户、部署目录、日志轮转、监听端口、健康检查和配置来源。
-- 分开授权远端文件读取、进程查看、系统日志、网络探测和远程 Shell。允许 SSH 端口不等于允许登录。
-- 验证主机身份、环境、服务实例和时间同步；禁止依赖过期主机清单。
-- 默认禁止 sudo、重启、改配置、写日志目录和抓取无边界的大文件。
+- Inspect service manager, process user, deployment directory, log rotation, listening ports, health checks, and configuration sources.
+- Authorize remote file reads, process inspection, system logs, network probes, and remote shell separately. An open SSH port does not authorize login.
+- Verify host identity, environment, service instance, and time synchronization; do not depend on a stale host inventory.
+- By default, prohibit sudo, restart, configuration changes, writes to log directories, and unbounded large-file collection.
 
-## 容器
+## Container
 
-- 查证镜像、入口、运行参数、挂载、网络、健康检查、日志驱动和资源限制。
-- 验证容器运行时、容器 ID、镜像 digest、环境和只读采集方式。
-- 单独授权 exec、复制文件、抓包、性能分析和访问宿主命名空间。
-- 默认禁止修改运行中容器、提交镜像、重启和读取未授权挂载。
+- Inspect image, entry point, runtime arguments, mounts, network, health checks, log driver, and resource limits.
+- Verify container runtime, container ID, image digest, environment, and read-only collection method.
+- Authorize exec, file copy, packet capture, profiling, and host-namespace access separately.
+- By default, prohibit modifying running containers, committing images, restart, and reading unauthorized mounts.
 
 ## Kubernetes
 
-- 查证工作负载、命名空间、Service、Ingress、ConfigMap/Secret 引用、探针、日志和遥测配置。
-- 验证当前 context、集群身份、命名空间、RBAC 和资源 UID；禁止仅凭 context 名称判断环境。
-- 分开授权 API 元数据读取、日志、events、port-forward、exec、ephemeral container 和资源修改。
-- 默认禁止查看 Secret 值、跨命名空间查询、exec、rollout、scale、delete 和 apply。
+- Inspect workloads, namespaces, Services, Ingresses, ConfigMap/Secret references, probes, logs, and telemetry configuration.
+- Verify current context, cluster identity, namespace, RBAC, and resource UID. Do not infer the environment from a context name alone.
+- Authorize API metadata reads, logs, events, port-forward, exec, ephemeral containers, and resource changes separately.
+- By default, prohibit Secret-value reads, cross-namespace queries, exec, rollout, scale, delete, and apply.
 
 ## Observability
 
-- 查证日志、指标和 Trace SDK、导出器、采样策略、服务命名、资源属性和关联标识。
-- 验证数据源、租户或账号、时间范围、时区、索引、查询限额和数据延迟。
-- 分开授权查询、保存查询、建立告警、导出原始数据和访问生产租户。
-- 默认限制时间窗、结果量和轮询频率；查询可用不代表允许访问所有数据集。
+- Inspect logging, metrics and tracing SDKs, exporters, sampling policies, service names, resource attributes, and correlation identifiers.
+- Verify data source, tenant or account, time range, time zone, index, query limits, and data delay.
+- Authorize queries, saved queries, alert creation, raw-data export, and production-tenant access separately.
+- Limit time windows, result volume, and polling frequency by default. Query capability does not authorize every dataset.
 
-## 分布式与混合系统
+## Distributed and hybrid systems
 
-- 为每个组件单独选择以上目标类型，不创建具有隐式全局权限的“大目标”。
-- 声明同步或异步边界、消息键、Trace 传播、时钟差异、重试和重复事件。
-- 为跨目标采集设置共同时间窗、数据量和停止条件。
-- 任一组件的权限或事实失效时，只关闭受影响链路，不扩大其他目标权限进行补偿。
+- Select a target type above for every component rather than creating one large target with implicit global authority.
+- Declare synchronous and asynchronous boundaries, message keys, trace propagation, clock differences, retries, and duplicate events.
+- Set a shared time window, data volume, and stop condition for cross-target collection.
+- When a component's permissions or facts become invalid, close only the affected path. Do not expand permissions on other targets to compensate.

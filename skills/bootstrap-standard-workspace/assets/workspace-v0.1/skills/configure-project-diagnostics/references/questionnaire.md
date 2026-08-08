@@ -1,60 +1,60 @@
-# 诊断配置问询
+# Diagnostic Configuration Questionnaire
 
-## 第一组：安全与授权
+## Group 1: safety and authorization
 
-必须先提出本组问题并等待明确回答。不得使用默认答案代替用户选择。
+Ask this group first and wait for explicit answers. Do not substitute default answers for user choices.
 
-1. 哪些动作绝对禁止？分别确认远程 Shell、写文件、改配置、重启、部署、扩缩容、删除、数据回放、安装工具和访问生产。
-2. 当前允许哪些动作类别？区分本地文件读取、本地命令、进程检查、远端元数据读取、日志读取、指标查询、Trace 查询、网络探测和采样复现。
-3. 授权覆盖哪些项目、目标和环境？明确开发、测试、预发、生产及其例外。
-4. 授权是长期项目策略，还是仅当前任务有效？记录确认时间、确认人语义和过期条件。
-5. 哪些数据属于敏感信息？明确凭证、个人信息、客户数据、业务正文、录音、转储、堆栈和数据库内容的脱敏要求。
-6. 允许把采集结果保存在哪里、保留多久、谁可以读取？
+1. Which actions are absolutely prohibited? Confirm remote shell, file writes, configuration changes, restart, deployment, scaling, deletion, data replay, tool installation, and production access separately.
+2. Which action categories are currently allowed? Distinguish local file reads, local commands, process inspection, remote metadata reads, log reads, metric queries, trace queries, network probes, and sample reproduction.
+3. Which projects, targets, and environments does authorization cover? Identify development, test, staging, production, and exceptions.
+4. Is authorization a long-lived project policy or valid only for the current task? Record confirmation time, confirmer semantics, and expiration conditions.
+5. Which data is sensitive? Establish redaction requirements for credentials, personal information, customer data, business content, recordings, dumps, stack traces, and database content.
+6. Where may collected results be stored, for how long, and who may read them?
 
-把回答编译为默认拒绝策略。含糊回答视为未授权，并在继续问询前向用户复述当前边界。
+Compile answers into a deny-by-default policy. Treat ambiguous answers as unauthorized and restate the current boundary before continuing.
 
-## 第二组：目标与运行模型
+## Group 2: target and runtime model
 
-1. 诊断目标属于哪些类型，是否为混合链路？
-2. 目标如何启动、停止、重现和判断健康？
-3. 有哪些环境、实例、节点、命名空间、集群、账号或租户边界？
-4. 代码仓库、构建产物、部署单元和运行目标如何映射？
-5. 哪些目标只作参考，哪些允许实际采集？
+1. Which target types apply, and is the path hybrid?
+2. How is each target started, stopped, reproduced, and judged healthy?
+3. Which environment, instance, node, namespace, cluster, account, or tenant boundaries exist?
+4. How do code repositories, build artifacts, deployment units, and runtime targets map to each other?
+5. Which targets are reference-only, and which allow actual collection?
 
-## 第三组：证据来源
+## Group 3: evidence sources
 
-1. 日志位于文件、标准输出、系统日志、应用沙箱还是平台查询接口？
-2. 指标、Trace、事件、崩溃报告、转储、本地数据库和缓存分别从哪里获得？
-3. 每类证据的格式、时间戳、时区、轮转、采样和保留规则是什么？
-4. 是否存在已知健康端点、诊断命令、只读 API 或查询模板？
-5. 哪些来源只能由人工导出，哪些可由 Provider 读取？
+1. Are logs in files, standard output, system logs, application sandboxes, or platform query APIs?
+2. Where do metrics, traces, events, crash reports, dumps, local databases, and caches come from?
+3. What are the format, timestamp, time zone, rotation, sampling, and retention rules for every evidence type?
+4. Are there known health endpoints, diagnostic commands, read-only APIs, or query templates?
+5. Which sources require manual export, and which may be read by a Provider?
 
-## 第四组：关联与复现
+## Group 4: correlation and reproduction
 
-1. 使用哪些业务关联标识：request ID、trace ID、call ID、job ID、用户或租户 ID、窗口 ID、进程 ID、pod UID 等？
-2. 标识如何从入口传播到日志、指标、Trace 和持久化数据？
-3. 复现是否会产生外部副作用、真实流量、计费、消息、通知或数据写入？
-4. 安全的最小复现环境、输入和停止条件是什么？
-5. 轮询频率、最长持续时间、最大下载量和并发上限是什么？
+1. Which business correlation identifiers are used: request ID, trace ID, call ID, job ID, user or tenant ID, window ID, process ID, pod UID, or others?
+2. How do identifiers propagate from entry points to logs, metrics, traces, and persistent data?
+3. Can reproduction create external side effects, real traffic, charges, messages, notifications, or data writes?
+4. What is the smallest safe reproduction environment, input, and stop condition?
+5. What are polling frequency, maximum duration, maximum download size, and concurrency limits?
 
-## 第五组：Provider 与凭证
+## Group 5: Provider and credentials
 
-1. 计划使用哪个 Provider，它能完成哪些接口动作？
-2. Provider 在当前宿主环境是否真实可用，还是仅存在于能力目录？
-3. 凭证从哪个引用获取，作用域和最小权限是什么？
-4. Provider 是否会缓存、上传或二次处理采集数据？
-5. Provider 失败、超时、限流或返回部分结果时如何停止并保留证据？
+1. Which Provider is planned, and which interface actions can it perform?
+2. Is the Provider actually available in the current host environment, or does it exist only in the capability catalog?
+3. Which reference supplies credentials, and what is their scope and least privilege?
+4. Does the Provider cache, upload, or further process collected data?
+5. How should the workflow stop and preserve evidence when the Provider fails, times out, is rate-limited, or returns partial results?
 
-## 第六组：保存与维护
+## Group 6: storage and maintenance
 
-1. 原始证据、脱敏副本、索引和摘要分别保存在哪里？
-2. 哪些文件属于项目长期知识，哪些只属于当前任务？
-3. 端点、节点、权限和凭证引用何时过期，如何重新验证？
-4. 谁负责关闭、撤销或重新配置诊断能力？
+1. Where are raw evidence, redacted copies, indexes, and summaries stored?
+2. Which files are long-term project knowledge, and which belong only to the current task?
+3. When do endpoints, nodes, permissions, and credential references expire, and how are they revalidated?
+4. Who is responsible for disabling, revoking, or reconfiguring diagnostic capabilities?
 
-## 冲突处理
+## Conflict handling
 
-- 用户最新明确禁止项优先于历史配置和文档。
-- 项目策略比任务授权更宽时，以任务授权为准；任务授权不得扩大项目策略。
-- 代码、配置和运行事实冲突时，记录冲突并停止受影响动作。
-- 无法确认生产边界、凭证权限或数据敏感级别时，禁止远端采集。
+- The user's latest explicit prohibition overrides historical configuration and documentation.
+- When project policy is broader than task authorization, task authorization prevails; task authorization cannot expand project policy.
+- When code, configuration, and runtime facts conflict, record the conflict and stop the affected action.
+- When the production boundary, credential permissions, or data sensitivity cannot be confirmed, prohibit remote collection.

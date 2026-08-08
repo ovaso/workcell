@@ -1,12 +1,12 @@
 #!/bin/sh
 set -eu
 
-# 打印创建脚本的调用方式。
+# Print create-script usage.
 usage() {
     echo "Usage: $0 <empty-or-absent-target-directory>" >&2
 }
 
-# 判断目录是否为空，同时覆盖普通文件、隐藏文件和符号链接。
+# Determine whether a directory is empty, including regular, hidden, and symlink entries.
 is_empty_directory() {
     check_directory=$1
     for check_entry in \
@@ -21,14 +21,14 @@ is_empty_directory() {
     return 0
 }
 
-# 仅清理由本次执行创建且路径已明确约束的暂存目录。
+# Clean only the constrained staging directory created by this run.
 cleanup_stage() {
     if [ -n "${stage_directory:-}" ] && [ -d "$stage_directory" ]; then
         rm -rf "$stage_directory"
     fi
 }
 
-# 读取目录 inode，用于确认 mv 执行的是同目录重命名而不是移入竞态目录。
+# Read the directory inode to distinguish same-directory rename from a raced move-into.
 directory_identity() {
     # shellcheck disable=SC2012
     ls -di "$1" 2>/dev/null | awk 'NR == 1 { print $1 }'

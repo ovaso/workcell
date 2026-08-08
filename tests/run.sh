@@ -4,13 +4,17 @@ set -eu
 PYTHONDONTWRITEBYTECODE=1
 export PYTHONDONTWRITEBYTECODE
 
-# 统一执行仓库级无网络验证。
+# Run the repository-level offline validation suite.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 
 for test_script in \
+  "$script_dir/test-canonical-english.sh" \
+  "$script_dir/test-powershell-parity.sh" \
   "$script_dir/test-schema-validation.sh" \
   "$script_dir/test-release-manifest.sh" \
+  "$script_dir/test-validate-skill.py" \
   "$script_dir/test-skills.sh" \
+  "$script_dir/test-github-config.py" \
   "$script_dir/test-runtime-scripts.sh" \
   "$script_dir/test-feedback-integration.py" \
   "$script_dir/test-build-sync.sh" \

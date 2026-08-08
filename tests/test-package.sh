@@ -1,12 +1,12 @@
 #!/bin/sh
 set -eu
 
-# 将发行物写到临时目录，避免污染仓库工作树。
+# Write the distribution to a temporary directory without polluting the worktree.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
 test_root=$(mktemp -d "${TMPDIR:-/tmp}/std-workspace-package-test.XXXXXX")
 
-# 清理本次测试创建的临时发行物。
+# Clean temporary release artifacts created by this test.
 cleanup() {
   rm -rf "$test_root"
 }
@@ -29,5 +29,7 @@ fi
 if command -v unzip >/dev/null 2>&1; then
   unzip -Z1 "$archive" | grep '^bootstrap-standard-workspace/SKILL.md$' >/dev/null
   unzip -Z1 "$archive" | grep '^bootstrap-standard-workspace/LICENSE$' >/dev/null
+  unzip -Z1 "$archive" | grep '^bootstrap-standard-workspace/assets/workspace-v0.1/LICENSE$' >/dev/null
   unzip -Z1 "$archive" | grep '^bootstrap-standard-workspace/assets/workspace-v0.1/AI_WORKSPACE.md$' >/dev/null
+  unzip -Z1 "$archive" | grep '^bootstrap-standard-workspace/scripts/create-workspace.ps1$' >/dev/null
 fi

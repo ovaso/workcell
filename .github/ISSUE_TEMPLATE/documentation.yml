@@ -1,0 +1,36 @@
+name: Documentation improvement
+description: Report inaccurate, incomplete, or unclear canonical English documentation.
+title: "[Docs]: "
+labels:
+  - documentation
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Document location
+      description: Provide a repository-relative path and section name.
+      placeholder: docs/architecture.md — Localization layer
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: Problem
+      description: Explain what is inaccurate, missing, or difficult to understand.
+    validations:
+      required: true
+  - type: textarea
+    id: improvement
+    attributes:
+      label: Suggested improvement
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I checked whether this file is generated and identified the canonical source when applicable.
+          required: true
+        - label: I agree to follow the Code of Conduct.
+          required: true

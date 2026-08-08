@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""将一个 TOML 文档转换为供 Schema 校验使用的 JSON。"""
+"""Convert one TOML document to JSON for schema validation."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ import tomllib
 
 
 def main() -> int:
-    """读取唯一输入路径并把解析结果写到标准输出。"""
+    """Read the single input path and write the parsed result to standard output."""
 
     if len(sys.argv) != 2:
         print("Usage: toml-to-json.py <document.toml>", file=sys.stderr)

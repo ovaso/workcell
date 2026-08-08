@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""校验仓库内受管 TOML 文件能够被标准库解析。"""
+"""Validate managed repository TOML files with the standard library."""
 
 from __future__ import annotations
 
@@ -9,13 +9,13 @@ import tomllib
 
 
 def repository_root() -> pathlib.Path:
-    """返回当前脚本所属的仓库根目录。"""
+    """Return the repository root that owns this script."""
 
     return pathlib.Path(__file__).resolve().parent.parent
 
 
 def managed_toml_files(root: pathlib.Path) -> list[pathlib.Path]:
-    """列出产品源码和分发资产中的 TOML 文件。"""
+    """List TOML files in product source and distribution assets."""
 
     ignored_parts = {".git", "dist"}
     return sorted(
@@ -26,7 +26,7 @@ def managed_toml_files(root: pathlib.Path) -> list[pathlib.Path]:
 
 
 def main() -> int:
-    """解析全部 TOML，并在首个语法错误处返回失败。"""
+    """Parse all TOML and fail on the first syntax error."""
 
     root = repository_root()
     files = managed_toml_files(root)

@@ -1,7 +1,7 @@
 [catalog]
 version = "0.1"
 kind = "seed-knowledge"
-note = "本文件描述如何识别工具及其能力，不代表当前机器已经安装。"
+note = "This file describes how to identify tools and their capabilities; it does not claim that they are installed on the current machine."
 
 [[commands]]
 name = "git"
@@ -73,6 +73,24 @@ level = "optional"
 name = "sqlite3"
 version_args = ["--version"]
 capabilities = ["database.sqlite.inspect", "database.sqlite.query"]
+level = "optional"
+
+[[commands]]
+name = "pwsh"
+version_args = ["--version"]
+capabilities = ["shell.powershell", "script.powershell"]
+level = "recommended"
+
+[[commands]]
+name = "powershell"
+version_args = ["-NoProfile", "-Command", "$PSVersionTable.PSVersion.ToString()"]
+capabilities = ["shell.powershell", "script.powershell"]
+level = "recommended"
+
+[[commands]]
+name = "winget"
+version_args = ["--version"]
+capabilities = ["package-manager.windows"]
 level = "optional"
 
 [[commands]]

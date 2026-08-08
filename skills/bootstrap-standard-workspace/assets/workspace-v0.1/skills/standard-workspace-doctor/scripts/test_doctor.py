@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""验证 Doctor 的只读核心门禁。"""
+"""Validate the Doctor's read-only core gates."""
 
 from __future__ import annotations
 
@@ -26,13 +26,15 @@ STANDARD_DIRECTORIES = (
     "knowledge",
     "docs",
     "memory",
+    "feedback",
+    "locales",
     "skills/example-skill",
     ".ai-workspace",
 )
 
 
 def host_facts_schema() -> dict[str, object]:
-    """构造覆盖当前宿主机事实契约的最小测试 Schema。"""
+    """Build a minimal test schema for the current host-fact contract."""
 
     return {
         "$defs": {"nonEmpty": {"type": "string", "minLength": 1}},
@@ -70,7 +72,7 @@ def host_facts_schema() -> dict[str, object]:
 
 
 def project_plugin_schema() -> dict[str, object]:
-    """构造覆盖当前项目插件入口契约的最小测试 Schema。"""
+    """Build a minimal test schema for the current project-plugin contract."""
 
     required = [
         "schema_version",
@@ -127,7 +129,7 @@ def project_plugin_schema() -> dict[str, object]:
 
 
 def release_manifest_schema() -> dict[str, object]:
-    """构造安装 Release 收据的 V0.1 测试 Schema。"""
+    """Build the V0.1 test schema for an installed Release receipt."""
 
     return {
         "type": "object",
@@ -160,13 +162,13 @@ def release_manifest_schema() -> dict[str, object]:
 
 
 def sha256_file(path: Path) -> str:
-    """计算测试夹具普通文件的 SHA-256。"""
+    """Compute the SHA-256 of a regular fixture file."""
 
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def release_manifest_document(root: Path) -> dict[str, object]:
-    """返回与最小测试工作区一致的安装 Release 收据。"""
+    """Return an installed Release receipt for the minimal test workspace."""
 
     return {
         "schema_version": "0.1",
@@ -182,7 +184,7 @@ def release_manifest_document(root: Path) -> dict[str, object]:
 
 
 def host_facts_document() -> dict[str, object]:
-    """返回可同时作为模板和未初始化当前投影的宿主机事实。"""
+    """Return host facts valid as both a template and uninitialized projection."""
 
     return {
         "schema_version": "0.1",
@@ -198,7 +200,7 @@ def host_facts_document() -> dict[str, object]:
 
 
 def project_plugin_document() -> dict[str, object]:
-    """返回可用于模板与项目实例的最小合法插件。"""
+    """Return a minimal valid plugin for templates and project instances."""
 
     return {
         "schema_version": "0.1",
@@ -231,10 +233,10 @@ def project_plugin_document() -> dict[str, object]:
 
 
 class DoctorTest(unittest.TestCase):
-    """覆盖合法工作区和关键失败关闭场景。"""
+    """Cover a valid workspace and critical fail-closed scenarios."""
 
     def create_workspace(self, root: Path) -> None:
-        """创建不依赖产品模板的最小合法测试工作区。"""
+        """Create a minimal valid test workspace independent of product assets."""
 
         for relative in STANDARD_DIRECTORIES:
             (root / relative).mkdir(parents=True, exist_ok=True)
@@ -249,7 +251,7 @@ class DoctorTest(unittest.TestCase):
             '[versions]\nproduct = "0.1.0"\nworkspace = "0.1"\n', encoding="utf-8"
         )
         (root / "skills/example-skill/SKILL.md").write_text(
-            "---\nname: example-skill\ndescription: 执行一个确定性的示例能力。\n---\n\n# Example\n",
+            "---\nname: example-skill\ndescription: Execute one deterministic example capability.\n---\n\n# Example\n",
             encoding="utf-8",
         )
         (root / ".ai-workspace/ownership.toml").write_text(
@@ -281,7 +283,7 @@ class DoctorTest(unittest.TestCase):
         )
 
     def test_minimal_workspace_passes(self) -> None:
-        """确认最小合法结构不会产生错误。"""
+        """Confirm a minimal valid structure produces no errors."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -290,7 +292,7 @@ class DoctorTest(unittest.TestCase):
             self.assertEqual("PASS", result["status"])
 
     def test_release_manifest_is_required_and_schema_validated(self) -> None:
-        """确认 Release 收据缺失或不符合随包 Schema 时失败关闭。"""
+        """Fail closed when the Release receipt is missing or schema-invalid."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -315,7 +317,7 @@ class DoctorTest(unittest.TestCase):
             )
 
     def test_release_manifest_version_matches_versions_lock(self) -> None:
-        """确认 Release 收据版本必须等于 versions.lock 的产品版本。"""
+        """Require the receipt version to equal the versions.lock product version."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -328,7 +330,7 @@ class DoctorTest(unittest.TestCase):
             self.assertTrue(any(item["code"] == "release.version-mismatch" for item in result["findings"]))
 
     def test_release_manifest_detects_distribution_file_failures(self) -> None:
-        """确认 distribution 文件缺失、链接、非普通文件和内容漂移均为 ERROR。"""
+        """Report missing, linked, non-regular, and drifted distribution files as ERROR."""
 
         with tempfile.TemporaryDirectory() as directory:
             container = Path(directory)
@@ -337,7 +339,10 @@ class DoctorTest(unittest.TestCase):
             self.create_workspace(root)
             outside = container / "outside.txt"
             outside.write_text("outside\n", encoding="utf-8")
-            (root / "docs/distribution-link").symlink_to(outside)
+            try:
+                (root / "docs/distribution-link").symlink_to(outside)
+            except (NotImplementedError, OSError) as exc:
+                self.skipTest(f"Host cannot create test symlinks: {exc}")
             receipt = release_manifest_document(root)
             receipt["files"] = [
                 {"path": "AI_WORKSPACE.md", "owner": "distribution", "sha256": "0" * 64},
@@ -358,7 +363,7 @@ class DoctorTest(unittest.TestCase):
             )
 
     def test_release_manifest_allows_mutable_owner_changes(self) -> None:
-        """确认 generated 与 workspace 条目不会被安装哈希冻结。"""
+        """Confirm installed hashes do not freeze generated and workspace entries."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -376,7 +381,7 @@ class DoctorTest(unittest.TestCase):
             self.assertEqual("PASS", result["status"])
 
     def test_json_schema_subset_covers_v01_keywords(self) -> None:
-        """确认 V0.1 声明的 Schema 关键字均有实际校验语义。"""
+        """Confirm every V0.1 schema keyword has actual validation semantics."""
 
         schema = {
             "$defs": {
@@ -470,7 +475,7 @@ class DoctorTest(unittest.TestCase):
         self.assertTrue(any(violation.schema_path.endswith("/minItems") for violation in validator.validate({**valid, "items": []})))
 
     def test_schema_contract_drift_fails_templates(self) -> None:
-        """确认随包 Schema 新增模板尚未提供的必填字段时失败关闭。"""
+        """Fail closed when a bundled schema adds a required field absent from templates."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -485,7 +490,7 @@ class DoctorTest(unittest.TestCase):
             self.assertTrue(any(item["path"] == ".ai-workspace/templates/host-facts.json" for item in matching))
 
     def test_unsupported_schema_drift_fails_closed(self) -> None:
-        """确认新增未实现约束时不会被 Doctor 静默忽略。"""
+        """Do not silently ignore a newly added unsupported constraint."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -502,7 +507,7 @@ class DoctorTest(unittest.TestCase):
         self.assertTrue(any("maxProperties" in item.message for item in hidden_constraint.inspect_schema()))
 
     def test_current_host_facts_instance_drift_fails(self) -> None:
-        """确认当前宿主机事实偏离 Schema 时报告 ERROR。"""
+        """Report ERROR when current host facts drift from the schema."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -517,7 +522,7 @@ class DoctorTest(unittest.TestCase):
             self.assertTrue(any(item["path"] == "environment/current/host-facts.json" for item in matching))
 
     def test_duplicate_json_key_fails_closed(self) -> None:
-        """确认重复 JSON 键不会被解析器静默覆盖。"""
+        """Ensure duplicate JSON keys are not silently overwritten by the parser."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -529,7 +534,7 @@ class DoctorTest(unittest.TestCase):
             self.assertTrue(any(item["code"] == "schema.instance-json-invalid" for item in result["findings"]))
 
     def test_project_plugin_instance_drift_fails(self) -> None:
-        """确认已存在的项目插件角色偏离 Schema 时报告 ERROR。"""
+        """Report ERROR when an existing project-plugin role violates the schema."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -544,7 +549,7 @@ class DoctorTest(unittest.TestCase):
             self.assertTrue(any(item["path"] == "project/plugin/project-plugin.json" for item in matching))
 
     def test_missing_required_file_fails(self) -> None:
-        """确认缺少入口文件时失败关闭。"""
+        """Fail closed when an entry file is missing."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -555,7 +560,7 @@ class DoctorTest(unittest.TestCase):
             self.assertTrue(any(item["code"] == "structure.file-missing" for item in result["findings"]))
 
     def test_invalid_workspace_state_fails(self) -> None:
-        """确认未知生命周期状态无法通过门禁。"""
+        """Ensure an unknown lifecycle state cannot pass the gate."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -565,7 +570,7 @@ class DoctorTest(unittest.TestCase):
             self.assertTrue(any(item["code"] == "workspace.state-invalid" for item in result["findings"]))
 
     def test_task_role_cannot_expand_project_role(self) -> None:
-        """确认任务不能把 reference 模块扩大为 edit。"""
+        """Ensure a task cannot expand a reference module to edit."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -584,7 +589,7 @@ class DoctorTest(unittest.TestCase):
             self.assertTrue(any(item["code"] == "task.module-role-expanded" for item in result["findings"]))
 
     def test_task_project_plugin_ref_rejects_symlink(self) -> None:
-        """确认任务不能经符号链接读取工作区外项目插件。"""
+        """Ensure a task cannot follow a project-plugin symlink outside the workspace."""
 
         with tempfile.TemporaryDirectory() as directory:
             container = Path(directory)
@@ -595,7 +600,10 @@ class DoctorTest(unittest.TestCase):
             outside.write_text(json.dumps(project_plugin_document()), encoding="utf-8")
             plugin_path = root / "project/plugin/project-plugin.json"
             plugin_path.unlink()
-            plugin_path.symlink_to(outside)
+            try:
+                plugin_path.symlink_to(outside)
+            except (NotImplementedError, OSError) as exc:
+                self.skipTest(f"Host cannot create test symlinks: {exc}")
             task_root = root / "requirements/task-symlink"
             task_root.mkdir()
             (task_root / "task.toml").write_text(
@@ -611,7 +619,7 @@ class DoctorTest(unittest.TestCase):
             self.assertTrue(any(item["code"] == "task.project-plugin-ref-symlink" for item in result["findings"]))
 
     def test_dev_feedback_task_state_is_supported(self) -> None:
-        """确认开发反馈使用唯一 Schema 中的 DEV_FEEDBACK 状态。"""
+        """Confirm development feedback uses the schema's DEV_FEEDBACK state."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -631,7 +639,7 @@ class DoctorTest(unittest.TestCase):
             self.assertFalse(any(item["code"] == "task.state-invalid" for item in result["findings"]))
 
     def test_unconfigured_diagnostics_cannot_open_remote_actions(self) -> None:
-        """确认未配置状态不能开启远端动作。"""
+        """Ensure unconfigured diagnostics cannot enable remote actions."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -649,7 +657,7 @@ class DoctorTest(unittest.TestCase):
             self.assertTrue(any(item["code"] == "diagnostics.unverified-open" for item in result["findings"]))
 
     def test_distribution_manifest_requires_exact_distribution_rule(self) -> None:
-        """确认发行清单条目不能只依赖宽泛的所有权规则。"""
+        """Ensure a distribution entry cannot rely only on a broad ownership rule."""
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

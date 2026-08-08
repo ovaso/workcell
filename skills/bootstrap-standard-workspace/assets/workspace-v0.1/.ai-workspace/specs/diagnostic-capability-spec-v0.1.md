@@ -1,10 +1,10 @@
 # Diagnostic Capability Specification V0.1
 
-## 1. 定义
+## 1. Definition
 
-诊断能力用于收集、关联和分析某个软件目标的运行事实。它是项目能力插件，不默认等于服务器排查。
+A diagnostic capability collects, correlates, and analyzes runtime facts for a software target. It is a project capability plugin and is not synonymous with server troubleshooting.
 
-## 2. 目标类型
+## 2. Target types
 
 ```text
 local-cli
@@ -20,20 +20,20 @@ observability-backed
 hybrid
 ```
 
-## 3. 配置前置
+## 3. Configuration prerequisite
 
-用户提出配置项目诊断能力时必须进入交互问询。第一组问题只确认安全与权限边界，并立即编译进入项目级 AI 规则。
+When a user requests project diagnostic configuration, begin an interactive questionnaire. The first questions establish only security and permission boundaries, which are then compiled immediately into project-level AI rules.
 
-问询顺序：
+Question order:
 
-1. 绝对禁止和允许事项；
-2. 目标类型；
-3. 部署、运行和环境模型；
-4. 日志、指标、Trace、崩溃或本地状态来源；
-5. 业务关联标识；
-6. 采集、复现、脱敏、保存和保留流程。
+1. absolute prohibitions and permitted actions;
+2. target type;
+3. deployment, runtime, and environment model;
+4. log, metric, trace, crash, and local-state sources;
+5. business correlation identifiers;
+6. collection, reproduction, redaction, storage, and retention workflow.
 
-## 4. 事实来源
+## 4. Fact sources
 
 ```text
 user-declared
@@ -44,9 +44,9 @@ runtime-observed
 historical
 ```
 
-安全禁止事项和用户确认的权限优先级最高。可达不代表授权。
+Security prohibitions and user-confirmed permissions have the highest precedence. Reachability is not authorization.
 
-## 5. Provider 接口
+## 5. Provider interface
 
 ```text
 discover
@@ -63,15 +63,15 @@ summarize
 health
 ```
 
-## 6. 结构化文件
+## 6. Structured files
 
-聚合真相源固定为：
+The aggregate source of truth is fixed at:
 
 ```text
 project/diagnostics/diagnostic-profile.toml
 ```
 
-目标、Provider 和知识的详细资源可放在：
+Detailed target, Provider, and knowledge resources may live under:
 
 ```text
 diagnostics/targets/
@@ -79,31 +79,31 @@ diagnostics/providers/
 diagnostics/knowledge/
 ```
 
-聚合文件记录 `schema_version`、profile、失败关闭策略、目标、Provider、关联标识、逐动作授权、事实和证据保留规则。项目插件只引用该能力，不复制诊断事实。
+The aggregate file records `schema_version`, profile identity, fail-closed policy, targets, Providers, correlation identifiers, per-action authorization, facts, and evidence-retention rules. The project plugin references the capability and does not copy diagnostic facts.
 
-profile 状态为 `unconfigured / configuring / draft / verified / degraded / stale / disabled`。只有 `verified` 可以支撑工作区状态 `DIAGNOSTICS_CONFIGURED`。
+Profile status is one of `unconfigured / configuring / draft / verified / degraded / stale / disabled`. Only `verified` can support workspace state `DIAGNOSTICS_CONFIGURED`.
 
-## 7. 执行条件
+## 7. Execution conditions
 
 ```text
-环境能力满足
-AND Provider 支持
-AND 项目策略允许
-AND 当前任务授权
+environment capability is present
+AND the Provider supports the action
+AND project policy permits it
+AND the current task authorizes it
 ```
 
-任一条件不满足时失败关闭。
+Fail closed when any condition is unmet.
 
-授权必须收窄到动作、目标和环境，并记录来源、确认时间及可选失效时间。笼统的 `diagnostics = true` 不构成授权。
+Authorization is narrowed to an action, target, and environment, with source, confirmation time, and optional expiration. A generic `diagnostics = true` does not constitute authorization.
 
-## 8. AGENTS 联动
+## 8. AGENTS integration
 
-结构化诊断策略是真相源。禁止登录、禁止远程 Shell、只读采集、凭证保护、允许端点和事实过期停止条件必须编译进入项目级 AI 规则文件。
+Structured diagnostic policy is the source of truth. Prohibitions on login and remote shell, read-only collection rules, credential protection, allowed endpoints, and stale-fact stop conditions must be compiled into the project-level AI rule file.
 
-## 9. 未配置状态
+## 9. Unconfigured state
 
-诊断状态为 `unconfigured` 时：
+When diagnostic status is `unconfigured`:
 
-- 只允许分析本地代码和已有文件；
-- 禁止所有远端诊断动作；
-- 禁止使用未登记端点、目录、节点和 Provider。
+- only local code and existing files may be analyzed;
+- all remote diagnostic actions are prohibited;
+- unregistered endpoints, directories, nodes, and Providers are prohibited.

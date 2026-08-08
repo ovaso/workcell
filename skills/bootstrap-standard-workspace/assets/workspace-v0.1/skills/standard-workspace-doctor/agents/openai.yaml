@@ -1,4 +1,4 @@
 interface:
   display_name: "Standard Workspace Doctor"
-  short_description: "只读检查工作区结构、生命周期、安全策略、任务角色并给出门禁结论"
-  default_prompt: "使用 $standard-workspace-doctor 对此标准工作区执行只读健康检查并报告 READY 门禁问题。"
+  short_description: "Check workspace structure, safety, and READY gates"
+  default_prompt: "Use $standard-workspace-doctor to run a read-only health check on this Standard Workspace and report READY gate issues."

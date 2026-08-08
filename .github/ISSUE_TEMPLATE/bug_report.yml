@@ -1,0 +1,70 @@
+name: Bug report
+description: Report a reproducible defect in the product, Bootstrap, validation, or documentation.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a defect. Remove credentials, private paths, endpoints, and project data before submitting. Use the private security reporting path for vulnerabilities.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Provide the product version, tag, or commit SHA.
+      placeholder: 0.1.0 or commit SHA
+    validations:
+      required: true
+  - type: dropdown
+    id: host
+    attributes:
+      label: Host platform
+      options:
+        - Linux or other POSIX host
+        - macOS
+        - Windows PowerShell 5.1
+        - Windows PowerShell 7
+        - Platform-independent documentation or Schema
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: State the actual behavior and its impact.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include sanitized commands, inputs, and the smallest reproducible sequence.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Add relevant output or file references after removing sensitive information.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I searched existing issues and pull requests.
+          required: true
+        - label: I removed credentials, private paths, endpoints, and confidential project information.
+          required: true
+        - label: This is not a vulnerability or other sensitive security report.
+          required: true
+        - label: I agree to follow the Code of Conduct.
+          required: true

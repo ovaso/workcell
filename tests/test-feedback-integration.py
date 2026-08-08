@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""验证标准仓库反馈导入只生成待审核信息。"""
+"""Validate that feedback import creates pending-review information only."""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ SPEC.loader.exec_module(MODULE)
 
 
 def report() -> dict:
-    return {"schema_version": "0.1", "feedback": {"id": "feedback-test", "workspace_release": "0.1.0", "source_fingerprint": "a" * 64, "redaction_confirmed": True}, "collection": {"mode": "manual", "authorized_sources": ["task-records"]}, "candidates": [{"id": "candidate-test", "kind": "constraint", "area": "skills", "scope": "standard-candidate", "title": "通用候选", "summary": "已脱敏结论。", "confidence": "confirmed", "occurrences": 2, "evidence": [{"kind": "review", "summary": "已脱敏证据。"}]}]}
+    return {"schema_version": "0.1", "feedback": {"id": "feedback-test", "workspace_release": "0.1.0", "source_fingerprint": "a" * 64, "redaction_confirmed": True}, "collection": {"mode": "manual", "authorized_sources": ["task-records"]}, "candidates": [{"id": "candidate-test", "kind": "constraint", "area": "skills", "scope": "standard-candidate", "title": "Generic candidate", "summary": "Redacted conclusion.", "confidence": "confirmed", "occurrences": 2, "evidence": [{"kind": "review", "summary": "Redacted evidence."}]}]}
 
 
 class FeedbackIntegrationTest(unittest.TestCase):
@@ -24,8 +24,8 @@ class FeedbackIntegrationTest(unittest.TestCase):
         self.assertTrue(MODULE.safe_report(report()))
         ledger = {"schema_version": "0.1", "candidates": {}}
         output = MODULE.proposal(MODULE.merge(ledger, report()))
-        self.assertIn("状态：待审核，未采纳、未实施。", output)
-        self.assertIn("采纳前门禁", output)
+        self.assertIn("Status: pending review; not adopted or implemented.", output)
+        self.assertIn("Pre-adoption gates", output)
 
     def test_path_in_report_is_rejected(self) -> None:
         document = report()

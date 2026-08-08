@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""创建不可覆盖的单候选反馈报告骨架。"""
+"""Create a non-overwriting single-candidate feedback report skeleton."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ def main() -> int:
     parser.add_argument("--output", required=True)
     parser.add_argument("--id", required=True)
     parser.add_argument("--workspace-release", required=True)
-    parser.add_argument("--source-fingerprint", required=True, help="工作区本地生成的不可逆 SHA-256 指纹")
+    parser.add_argument("--source-fingerprint", required=True, help="Irreversible SHA-256 fingerprint generated locally by the workspace")
     parser.add_argument("--mode", choices=["manual", "task-close", "periodic"], required=True)
     parser.add_argument("--source", action="append", choices=["task-records", "workspace-control-plane", "approved-project-material"], required=True)
     parser.add_argument("--candidate-id", required=True)
@@ -30,9 +30,9 @@ def main() -> int:
     arguments = parser.parse_args()
     output = Path(arguments.output)
     if output.exists():
-        parser.error(f"拒绝覆盖已有报告：{output}")
+        parser.error(f"Refusing to overwrite existing report: {output}")
     if arguments.occurrences < 1:
-        parser.error("--occurrences 必须至少为 1")
+        parser.error("--occurrences must be at least 1")
     document = {"schema_version": "0.1", "feedback": {"id": arguments.id, "workspace_release": arguments.workspace_release, "source_fingerprint": arguments.source_fingerprint, "redaction_confirmed": True, "created_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat()}, "collection": {"mode": arguments.mode, "authorized_sources": sorted(set(arguments.source))}, "candidates": [{"id": arguments.candidate_id, "kind": arguments.kind, "area": arguments.area, "scope": arguments.scope, "title": arguments.title, "summary": arguments.summary, "confidence": arguments.confidence, "occurrences": arguments.occurrences, "evidence": [{"kind": arguments.evidence_kind, "summary": arguments.evidence_summary}]}]}
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

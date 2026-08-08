@@ -10,12 +10,12 @@ const repositoryRoot = path.resolve(scriptDirectory, "..");
 const schemaDirectory = path.join(repositoryRoot, "schemas");
 const exampleDirectory = path.join(schemaDirectory, "examples");
 
-/** 将 JSON Pointer 片段转换为对象键。 */
+/** Convert a JSON Pointer segment to an object key. */
 function decodePointerSegment(segment) {
   return segment.replaceAll("~1", "/").replaceAll("~0", "~");
 }
 
-/** 解析当前 Schema 内的本地引用。 */
+/** Resolve a local reference in the current schema. */
 function resolveReference(rootSchema, reference) {
   if (!reference.startsWith("#/")) {
     throw new Error(`Only local schema references are supported: ${reference}`);
@@ -27,7 +27,7 @@ function resolveReference(rootSchema, reference) {
     .reduce((value, key) => value[key], rootSchema);
 }
 
-/** 判断一个 JavaScript 值是否符合 JSON Schema 的基本类型。 */
+/** Return whether a JavaScript value matches a basic JSON Schema type. */
 function matchesType(value, expectedType) {
   switch (expectedType) {
     case "null":
@@ -45,14 +45,14 @@ function matchesType(value, expectedType) {
   }
 }
 
-/** 校验 ISO 8601 日期时间；本工具只覆盖当前仓库使用的格式。 */
+/** Validate the ISO 8601 date-time forms used by this repository. */
 function isDateTime(value) {
   return typeof value === "string"
     && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value)
     && !Number.isNaN(Date.parse(value));
 }
 
-/** 递归校验一个值，并把所有错误追加到 errors。 */
+/** Validate a value recursively and append every error to errors. */
 function validateValue(value, schema, rootSchema, location, errors) {
   if (schema === false) {
     errors.push(`${location}: value is forbidden`);
@@ -142,7 +142,7 @@ function validateValue(value, schema, rootSchema, location, errors) {
   }
 }
 
-/** 读取一对 Schema 与示例并执行无依赖校验。 */
+/** Read a schema/example pair and validate it without dependencies. */
 function validatePair(baseName) {
   const schemaPath = path.join(schemaDirectory, `${baseName}.schema.json`);
   const examplePath = path.join(exampleDirectory, `${baseName}.example.json`);
@@ -155,7 +155,7 @@ function validatePair(baseName) {
   }
 }
 
-/** 执行仓库内全部 Schema 与示例对。 */
+/** Validate every schema/example pair in the repository. */
 function main() {
   const schemaNames = fs.readdirSync(schemaDirectory)
     .filter((name) => name.endsWith(".schema.json"))

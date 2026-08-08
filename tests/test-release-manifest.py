@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""验证安装 Release 清单生成器的确定性、完整覆盖和 first-match 所有权。"""
+"""Validate installed-Release manifest determinism, coverage, and first-match ownership."""
 
 from __future__ import annotations
 
@@ -18,17 +18,17 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 GENERATOR_PATH = REPOSITORY_ROOT / "scripts/generate-release-manifest.py"
 MODULE_SPEC = importlib.util.spec_from_file_location("release_manifest_generator", GENERATOR_PATH)
 if MODULE_SPEC is None or MODULE_SPEC.loader is None:
-    raise RuntimeError(f"无法加载生成器：{GENERATOR_PATH}")
+    raise RuntimeError(f"Unable to load generator: {GENERATOR_PATH}")
 GENERATOR = importlib.util.module_from_spec(MODULE_SPEC)
 sys.modules[MODULE_SPEC.name] = GENERATOR
 MODULE_SPEC.loader.exec_module(GENERATOR)
 
 
 class ReleaseManifestGeneratorTest(unittest.TestCase):
-    """覆盖规范输出、自排除、漂移检测和非法资产拒绝。"""
+    """Cover canonical output, self-exclusion, drift detection, and invalid assets."""
 
     def prepare_asset(self, root: Path) -> Path:
-        """创建含宽窄规则的最小发行资产。"""
+        """Create a minimal release asset with broad and narrow rules."""
 
         asset = root / "asset"
         (asset / ".ai-workspace").mkdir(parents=True)
@@ -63,7 +63,7 @@ owner = "distribution"
         return asset
 
     def test_manifest_is_deterministic_complete_and_excludes_itself(self) -> None:
-        """确认输出稳定、覆盖全部其他普通文件且严格使用首条命中规则。"""
+        """Confirm stable output, full file coverage, and strict first-match resolution."""
 
         with tempfile.TemporaryDirectory() as directory:
             asset = self.prepare_asset(Path(directory))
@@ -98,7 +98,7 @@ owner = "distribution"
             self.assertEqual(actual_files, set(entries))
 
     def test_check_rejects_file_drift(self) -> None:
-        """确认只读检查不会接受生成后的资产内容漂移。"""
+        """Ensure read-only checking rejects asset drift after generation."""
 
         with tempfile.TemporaryDirectory() as directory:
             asset = self.prepare_asset(Path(directory))
@@ -120,7 +120,7 @@ owner = "distribution"
             self.assertEqual(1, status)
 
     def test_symlink_is_rejected(self) -> None:
-        """确认清单不会静默遗漏或跟随发行资产中的符号链接。"""
+        """Ensure the manifest does not omit or follow asset symlinks silently."""
 
         with tempfile.TemporaryDirectory() as directory:
             asset = self.prepare_asset(Path(directory))
@@ -128,7 +128,7 @@ owner = "distribution"
             try:
                 link_path.symlink_to(asset / "exact.txt")
             except (NotImplementedError, OSError):
-                self.skipTest("当前平台不支持创建测试符号链接")
+                self.skipTest("The current platform cannot create the test symlink")
             with self.assertRaises(GENERATOR.ReleaseManifestError):
                 GENERATOR.build_manifest(asset, "0.1.0")
 

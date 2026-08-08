@@ -52,7 +52,7 @@
     "paths": {
       "type": "object",
       "additionalProperties": {"type": "string", "minLength": 1},
-      "required": ["environment", "project", "requirements", "workspaces", "skills"]
+      "required": ["environment", "project", "requirements", "workspaces", "skills", "feedback", "locales"]
     },
     "safety": {
       "type": "object",

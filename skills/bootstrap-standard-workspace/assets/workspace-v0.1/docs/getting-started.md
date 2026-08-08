@@ -1,21 +1,27 @@
-# 初始化指南
+# Getting Started
 
-## 1. 确认初始状态
+## 1. Confirm the initial state
 
-检查 `.ai-workspace/workspace.toml` 的状态为 `CREATED`，并确认 Bootstrap 没有覆盖既有目录。
+Verify that `.ai-workspace/workspace.toml` has status `CREATED` and that Bootstrap did not overwrite an existing directory.
 
-## 2. 建立环境事实
+## 2. Establish environment facts
 
-使用 `initialize-standard-workspace` 和 `inspect-host-environment`。扫描只记录命令、工具链、环境变量名称与敏感分类、经授权的网络探测结果；不得把凭证值写入文件。
+Use `initialize-standard-workspace` and `inspect-host-environment`. Inspection records only commands, toolchains, environment-variable names with sensitivity classifications, and explicitly authorized network-probe results. Never write credential values to files.
 
-## 3. 接入项目
+On Windows, use `py -3`, `python`, or another verified Python 3 command for the cross-platform runtime scripts. Do not assume a POSIX shell is installed.
 
-使用 `adapt-project-workspace`。先问询目标和边界，再读取代码、构建文件、Git 配置与已有文档，生成项目插件、项目实例和证据索引。不得从示例或历史项目直接继承事实。
+## 3. Attach the project
 
-## 4. 配置诊断（可选）
+Use `adapt-project-workspace`. Confirm objectives and boundaries first, then inspect code, build files, Git configuration, and existing documentation. Generate the project plugin, project instance, and evidence index. Do not inherit facts from examples or historical projects.
 
-使用 `configure-project-diagnostics`。必须先确认禁止事项、目标类型、部署模型、Observability、关联标识、证据保存和脱敏规则；生成策略后再编译 `AGENTS.md` 诊断硬约束。
+## 4. Configure diagnostics when needed
 
-## 5. Doctor 与 READY
+Use `configure-project-diagnostics`. First confirm prohibitions, target type, deployment model, observability, correlation identifiers, evidence storage, and redaction rules. Generate policy before compiling diagnostic hard constraints into `AGENTS.md`.
 
-运行 `standard-workspace-doctor`。只有必需事实、策略、结构和版本均通过时，才可将工作区标记为 `READY`。
+## 5. Run the Doctor and enter READY
+
+Run `standard-workspace-doctor`. Enter `READY` only after required facts, policies, structure, and versions all pass.
+
+## 6. Generate localized content when needed
+
+Use `localize-standard-workspace` after choosing an explicit target locale. Keep generated translations under `locales/<locale>/`, preserve English sources and machine-readable identifiers, and review the translation before treating it as operator guidance.

@@ -1,4 +1,4 @@
-"""为 Skill Creator quick_validate 提供最小 YAML frontmatter 兼容层。"""
+"""Provide a minimal YAML frontmatter layer for Skill Creator quick_validate."""
 
 from __future__ import annotations
 
@@ -6,11 +6,11 @@ import json
 
 
 class YAMLError(ValueError):
-    """表示当前简单 frontmatter 无法解析。"""
+    """Indicate that the constrained frontmatter cannot be parsed."""
 
 
 def safe_load(source: str) -> dict[str, object]:
-    """解析本仓库只含单行标量的 Skill frontmatter。"""
+    """Parse the single-line-scalar Skill frontmatter used by this repository."""
 
     result: dict[str, object] = {}
     for raw_line in source.splitlines():

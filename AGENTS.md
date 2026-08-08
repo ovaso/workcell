@@ -1,52 +1,52 @@
 # AGENTS
 
-## 适用范围
+## Scope
 
-本文件只约束 `std-workspace` 产品源码，不修改或替代任何外部项目的业务规范。
+This file governs only the `std-workspace` product source. It does not modify or replace the business rules of any external project.
 
-## 产品原则
+## Product principles
 
-- 保持平台无关。Codex、Claude Code 等平台文件只能是适配层，不能成为规范唯一来源。
-- 保持全文本、可审查、可通过 Git 分发和升级。
-- Bootstrap Skill 只负责创建、校验、修复和升级；日常运行能力放入展开后的工作区 Skills。
-- 结构化 Manifest、Schema、事实和策略是真相源；AGENTS 等文件是可生成的 AI 适配结果。
-- 环境、项目和诊断运行事实必须通过初始化流程建立，禁止由历史文档直接推定。
-- 能力存在不代表操作获得授权。任何诊断和外部动作必须同时满足能力、Provider、项目策略和任务授权。
-- 默认只读、失败关闭。安装工具、修改环境、访问远端、覆盖用户内容和升级必须获得明确授权。
+- Remain platform-neutral. Platform files for Codex, Claude Code, and similar systems are adapters and must not become the sole source of truth.
+- Remain text-only, reviewable, and distributable or upgradable through Git.
+- The Bootstrap Skill is responsible only for creation, validation, repair, and upgrade. Daily runtime capabilities belong to the Skills in the expanded workspace.
+- Structured manifests, schemas, facts, and policies are sources of truth. Files such as AGENTS are generated AI adapters.
+- Environment, project, and diagnostic runtime facts must be established by initialization and must not be inferred directly from historical documentation.
+- Capability does not imply authorization. Diagnostic and external actions must satisfy environment capability, Provider support, project policy, and task authorization.
+- Default to read-only and fail closed. Installing tools, modifying the environment, accessing remote systems, overwriting user content, and applying upgrades require explicit authorization.
 
-## 语言约定
+## Language convention
 
-- 面向操作者的产品说明、规范正文和错误提示使用中文。
-- Skill 名称、目录名、文件名、Schema 字段、状态枚举、命令与稳定 ID 使用英文 ASCII。
-- 同一条面向操作者的信息不得无理由混用两种语言；英文接口名可用反引号引用。
+- Canonical product documentation, specifications, operator messages, metadata, code comments, and error messages use English.
+- Skill names, directory names, file names, schema fields, state enums, commands, and stable IDs use English ASCII.
+- Localized content is generated only through an explicit localization workflow. It must remain separate from the canonical English control plane and must not change machine-readable identifiers.
 
-## 文件所有权
+## File ownership
 
-- `distribution`：发行版维护，可通过 Migration 替换。
-- `generated`：由结构化事实编译，不手工维护。
-- `workspace`：工作区、项目或用户维护，升级必须保留。
+- `distribution`: maintained by the release and replaceable through a Migration.
+- `generated`: compiled from structured facts and not maintained manually.
+- `workspace`: maintained by the workspace, project, or user and preserved by upgrades.
 
-新增模板或规范时必须明确其所有权。
+Every new template or specification must declare its ownership.
 
-## Skill 规则
+## Skill rules
 
-- 每个 Skill 必须包含合法 `SKILL.md`，名称使用小写连字符。
-- `SKILL.md` 保持精简，详细规范放到 `references/`。
-- 可重复、脆弱或需要一致性的行为优先放到 `scripts/`。
-- 用于展开的文件放到 `assets/`。
-- 禁止在 Skill 内新增 README、安装指南或重复说明。
-- 所有 Skill 必须通过 Skill Creator 的 `quick_validate.py`。
+- Every Skill must contain a valid `SKILL.md`; names use lowercase hyphen-case.
+- Keep `SKILL.md` concise and place detailed specifications in `references/`.
+- Put repeatable, fragile, or consistency-sensitive behavior in `scripts/` whenever practical.
+- Put files intended for expansion in `assets/`.
+- Do not add README files, installation guides, or duplicated explanations inside a Skill.
+- Every Skill must pass Skill Creator's `quick_validate.py`.
 
-## 变更与验证
+## Changes and validation
 
-- 所有修改仅限本目录。
-- 修改脚本时必须增加或更新对应测试。
-- 修改 Schema 时必须运行 JSON 解析和示例校验。
-- 修改模板时必须运行 Bootstrap 测试和 Workspace Doctor。
-- 禁止自动提交、推送或发布。
+- Limit all modifications to this repository.
+- When modifying scripts, add or update the corresponding tests.
+- When modifying schemas, run JSON parsing and example validation.
+- When modifying templates, run the Bootstrap tests and Workspace Doctor.
+- Do not commit, push, or publish automatically.
 
-## 当前安全边界
+## Current security boundary
 
-- V0.1 Bootstrap 不联网、不安装软件、不修改 Shell，只写用户明确指定的空目录。
-- V0.1 诊断能力未配置时，所有远端诊断动作默认禁止。
-- 自更新只定义协议；在唯一仓库、正式 Release 和签名/哈希验证完成前不得自动应用。
+- The V0.1 Bootstrap does not access the network, install software, or modify the shell. It writes only to an explicitly specified empty directory.
+- When V0.1 diagnostic capabilities are unconfigured, all remote diagnostic actions are denied by default.
+- Self-update defines a protocol only. Do not apply updates automatically until there is a unique repository, formal releases, and signature or hash verification.

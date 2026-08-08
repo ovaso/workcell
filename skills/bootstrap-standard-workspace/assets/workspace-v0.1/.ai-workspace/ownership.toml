@@ -8,6 +8,10 @@ pattern = "AI_WORKSPACE.md"
 owner = "distribution"
 
 [[rules]]
+pattern = "LICENSE"
+owner = "distribution"
+
+[[rules]]
 pattern = ".ai-workspace/distribution.manifest"
 owner = "distribution"
 
@@ -128,6 +132,14 @@ pattern = "skills/extract-standard-feedback/**"
 owner = "distribution"
 
 [[rules]]
+pattern = "skills/localize-standard-workspace"
+owner = "distribution"
+
+[[rules]]
+pattern = "skills/localize-standard-workspace/**"
+owner = "distribution"
+
+[[rules]]
 pattern = "AGENTS.md"
 owner = "generated"
 
@@ -173,6 +185,10 @@ owner = "workspace"
 
 [[rules]]
 pattern = "feedback/**"
+owner = "workspace"
+
+[[rules]]
+pattern = "locales/**"
 owner = "workspace"
 
 [[rules]]

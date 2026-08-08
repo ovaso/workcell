@@ -21,6 +21,14 @@ SPEC.loader.exec_module(inspect_host)
 
 
 class InspectHostTest(unittest.TestCase):
+    def test_windows_command_catalog_uses_safe_known_probes(self) -> None:
+        for command in ("py", "pwsh", "powershell", "winget", "choco", "scoop"):
+            self.assertIn(command, inspect_host.DEFAULT_COMMANDS)
+            self.assertIn(command, inspect_host.VERSION_ARGUMENTS)
+        self.assertEqual("python", inspect_host.TOOLCHAIN_KINDS["py"])
+        self.assertEqual("powershell", inspect_host.TOOLCHAIN_KINDS["pwsh"])
+        self.assertEqual("powershell", inspect_host.TOOLCHAIN_KINDS["powershell"])
+
     def test_environment_classification_never_needs_values(self) -> None:
         self.assertEqual(("secret", "credential-like-name"), inspect_host.classify_env_name("API_TOKEN"))
         self.assertEqual(("private", "identity-path-or-endpoint-name"), inspect_host.classify_env_name("HOME"))

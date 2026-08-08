@@ -1,6 +1,6 @@
-# 任务契约
+# Task Contract
 
-## 真相源与目录
+## Source of truth and directories
 
 ```text
 requirements/<task-id>/
@@ -14,22 +14,22 @@ requirements/<task-id>/
   reviews/
   memory/
 workspaces/<task-id>/
-  ...仅在任务准备隔离代码时创建...
+  ...created only when the task prepares isolated code...
 ```
 
-按任务类型创建必要子目录；`task.toml` 必须存在。它是状态真相源，且必须符合 `.ai-workspace/schemas/task.schema.json`。创建时使用 `.ai-workspace/templates/task.toml`，不要维护第二套字段。
+Create only the subdirectories required by the task type; `task.toml` must exist. It is the state source of truth and must satisfy `.ai-workspace/schemas/task.schema.json`. Start from `.ai-workspace/templates/task.toml`; do not maintain a second field definition.
 
-全部任务内容属于 `workspace` 所有权，发行升级不得覆盖。
+All task content is `workspace`-owned and must not be overwritten by a release upgrade.
 
-## task 表
+## `task` table
 
-记录稳定 `id`、展示名称、标题、任务类型、标准 `status`、项目插件引用和时间。任务 ID 用于目录、分支和关联；展示名称可以使用中文。
+Record stable `id`, display name, title, task type, standard `status`, project-plugin reference, and timestamps. Use the task ID for directories, branches, and correlation. The display name may be localized.
 
-任务类型仅使用：`requirement`、`defect`、`diagnostic`、`review`、`maintenance`、`research`。
+Task type uses only `requirement`, `defect`, `diagnostic`, `review`, `maintenance`, or `research`.
 
-## scope 表
+## `scope` table
 
-模块角色由四个唯一字符串数组表示：
+Represent module roles with four arrays of unique strings:
 
 ```toml
 [scope]
@@ -39,41 +39,41 @@ reference = ["shared-library"]
 excluded = ["deployment"]
 ```
 
-角色权限顺序为：
+Role ordering is:
 
 ```text
 excluded / reference < verify < edit
 ```
 
-- `edit`：当前任务允许修改的模块；不自动包含提交、推送、发布或外部写入。
-- `verify`：只做契约、构建、测试和链路验证，不修改源文件。
-- `reference`：只读检索与上下文参考。
-- `excluded`：明确不处理，用于阻止任务无证据扩散。
+- `edit`: modules that the current task may modify; does not include commit, push, release, or external writes automatically.
+- `verify`: contract, build, test, and integration-path verification without source modification.
+- `reference`: read-only search and context.
+- `excluded`: explicitly out of scope, preventing unsupported task expansion.
 
-项目插件 `project/plugin/project-plugin.json` 中 `modules[].role` 是上限，角色同样只使用 `edit`、`verify`、`reference`。任务只能收窄，不能扩大；一个模块只能出现在一个 scope 数组中。`task.project_plugin_ref` 应指向该 JSON，例如：
+Project-plugin `modules[].role` in `project/plugin/project-plugin.json` is the ceiling and uses only `edit`, `verify`, or `reference`. A task may narrow but not expand the role, and a module appears in only one scope array. `task.project_plugin_ref` points to that JSON, for example:
 
 ```toml
 [task]
 project_plugin_ref = "project/plugin/project-plugin.json"
 ```
 
-## workflow 表
+## `workflow` table
 
-- `current_plan` 指向当前生效的版本化计划；没有计划时使用空字符串或 null。
-- 新计划使用新文件，把旧路径追加到 `superseded_plans`，禁止原地覆盖。
-- `next_action` 和 `next_gate` 必须与当前状态相符。
-- `branch` 从稳定任务 ID 派生；不得在多个文档手工维护不同分支值。
+- `current_plan` points to the active versioned plan; use an empty string or null when no plan exists.
+- Create a new file for a new plan and append the old path to `superseded_plans`; do not overwrite in place.
+- `next_action` and `next_gate` match the current state.
+- Derive `branch` from the stable task ID; do not maintain conflicting values in multiple documents.
 
-## gates 与 evidence
+## `gates` and `evidence`
 
-门禁状态只使用 `pending`、`passed`、`failed`、`waived`、`not-applicable`。`passed` 或 `waived` 应提供 `evidence_refs`。
+Gate status uses only `pending`, `passed`, `failed`, `waived`, or `not-applicable`. A `passed` or `waived` gate should provide `evidence_refs`.
 
-证据类型只使用：`requirement`、`plan`、`code`、`test`、`log`、`metric`、`trace`、`review`、`decision`、`release`。证据引用必须说明实际位置和观测时间；不得把 memory 或口头结论当作状态真相源。
+Evidence type uses only `requirement`, `plan`, `code`, `test`, `log`, `metric`, `trace`, `review`, `decision`, or `release`. Evidence references identify actual locations and observation times. Memory and verbal conclusions are not sources of truth for state.
 
-任务 Manifest 当前不保存凭证或笼统的能力开关。当前动作是否允许，必须同时读取核心策略、项目插件策略、诊断配置和本次用户授权。能力存在不等于授权。
+The task manifest stores neither credentials nor broad capability switches. Determine whether an action is allowed from core policy, project-plugin policy, diagnostic configuration, and the current user authorization together. Capability does not imply authorization.
 
-## 并行写入
+## Parallel writes
 
-在计划或 `decisions/` 证据中登记参与者、模块、文件组和只读或写入模式，并把决定文件加入 `evidence`。同一时间只允许一个参与者拥有同一文件的写入权；参与者不得超出 `scope.edit`。
+Record participants, modules, file groups, and read-only or write mode in the plan or `decisions/` evidence, then include the decision file in `evidence`. Only one participant may hold write authority for a file at a time, and no participant may write outside `scope.edit`.
 
-并行安排是协作边界，不改变项目角色、任务范围或用户授权。
+Parallel scheduling is a collaboration boundary and does not change project roles, task scope, or user authorization.

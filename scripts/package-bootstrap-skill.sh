@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-# 获取仓库、版本与发行目录。
+# Resolve the repository, version, and distribution directory.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
 version=$(tr -d '[:space:]' < "$repo_root/VERSION")
@@ -16,6 +16,7 @@ fi
 
 "$repo_root/scripts/build-bootstrap-assets.sh"
 "$repo_root/scripts/validate-product.sh"
+"$repo_root/skills/bootstrap-standard-workspace/scripts/validate-bundle.sh" >/dev/null
 
 mkdir -p "$dist_dir"
 rm -f "$archive" "$archive.sha256"

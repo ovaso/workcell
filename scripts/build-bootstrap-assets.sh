@@ -1,20 +1,20 @@
 #!/bin/sh
 set -eu
 
-# 获取仓库根目录，所有同步目标均由该绝对路径派生。
+# Resolve the repository root; derive every synchronization target from it.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
 skill_root="$repo_root/skills/bootstrap-standard-workspace"
 asset_root="$skill_root/assets/workspace-v0.1"
 stage_root=$(mktemp -d "${TMPDIR:-/tmp}/std-workspace-build.XXXXXX")
 
-# 清理本次构建使用的临时目录。
+# Clean the temporary directory used by this build.
 cleanup() {
   rm -rf "$stage_root"
 }
 trap cleanup EXIT HUP INT TERM
 
-# 将一个源码目录原子同步到受控目标，防止旧文件残留。
+# Synchronize a source directory atomically to an allowlisted target without stale files.
 replace_directory() {
   source_dir=$1
   target_dir=$2
@@ -43,7 +43,7 @@ replace_directory() {
   mv "$stage_dir" "$target_dir"
 }
 
-# 计算文件 SHA-256；兼容常见 GNU 与 BSD/macOS 工具。
+# Compute a file SHA-256 with common GNU and BSD/macOS tools.
 sha256_file() {
   file_path=$1
   if command -v sha256sum >/dev/null 2>&1; then
@@ -59,14 +59,14 @@ sha256_file() {
 replace_directory "$repo_root/specs" "$skill_root/references/specs"
 replace_directory "$repo_root/schemas" "$skill_root/references/schemas"
 
-# 只把通用、发行安全的产品文档带入 Skill，排除会话溯源。
+# Include only generic, release-safe product documentation; exclude session history.
 mkdir -p "$stage_root/release-product-docs"
 for document in product-vision.md architecture.md lifecycle.md roadmap.md; do
   cp "$repo_root/docs/$document" "$stage_root/release-product-docs/$document"
 done
 replace_directory "$stage_root/release-product-docs" "$skill_root/references/product-docs"
 
-# 只携带可复用决策和种子知识，来源工作区观察事实仅保留在源码仓库。
+# Carry reusable decisions and seed knowledge only; keep source observations in the repository.
 mkdir -p "$stage_root/release-product-facts"
 for fact in known-tool-capabilities.toml session-decisions.toml; do
   cp "$repo_root/facts/$fact" "$stage_root/release-product-facts/$fact"
@@ -75,10 +75,11 @@ replace_directory "$stage_root/release-product-facts" "$skill_root/references/pr
 
 replace_directory "$repo_root/LICENSES" "$skill_root/LICENSES"
 cp "$repo_root/LICENSE" "$skill_root/LICENSE"
+cp "$repo_root/LICENSE" "$asset_root/LICENSE"
 replace_directory "$repo_root/specs" "$asset_root/.ai-workspace/specs"
 replace_directory "$repo_root/schemas" "$asset_root/.ai-workspace/schemas"
 
-# 将环境能力目录作为展开后工作区的发行种子知识，供事实刷新和建议流程读取。
+# Ship the tool-capability catalog as seed knowledge for fact refresh and recommendations.
 mkdir -p "$asset_root/knowledge"
 cp "$repo_root/facts/known-tool-capabilities.toml" "$asset_root/knowledge/tool-capabilities.toml"
 
@@ -88,7 +89,7 @@ for document in product-vision.md architecture.md lifecycle.md roadmap.md; do
 done
 replace_directory "$stage_root/standard-docs" "$asset_root/docs/standard"
 
-# 在外层 checksum 之前生成安装收据；该收据不自哈希，由外层清单保护。
+# Generate the installed receipt before outer checksums; it does not hash itself.
 release_version=$(tr -d '[:space:]' < "$repo_root/VERSION")
 PYTHONDONTWRITEBYTECODE=1 python3 "$repo_root/scripts/generate-release-manifest.py" \
   --asset-root "$asset_root" \

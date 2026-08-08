@@ -1,20 +1,20 @@
 #!/bin/sh
 set -eu
 
-# 将真实 TOML Manifest 映射为 JSON 后，使用同一组 Schema 校验。
+# Map real TOML manifests to JSON and validate them with the same schemas.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
 skill_root="$repo_root/skills/bootstrap-standard-workspace"
 asset_root="$skill_root/assets/workspace-v0.1"
 test_root=$(mktemp -d "${TMPDIR:-/tmp}/std-workspace-toml-schema.XXXXXX")
 
-# 清理转换过程中产生的临时 JSON。
+# Clean temporary JSON produced by conversion.
 cleanup() {
   rm -rf "$test_root"
 }
 trap cleanup EXIT HUP INT TERM
 
-# 转换并校验一个 TOML 与 Schema 对。
+# Convert and validate one TOML/schema pair.
 validate_toml_instance() {
   schema_name=$1
   toml_path=$2

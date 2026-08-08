@@ -1,59 +1,59 @@
 # Data Serialization Specification V0.1
 
-## 1. 目的
+## 1. Purpose
 
-标准工作区同时使用 TOML 和 JSON：小型、面向人工维护的配置优先 TOML；层级较深、需要严格 Schema 和确定性生成的数据优先 JSON。JSON Schema 直接校验 JSON，或校验 TOML 解析后得到的 JSON 等价结构。
+The standard workspace uses both TOML and JSON. Prefer TOML for small configurations maintained by people, and JSON for deeply nested data that requires strict schemas and deterministic generation. JSON Schema validates JSON directly or validates the JSON-equivalent structure produced by parsing TOML.
 
-## 2. 格式职责
+## 2. Format responsibilities
 
-- TOML：工作区身份、版本锁、策略、诊断配置和任务 Manifest。
-- JSON：环境事实快照、项目插件及其他层级较深的确定性数据。
-- JSON Schema：字段、类型、枚举、必需项和兼容版本约束。
-- Markdown：规范、知识、计划、说明和报告。
-- 纯文本 Manifest：不可变发行文件的逐路径清单。
+- TOML: workspace identity, version locks, policies, diagnostic configuration, and task manifests.
+- JSON: environment-fact snapshots, project plugins, and other deeply nested deterministic data.
+- JSON Schema: field, type, enum, required-property, and compatible-version constraints.
+- Markdown: specifications, knowledge, plans, explanations, and reports.
+- Plain-text manifests: per-path lists of immutable release files.
 
-动态状态不得只存在于 Markdown；秘密值不得写入任何上述格式。
+Dynamic state must not exist only in Markdown. Secret values must not be written in any of these formats.
 
-## 3. TOML 到 JSON 的映射
+## 3. TOML-to-JSON mapping
 
-采用标准 TOML 解析语义：
+Use standard TOML parsing semantics:
 
-- 表映射为 JSON object；
-- 数组映射为 JSON array；
-- 表数组映射为 object array；
-- 字符串、整数、浮点数和布尔值保持对应 JSON 类型；
-- 日期时间在 Schema 层按 RFC 3339 字符串验证。
+- a table maps to a JSON object;
+- an array maps to a JSON array;
+- an array of tables maps to an array of objects;
+- strings, integers, floating-point numbers, and booleans retain their corresponding JSON types;
+- date-time values are validated as RFC 3339 strings at the schema layer.
 
-实现不得通过正则表达式完整解析 TOML。Bootstrap V0.1 允许仅为少量固定字段使用受限读取器，但完整校验应使用标准 TOML 解析器。
+Implementations must not parse complete TOML with regular expressions. Bootstrap V0.1 may use constrained readers for a small number of fixed fields, but complete validation must use a standard TOML parser.
 
-## 4. 空值与未知事实
+## 4. Null values and unknown facts
 
-TOML 没有 `null`。未建立的可选事实应省略字段，而不是填写虚构时间、路径、端点或版本。确需表达未知状态时使用 Schema 明确定义的枚举，例如 `uninitialized`、`unknown` 或 `not-probed`。
+TOML has no `null`. Omit optional facts that have not been established instead of inventing times, paths, endpoints, or versions. When an unknown state must be represented, use an enum explicitly defined by the schema, such as `uninitialized`, `unknown`, or `not-probed`.
 
-空字符串只能用于明确允许的待初始化引用字段，不得代表已验证事实。
+An empty string is allowed only for an explicitly permitted uninitialized reference and must not represent a verified fact.
 
-## 5. 时间
+## 5. Time
 
-已观测时间使用带时区的 RFC 3339，例如：
+Observation times use RFC 3339 with a time zone, for example:
 
 ```text
 2026-07-31T16:30:00+08:00
 ```
 
-禁止使用文件修改时间替代事实观测时间。事实刷新必须生成新快照或明确记录被替代关系。
+Do not substitute a file modification time for a fact observation time. Refreshing facts must create a new snapshot or explicitly record a supersession relationship.
 
-## 6. 版本兼容
+## 6. Version compatibility
 
-每个 Manifest 必须声明自己的 Schema 或 API 版本。读取器遇到未知主版本时失败关闭；未知次版本只有在 Schema 明确兼容时才可继续。
+Every manifest must declare its schema or API version. Readers fail closed on an unknown major version. An unknown minor version is acceptable only when the schema explicitly declares compatibility.
 
-## 7. 确定性输出
+## 7. Deterministic output
 
-生成器应稳定排序：
+Generators must produce stable output:
 
-- 固定表顺序；
-- 按稳定 ID 排序的数组；
-- UTF-8、LF 换行；
-- 文件末尾保留一个换行；
-- 不写宿主机绝对路径，除非该文件明确属于本地 workspace 事实且被标记为敏感。
+- fixed table order;
+- arrays sorted by stable ID;
+- UTF-8 and LF line endings;
+- exactly one trailing newline;
+- no host-specific absolute paths unless a file explicitly stores local workspace facts and marks them as sensitive.
 
-这些约束用于降低无意义 Diff，并支持哈希、Doctor 和升级预览。
+These constraints reduce meaningless diffs and support hashing, Doctor checks, and upgrade previews.

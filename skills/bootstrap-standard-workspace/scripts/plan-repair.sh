@@ -1,13 +1,13 @@
 #!/bin/sh
 set -eu
 
-# 输出统一的修复计划失败信息。
+# Print a consistent repair-plan failure.
 fail() {
     echo "ERROR: $*" >&2
     exit 2
 }
 
-# 校验 Manifest 路径，防止计划阶段逃逸工作区。
+# Validate manifest paths to prevent workspace escape during planning.
 validate_manifest_path() {
     manifest_path=$1
     case "$manifest_path" in
@@ -19,7 +19,7 @@ validate_manifest_path() {
     return 0
 }
 
-# 检查相对路径任一祖先或末端是否为符号链接，防止修复计划跟随外部路径。
+# Check every relative-path ancestor and leaf so the plan cannot follow an external path.
 path_contains_symlink_component() {
     link_root=$1
     link_remaining=$2

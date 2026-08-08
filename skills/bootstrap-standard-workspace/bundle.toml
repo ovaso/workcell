@@ -1,7 +1,7 @@
 [bundle]
 id = "bootstrap-standard-workspace"
 version = "0.1.0"
-status = "draft"
+status = "stable"
 format = "text-only-skill-bundle"
 
 [versions]
@@ -20,6 +20,7 @@ workspace_asset = "assets/workspace-v0.1"
 required_entries = [
   "AI_WORKSPACE.md",
   "AGENTS.md",
+  "LICENSE",
   ".ai-workspace/workspace.toml",
   ".ai-workspace/versions.lock",
   ".ai-workspace/release-manifest.json",

@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-# 执行完整产品结构和安全扫描。
+# Run the complete product structure and safety scan.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
 

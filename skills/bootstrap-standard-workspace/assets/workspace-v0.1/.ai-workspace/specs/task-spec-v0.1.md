@@ -1,66 +1,66 @@
 # Standard Task Specification V0.1
 
-## 1. 目的
+## 1. Purpose
 
-需求、缺陷、诊断、Review、维护和研究都表示为独立任务实例。任务 Manifest 是当前状态的唯一机器可读入口；计划、memory、Git 和日志是证据，不得再由它们反向猜测任务状态。
+Requirements, defects, diagnostics, reviews, maintenance, and research are represented as independent task instances. The task manifest is the only machine-readable entry point for current state. Plans, memory, Git, and logs are evidence and must not be used to infer task state in reverse.
 
-## 2. 稳定 ID 与展示名称
+## 2. Stable ID and display name
 
-每个任务同时维护：
+Every task maintains:
 
-- `id`：用于目录、分支、命令和关联的稳定机器 ID；
-- `display_name`：面向个人阅读的名称，可使用中文；
-- `title`：本次任务的简短目标。
+- `id`: a stable machine ID used for directories, branches, commands, and correlation;
+- `display_name`: a human-readable localized name;
+- `title`: a concise objective for this task.
 
-目录和分支由 `id` 派生，禁止在多处手工维护不一致的副本。
+Derive directories and branches from `id`; do not maintain inconsistent copies manually.
 
-V0.1 机器 ID 只使用小写 ASCII 字母、数字、点、下划线和连字符；中文、空格及其他展示字符放入 `display_name`。项目插件可以定义分支前缀，但不得改变任务 ID 本身。
+V0.1 machine IDs contain only lowercase ASCII letters, digits, dots, underscores, and hyphens. Spaces and localized display characters belong in `display_name`. A project plugin may define a branch prefix but must not change the task ID.
 
-## 3. 生命周期
+## 3. Lifecycle
 
 ```text
 INBOX
-→ SCOPED
-→ PLANNED
-→ READY
-→ IMPLEMENTING
-→ VERIFYING
-→ DEV_FEEDBACK / TEST_FEEDBACK
-→ QC_READY
-→ RELEASE_READY
-→ DONE
-→ ARCHIVED
+-> SCOPED
+-> PLANNED
+-> READY
+-> IMPLEMENTING
+-> VERIFYING
+-> DEV_FEEDBACK / TEST_FEEDBACK
+-> QC_READY
+-> RELEASE_READY
+-> DONE
+-> ARCHIVED
 ```
 
-任何活动状态均可显式进入 `PAUSED`。状态迁移必须记录下一步与下一道门禁，不能只改状态字段。
+Any active state may explicitly enter `PAUSED`. Every transition records the next action and next gate; changing only the status field is invalid.
 
-## 4. 模块角色
+## 4. Module roles
 
-- `edit`：当前任务允许修改的模块。
-- `verify`：只用于契约、构建或链路验证的模块。
-- `reference`：只读参考模块。
-- `excluded`：本任务明确不处理的模块或范围。
+- `edit`: modules that the current task may modify.
+- `verify`: modules used only for contracts, builds, or integration-path verification.
+- `reference`: read-only reference modules.
+- `excluded`: modules or scope explicitly excluded from the task.
 
-并行代理的写入所有权必须落在 `edit` 范围内，且同一文件不得被多个代理同时拥有。
+Parallel-agent write ownership must stay within `edit`, and the same file must not be owned by multiple agents simultaneously.
 
-## 5. 计划与历史
+## 5. Plans and history
 
-- `current_plan` 明确指向当前生效计划。
-- 新计划不得原地覆盖旧版本；旧计划进入 `superseded_plans`。
-- 计划只描述预期工作、验证和风险；执行事实写入变更记录和证据。
-- memory 可帮助恢复会话，但不是任务状态的真相源。
+- `current_plan` points explicitly to the active plan.
+- A new plan must not overwrite an older version in place; older plans move to `superseded_plans`.
+- Plans describe intended work, verification, and risks. Execution facts belong in change records and evidence.
+- Memory may help resume a session but is not the source of truth for task state.
 
-## 6. 门禁与证据
+## 6. Gates and evidence
 
-门禁状态为 `pending / passed / failed / waived / not-applicable`。任何 `passed` 或 `waived` 都应引用证据或决定记录。
+Gate status is one of `pending / passed / failed / waived / not-applicable`. Every `passed` or `waived` status should reference evidence or a decision record.
 
-证据类型至少包括：需求、计划、代码、测试、日志、指标、追踪、Review、决策和发布材料。原始日志应通过 Manifest 记录来源、时间窗口、关联标识、脱敏和保留策略。
+Evidence types include at least requirement, plan, code, test, log, metric, trace, review, decision, and release material. A raw-log manifest records provenance, time window, correlation identifiers, redaction, and retention policy.
 
-## 7. 安全边界
+## 7. Security boundary
 
-任务授权只能缩小或临时开放已登记的项目能力，不能绕过核心禁止事项。环境具备某个命令、项目配置了某个 Provider，均不自动构成当前任务授权。
+Task authorization may narrow or temporarily open a registered project capability but cannot bypass core prohibitions. The presence of a command in the environment or a configured Provider in the project does not authorize its use for the current task.
 
-## 8. 目录建议
+## 8. Recommended directory
 
 ```text
 requirements/<task-id>/
@@ -75,4 +75,4 @@ requirements/<task-id>/
 └── memory/
 ```
 
-是否创建全部子目录由任务类型决定；`task.toml` 必须始终存在。
+The task type determines which optional subdirectories are created; `task.toml` must always exist.

@@ -1,55 +1,55 @@
 # Distribution and Upgrade Specification V0.1
 
-## 1. 产品形态
+## 1. Product form
 
 ```text
-唯一 Git 源码仓库
--> 稳定 Tag
--> 校验与打包
+single canonical Git source repository
+-> stable tag
+-> validation and packaging
 -> Bootstrap Skill ZIP
--> 安装和展开
--> 独立标准工作区实例
+-> installation and expansion
+-> independent standard workspace instance
 ```
 
-## 2. 版本
+## 2. Versions
 
-至少独立维护：产品版本、工作区 Schema、Release Manifest Schema、环境事实 Schema、项目插件 API、诊断能力 API 和任务 Schema。
+Maintain at least the product version, workspace schema, Release Manifest schema, environment-fact schema, project-plugin API, diagnostic-capability API, and task schema independently.
 
-## 3. 发行要求
+## 3. Release requirements
 
-- Release 必须从稳定 Tag 构建。
-- 发行物不可变。
-- 确定性生成工作区内 `.ai-workspace/release-manifest.json`，覆盖资产内除自身外的全部普通文件，并记录 first-match 所有权和 SHA-256。
-- 生成 Bootstrap 外层 SHA-256 清单，覆盖包括工作区 Release 清单在内的完整资产；工作区 Release 清单不得自哈希。
-- 不得用 `main` 最新提交作为自动升级目标。
-- 正式公开前必须选择许可证并完成第三方许可证清单。
+- Build a Release from a stable tag.
+- Keep the distribution immutable.
+- Deterministically generate `.ai-workspace/release-manifest.json` inside the workspace. Cover every regular asset file except the manifest itself and record first-match ownership and SHA-256.
+- Generate an outer Bootstrap SHA-256 manifest that covers the complete asset, including the workspace Release Manifest. The workspace Release Manifest must not hash itself.
+- Do not use the latest `main` commit as an automatic upgrade target.
+- Verify the repository license and complete third-party notices before every public release.
 
-## 4. 工作区升级
+## 4. Workspace upgrade
 
 ```text
-验证当前安装收据与候选外层校验
--> 读取版本
--> 选择 Migration
--> 生成升级计划和文件影响
--> 用户确认
--> 创建可恢复快照
--> 执行 Migration
--> 重编译生成文件
--> Doctor
--> 更新版本锁和发行指针
--> 最后原子替换安装收据或回滚
+verify the current installation receipt and candidate outer checksum
+-> read versions
+-> select a Migration
+-> generate the upgrade plan and file impact
+-> obtain user confirmation
+-> create a recoverable snapshot
+-> apply the Migration
+-> recompile generated files
+-> run the Doctor
+-> update version locks and the release pointer
+-> atomically replace the installation receipt last, or roll back
 ```
 
-升级预览必须直接使用当前工作区 `.ai-workspace/release-manifest.json` 作为 `--current-manifest`。候选清单必须符合相同 Schema，且由候选 Release 的外层 checksum 或签名建立信任。清单自身不出现在 `files` 中；预览和事务日志必须把它作为独立的 `replace-receipt` 末步动作。成功替换后禁止再执行生成、格式化或其他工作区写入；替换失败视为升级失败并进入回滚。
+The upgrade preview must use the current workspace `.ai-workspace/release-manifest.json` directly as `--current-manifest`. The candidate manifest must satisfy the same schema and gain trust from the candidate Release's outer checksum or signature. The manifest itself does not appear in `files`; previews and transaction logs represent it as a separate, final `replace-receipt` action. After a successful replacement, no generation, formatting, or other workspace write may occur. A failed replacement is an upgrade failure and triggers rollback.
 
-## 5. 自更新
+## 5. Self-update
 
-自更新只在唯一仓库、生产标准和正式 Release 流程稳定后启用。默认允许自动检查，可配置自动下载，禁止默认自动应用。
+Enable self-update only after the canonical repository, production standard, and formal Release process are stable. Automatic checks may be enabled by default, automatic downloads may be configured, and automatic application must remain disabled by default.
 
-不得在 Skill 正在执行时原地覆盖自身。新版本应安装到临时或并列目录，校验后再切换，并保留回滚能力。
+Do not overwrite a currently executing Skill in place. Install a new version in a temporary or sibling directory, validate it, then switch while preserving rollback capability.
 
-## 6. 文件所有权
+## 6. File ownership
 
-- `distribution` 可由 Migration 替换。
-- `generated` 重新编译。
-- `workspace` 完整保留。
+- `distribution` may be replaced by a Migration.
+- `generated` is recompiled.
+- `workspace` is preserved completely.

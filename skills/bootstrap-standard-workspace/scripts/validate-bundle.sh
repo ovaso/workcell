@@ -1,13 +1,13 @@
 #!/bin/sh
 set -eu
 
-# 输出统一的 Bundle 校验失败信息。
+# Print a consistent bundle-validation failure.
 fail() {
     echo "ERROR: $*" >&2
     exit 2
 }
 
-# 校验文件中存在精确的必需元数据行。
+# Verify that an exact required metadata line exists.
 require_exact_line() {
     expected_line=$1
     metadata_file=$2
@@ -16,7 +16,7 @@ require_exact_line() {
     fi
 }
 
-# 按 V0.1 受限 TOML 契约校验 Bundle 结构、类型、重复项和必需入口。
+# Validate bundle structure, types, duplicates, and entry points against the constrained V0.1 TOML contract.
 validate_bundle_metadata() {
     if ! awk '
         function trim(value) {
@@ -90,6 +90,7 @@ validate_bundle_metadata() {
 
             expected_entry["AI_WORKSPACE.md"] = 1
             expected_entry["AGENTS.md"] = 1
+            expected_entry["LICENSE"] = 1
             expected_entry[".ai-workspace/workspace.toml"] = 1
             expected_entry[".ai-workspace/versions.lock"] = 1
             expected_entry[".ai-workspace/release-manifest.json"] = 1
@@ -181,7 +182,7 @@ validate_bundle_metadata() {
     fi
 }
 
-# 校验运行时 Skill 的目录名与 YAML name 字段一致。
+# Verify that each runtime Skill directory matches its YAML name.
 validate_runtime_skill() {
     runtime_name=$1
     runtime_file=$asset_directory/skills/$runtime_name/SKILL.md
@@ -200,7 +201,7 @@ validate_runtime_skill() {
     fi
 }
 
-# 校验修复清单中的每个路径都由 ownership.toml 明确归类为 distribution。
+# Verify that ownership.toml explicitly classifies every repair-manifest path as distribution.
 validate_manifest_ownership() {
     ownership_file=$asset_directory/.ai-workspace/ownership.toml
     manifest_file=$asset_directory/.ai-workspace/distribution.manifest
@@ -278,7 +279,7 @@ validate_manifest_ownership() {
     fi
 }
 
-# 校验 SHA-256 清单覆盖全部资产，且每个摘要与文件内容一致。
+# Verify that the SHA-256 manifest covers all assets and every digest matches.
 validate_checksums() {
     checksum_file=$skill_directory/checksums/workspace-v0.1.sha256
     [ -s "$checksum_file" ] || fail "missing workspace checksum manifest"
@@ -345,6 +346,10 @@ asset_directory=$skill_directory/assets/workspace-v0.1
 [ -x "$script_directory/create-workspace.sh" ] || fail "create script is not executable"
 [ -x "$script_directory/validate-workspace.sh" ] || fail "workspace validator is not executable"
 [ -x "$script_directory/plan-repair.sh" ] || fail "repair planner is not executable"
+[ -s "$script_directory/create-workspace.ps1" ] || fail "PowerShell create script is missing"
+[ -s "$script_directory/validate-workspace.ps1" ] || fail "PowerShell workspace validator is missing"
+[ -s "$script_directory/plan-repair.ps1" ] || fail "PowerShell repair planner is missing"
+[ -s "$script_directory/validate-bundle.ps1" ] || fail "PowerShell bundle validator is missing"
 placeholder_marker=TO"DO"
 if grep -F "$placeholder_marker" "$skill_directory/SKILL.md" >/dev/null 2>&1; then
     fail "external Skill contains an unresolved template placeholder"
@@ -353,7 +358,7 @@ fi
 validate_bundle_metadata
 require_exact_line 'id = "bootstrap-standard-workspace"' "$bundle_file"
 require_exact_line 'version = "0.1.0"' "$bundle_file"
-require_exact_line 'status = "draft"' "$bundle_file"
+require_exact_line 'status = "stable"' "$bundle_file"
 require_exact_line 'format = "text-only-skill-bundle"' "$bundle_file"
 require_exact_line 'workspace = "0.1"' "$bundle_file"
 require_exact_line 'release_manifest = "0.1"' "$bundle_file"
@@ -396,7 +401,8 @@ for runtime_name in \
     standard-workspace-doctor \
     start-standard-task \
     upgrade-standard-workspace \
-    extract-standard-feedback
+    extract-standard-feedback \
+    localize-standard-workspace
 do
     validate_runtime_skill "$runtime_name"
 done

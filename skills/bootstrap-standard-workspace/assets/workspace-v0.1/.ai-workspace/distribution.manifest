@@ -1,5 +1,6 @@
-# V0.1 只列不可变的 distribution 文件。可变实例必须通过模板生成，禁止 byte repair。
+# V0.1 lists only immutable distribution files. Mutable instances come from templates and must not receive byte repair.
 AI_WORKSPACE.md
+LICENSE
 .ai-workspace/distribution.manifest
 .ai-workspace/release-manifest.json
 .ai-workspace/ownership.toml
@@ -18,3 +19,4 @@ skills/standard-workspace-doctor
 skills/start-standard-task
 skills/upgrade-standard-workspace
 skills/extract-standard-feedback
+skills/localize-standard-workspace

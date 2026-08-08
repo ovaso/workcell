@@ -1,19 +1,19 @@
 #!/bin/sh
 set -eu
 
-# 输出统一的工作区校验失败信息。
+# Print a consistent workspace-validation failure.
 fail() {
     echo "ERROR: $*" >&2
     exit 2
 }
 
-# 输出可修复的发行版漂移，并使用约定的漂移退出码。
+# Report repairable distribution drift with the defined drift exit code.
 drift() {
     echo "DRIFT: $*" >&2
     exit 1
 }
 
-# 按工作区 V0.1 的受限 TOML 子集校验 section、键、类型和重复定义。
+# Validate sections, keys, types, and duplicates in the constrained V0.1 TOML subset.
 validate_metadata_toml() {
     metadata_file=$1
     metadata_profile=$2
@@ -141,7 +141,7 @@ validate_metadata_toml() {
     fi
 }
 
-# 从简单 TOML 表中读取字符串值；V0.1 元数据禁止多行值和重复键。
+# Read a string from a simple TOML table; V0.1 metadata prohibits multiline values and duplicate keys.
 toml_value() {
     toml_file=$1
     toml_section=$2
@@ -185,7 +185,7 @@ toml_value() {
     ' "$toml_file"
 }
 
-# 校验必需 TOML 字段存在且与当前 Bundle 兼容。
+# Verify that required TOML fields exist and are compatible with the current bundle.
 require_toml_value() {
     value_file=$1
     value_section=$2
@@ -197,7 +197,7 @@ require_toml_value() {
     fi
 }
 
-# 校验 Manifest 路径是规范化的工作区内相对路径。
+# Validate a manifest path as a normalized workspace-relative path.
 validate_manifest_path() {
     manifest_path=$1
     case "$manifest_path" in
@@ -209,7 +209,7 @@ validate_manifest_path() {
     return 0
 }
 
-# 检查相对路径任一祖先或末端是否为符号链接，避免越出工作区根目录。
+# Check every relative-path ancestor and leaf for symlinks to prevent workspace escape.
 path_contains_symlink_component() {
     link_root=$1
     link_remaining=$2
@@ -234,7 +234,7 @@ path_contains_symlink_component() {
     return 1
 }
 
-# 比较当前版本中受发行版管理的文件和目录。
+# Compare files and directories managed by the current release.
 validate_distribution_files() {
     manifest_file=$asset_directory/.ai-workspace/distribution.manifest
     workspace_manifest=$workspace_directory/.ai-workspace/distribution.manifest
@@ -305,7 +305,9 @@ if [ "$metadata_only" = false ]; then
         tools \
         knowledge \
         docs \
-        memory
+        memory \
+        feedback \
+        locales
     do
         [ ! -L "$workspace_directory/$required_directory" ] || fail "required directory must not be a symbolic link: $required_directory"
         [ -d "$workspace_directory/$required_directory" ] || fail "missing required directory: $required_directory"
@@ -378,7 +380,8 @@ for path_pair in \
     'requirements:requirements' \
     'workspaces:workspaces' \
     'skills:skills' \
-    'feedback:feedback'
+    'feedback:feedback' \
+    'locales:locales'
 do
     path_key=${path_pair%%:*}
     expected_path=${path_pair#*:}
