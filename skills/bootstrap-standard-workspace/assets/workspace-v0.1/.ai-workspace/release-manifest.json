@@ -500,7 +500,7 @@
     {
       "path": "skills/standard-workspace-doctor/scripts/doctor.py",
       "owner": "distribution",
-      "sha256": "cb156819d9b33811a5225cfd470f47f8fff26bd033bdef0fbf4616bef6253e95"
+      "sha256": "a44cbc1f508e279e6294d0932c57a1a6b16ca271958c1bd1c596b98beb99b2b6"
     },
     {
       "path": "skills/standard-workspace-doctor/scripts/json_schema_subset.py",

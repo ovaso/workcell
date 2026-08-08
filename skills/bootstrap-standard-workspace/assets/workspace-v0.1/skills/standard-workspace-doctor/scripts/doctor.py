@@ -145,7 +145,7 @@ class WorkspaceDoctor:
 
         path_obj = Path(path)
         try:
-            display_path = str(path_obj.resolve().relative_to(self.root))
+            display_path = path_obj.resolve().relative_to(self.root).as_posix()
         except (OSError, ValueError):
             display_path = str(path)
         self.findings.append(Finding(severity, code, display_path or ".", message))
