@@ -12,7 +12,7 @@ function Fail {
 }
 
 function Remove-TomlComment {
-    param([Parameter(Mandatory = $true)][string]$Line)
+    param([Parameter(Mandatory = $true)][AllowEmptyString()][string]$Line)
     $builder = New-Object Text.StringBuilder
     $quoted = $false
     $escaped = $false
