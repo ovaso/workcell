@@ -48,7 +48,7 @@ function Get-TreeSnapshot {
     }
     $array = $entries.ToArray()
     [Array]::Sort($array, [StringComparer]::Ordinal)
-    return ,$array
+    return $array
 }
 
 function Assert-DirectoriesEqual {
