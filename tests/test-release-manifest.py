@@ -56,10 +56,15 @@ pattern = ".ai-workspace/release-manifest.json"
 owner = "distribution"
 """,
             encoding="utf-8",
+            newline="\n",
         )
-        (asset / "distribution/specific.txt").write_text("first match\n", encoding="utf-8")
-        (asset / "exact.txt").write_text("exact\n", encoding="utf-8")
-        (asset / "workspace.txt").write_text("workspace\n", encoding="utf-8")
+        (asset / "distribution/specific.txt").write_text(
+            "first match\n", encoding="utf-8", newline="\n"
+        )
+        (asset / "exact.txt").write_text("exact\n", encoding="utf-8", newline="\n")
+        (asset / "workspace.txt").write_text(
+            "workspace\n", encoding="utf-8", newline="\n"
+        )
         return asset
 
     def test_manifest_is_deterministic_complete_and_excludes_itself(self) -> None:
@@ -106,7 +111,9 @@ owner = "distribution"
                 asset,
                 GENERATOR.canonical_bytes(GENERATOR.build_manifest(asset, "0.1.0")),
             )
-            (asset / "exact.txt").write_text("changed\n", encoding="utf-8")
+            (asset / "exact.txt").write_text(
+                "changed\n", encoding="utf-8", newline="\n"
+            )
             with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
                 status = GENERATOR.main(
                     [
