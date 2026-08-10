@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bootstrap Workcell"
+  short_description: "Create and validate a portable AI workspace bundle"
+  default_prompt: "Use $bootstrap-workcell to create a Workcell workspace in an explicit empty directory and validate the result."

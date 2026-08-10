@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:ai-native-standard-workspace:schema:bundle:0.1",
-  "title": "Standard Workspace Bootstrap Bundle V0.1",
+  "$id": "urn:workcell:schema:bundle:0.1",
+  "title": "Workcell Bootstrap Bundle V0.1",
   "type": "object",
   "additionalProperties": false,
   "required": ["bundle", "versions", "payload", "safety"],
@@ -11,7 +11,7 @@
       "additionalProperties": false,
       "required": ["id", "version", "status", "format"],
       "properties": {
-        "id": {"const": "bootstrap-standard-workspace"},
+        "id": {"const": "bootstrap-workcell"},
         "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$"},
         "status": {"enum": ["draft", "release-candidate", "stable", "deprecated"]},
         "format": {"const": "text-only-skill-bundle"}

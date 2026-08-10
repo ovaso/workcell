@@ -2,10 +2,10 @@
 
 ## Source repository and nested Skills
 
-`std-workspace` is an independent Git source repository, not an expanded standard workspace. Repository-level documentation, licenses, specifications, schemas, build logic, and tests are siblings of `skills/`. The standard protocols target multiple AI platforms, while V0.1 deterministic bootstrap scripts provide equivalent POSIX `sh` and PowerShell entry points:
+`workcell` is an independent Git source repository, not an expanded Workcell workspace. Repository-level documentation, licenses, specifications, schemas, build logic, and tests are siblings of `skills/`. The Workcell protocols target multiple AI platforms, while V0.1 deterministic bootstrap scripts provide equivalent POSIX `sh` and PowerShell entry points:
 
 ```text
-std-workspace/
+workcell/
 ├── README.md
 ├── LICENSE
 ├── LICENSES/
@@ -15,7 +15,7 @@ std-workspace/
 ├── scripts/
 ├── tests/
 └── skills/
-    └── bootstrap-standard-workspace/
+    └── bootstrap-workcell/
         ├── SKILL.md
         └── assets/workspace-v0.1/
             └── skills/   # runtime Skills carried by the expanded workspace
@@ -27,7 +27,7 @@ The outer Bootstrap Skill is the distribution and self-bootstrap entry point. Th
 
 ```text
 Bootstrap distribution layer
-  -> standard workflow kernel
+  -> Workcell workflow kernel
   -> host environment fact layer
   -> generic technology adapters
   -> project plugin
@@ -40,7 +40,7 @@ Bootstrap distribution layer
 
 Responsible for `create / validate / repair / upgrade`, with secure self-update added only after releases are stable. Bootstrap is installation media and does not perform daily project development.
 
-## Standard workflow kernel
+## Workcell workflow kernel
 
 Defines workspace and task lifecycles, the evidence model, file ownership, AI context assembly, security constraints, and multi-agent collaboration boundaries. The kernel must not contain project names, server addresses, or business rules.
 
@@ -76,8 +76,8 @@ An upgrade may replace only `distribution`, recompile `generated`, and must pres
 
 ## Localization layer
 
-English is the canonical language for product and control-plane content. `localize-standard-workspace` may generate reviewed target-language documentation and adapter text under workspace-owned or generated localization paths. It must preserve stable IDs, schemas, commands, paths, policy semantics, and the English source, and it must never turn a translation into an independent source of truth.
+English is the canonical language for product and control-plane content. `localize-workcell` may generate reviewed target-language documentation and adapter text under workspace-owned or generated localization paths. It must preserve stable IDs, schemas, commands, paths, policy semantics, and the English source, and it must never turn a translation into an independent source of truth.
 
-## Practice feedback and standard evolution
+## Practice feedback and Workcell evolution
 
-The workspace uses `extract-standard-feedback` to derive redacted candidates from explicitly authorized material and writes them under `feedback/`. This neither changes the standard nor uploads data automatically. The standard repository's `integrate-workspace-feedback` handles only candidates explicitly imported by the user and creates reviewable proposals. Specifications, schemas, Skills, assets, and versions may change only after independent evidence has been aggregated, compatibility and ownership have been assessed, and the user has confirmed the change.
+The workspace uses `extract-workcell-feedback` to derive redacted candidates from explicitly authorized material and writes them under `feedback/`. This neither changes Workcell nor uploads data automatically. The Workcell repository's `integrate-workcell-feedback` handles only candidates explicitly imported by the user and creates reviewable proposals. Specifications, schemas, Skills, assets, and versions may change only after independent evidence has been aggregated, compatibility and ownership have been assessed, and the user has confirmed the change.

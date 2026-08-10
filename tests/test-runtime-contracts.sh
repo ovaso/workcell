@@ -4,8 +4,8 @@ set -eu
 # Validate deterministic runtime-tool output against repository-level schemas.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
-asset_root="$repo_root/skills/bootstrap-standard-workspace/assets/workspace-v0.1"
-test_root=$(mktemp -d "${TMPDIR:-/tmp}/std-workspace-runtime-contracts.XXXXXX")
+asset_root="$repo_root/skills/bootstrap-workcell/assets/workspace-v0.1"
+test_root=$(mktemp -d "${TMPDIR:-/tmp}/workcell-runtime-contracts.XXXXXX")
 
 # Clean runtime-contract test output.
 cleanup() {

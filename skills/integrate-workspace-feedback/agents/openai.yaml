@@ -1,4 +1,0 @@
-interface:
-  display_name: "Integrate Workspace Feedback"
-  short_description: "Validate feedback and draft standard evolution proposals"
-  default_prompt: "Use $integrate-workspace-feedback to validate imported feedback and create a reviewable standard-evolution proposal without adopting changes automatically."

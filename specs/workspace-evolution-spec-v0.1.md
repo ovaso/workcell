@@ -1,8 +1,8 @@
-# Standard Workspace Evolution Specification V0.1
+# Workcell Evolution Specification V0.1
 
 ## 1. Boundary
 
-Workspace practice may produce candidates for standard evolution, but the standard repository remains the sole source of truth. Feedback export, import, proposal, adoption, and release are separate operations. A workspace must not modify the standard repository automatically, upload feedback, or trigger an upgrade.
+Workspace practice may produce candidates for Workcell evolution, but the Workcell repository remains the sole source of truth. Feedback export, import, proposal, adoption, and release are separate operations. A workspace must not modify the Workcell repository automatically, upload feedback, or trigger an upgrade.
 
 Feedback contains only redacted abstract conclusions and minimal evidence summaries. It must not contain project names, repository or host paths, remote addresses, credentials, business data, complete logs, source code, or unauthorized material.
 
@@ -22,12 +22,12 @@ Feedback contains only redacted abstract conclusions and minimal evidence summar
 | --- | --- |
 | `local` | Keep in workspace knowledge or policy; do not import into the standard. |
 | `project-plugin` | Maintain in the project plugin; do not add to generic assets. |
-| `standard-candidate` | May be imported into the standard repository to create a proposal; still requires review. |
+| `standard-candidate` | May be imported into the Workcell repository to create a proposal; still requires review. |
 
 A generic proposal requires evidence from at least two independent workspaces, or one confirmed security, integrity, or compatibility defect. A one-off practice, project terminology, environment preference, or unverified inference must not become a generic constraint.
 
 ## 4. Integration and versioning
 
-A maintainer places explicitly provided reports into the local, Git-ignored `evolution/inbox/`. `integrate-workspace-feedback` validates schema, redaction, scope, and duplicate IDs before writing reviewable evidence to `evolution/ledger/evidence.json`. It deduplicates by normalized candidate ID and counts independent workspace evidence with unique `source_fingerprint` values. It then creates a non-overwriting Change Set proposal under `evolution/proposals/`. It does not modify the product definition directly.
+A maintainer places explicitly provided reports into the local, Git-ignored `evolution/inbox/`. `integrate-workcell-feedback` validates schema, redaction, scope, and duplicate IDs before writing reviewable evidence to `evolution/ledger/evidence.json`. It deduplicates by normalized candidate ID and counts independent workspace evidence with unique `source_fingerprint` values. It then creates a non-overwriting Change Set proposal under `evolution/proposals/`. It does not modify the product definition directly.
 
 Only an adopted, reviewed change may modify specifications, schemas, Skills, or assets. Adoption also requires asset synchronization, full validation, upgrade-impact assessment, and version and release-record updates. Patch versions are only for behavior-preserving fixes; compatible additions use minor versions; breaking changes to schemas, state machines, ownership, or default security semantics use major versions and require a Migration.

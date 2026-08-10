@@ -1,4 +1,0 @@
-interface:
-  display_name: "Upgrade Standard Workspace"
-  short_description: "Preview and safely upgrade a Standard Workspace"
-  default_prompt: "Use $upgrade-standard-workspace to preview and safely plan this workspace upgrade, protecting user content before requesting confirmation."

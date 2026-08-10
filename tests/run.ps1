@@ -28,10 +28,10 @@ foreach ($testScript in @(
         & $powerShell -NoProfile -ExecutionPolicy Bypass -File $path
     }
     else {
-        Import-Module (Join-Path $PSScriptRoot 'StdWorkspace.TestHelpers.psm1') -Force
+        Import-Module (Join-Path $PSScriptRoot 'Workcell.TestHelpers.psm1') -Force
         Invoke-Python3 -Arguments @($path)
     }
     if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 }
 
-Write-Output 'All std-workspace tests passed.'
+Write-Output 'All Workcell tests passed.'

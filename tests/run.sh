@@ -26,4 +26,4 @@ do
   "$test_script"
 done
 
-printf 'All std-workspace tests passed.\n'
+printf 'All Workcell tests passed.\n'

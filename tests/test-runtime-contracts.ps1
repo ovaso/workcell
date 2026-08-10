@@ -3,10 +3,10 @@
 param()
 
 $ErrorActionPreference = 'Stop'
-Import-Module (Join-Path $PSScriptRoot 'StdWorkspace.TestHelpers.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'Workcell.TestHelpers.psm1') -Force
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$assetRoot = Join-Path $repoRoot 'skills/bootstrap-standard-workspace/assets/workspace-v0.1'
-$testRoot = New-TestDirectory -Prefix 'std-workspace-runtime-contracts'
+$assetRoot = Join-Path $repoRoot 'skills/bootstrap-workcell/assets/workspace-v0.1'
+$testRoot = New-TestDirectory -Prefix 'workcell-runtime-contracts'
 $env:PYTHONDONTWRITEBYTECODE = '1'
 
 try {

@@ -75,9 +75,9 @@ function Get-RelativeForwardPath {
 }
 
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$skillRoot = Join-Path $repoRoot 'skills/bootstrap-standard-workspace'
+$skillRoot = Join-Path $repoRoot 'skills/bootstrap-workcell'
 $assetRoot = Join-Path $skillRoot 'assets/workspace-v0.1'
-$stageRoot = Join-Path ([IO.Path]::GetTempPath()) ('std-workspace-build.' + [Guid]::NewGuid().ToString('N'))
+$stageRoot = Join-Path ([IO.Path]::GetTempPath()) ('workcell-build.' + [Guid]::NewGuid().ToString('N'))
 $script:StageRoot = $stageRoot
 New-Item -ItemType Directory -Path $stageRoot | Out-Null
 
@@ -89,7 +89,7 @@ $allowed = @(
     (Join-Path $skillRoot 'LICENSES'),
     (Join-Path $assetRoot '.ai-workspace/schemas'),
     (Join-Path $assetRoot '.ai-workspace/specs'),
-    (Join-Path $assetRoot 'docs/standard')
+    (Join-Path $assetRoot 'docs/workcell')
 )
 $script:AllowedTargets = @{}
 foreach ($target in $allowed) {
@@ -128,7 +128,7 @@ try {
     foreach ($document in @('product-vision.md', 'architecture.md', 'lifecycle.md', 'roadmap.md')) {
         Copy-Item -LiteralPath (Join-Path $repoRoot "docs/$document") -Destination (Join-Path $standardDocs $document)
     }
-    Replace-Directory -Source $standardDocs -Target (Join-Path $assetRoot 'docs/standard')
+    Replace-Directory -Source $standardDocs -Target (Join-Path $assetRoot 'docs/workcell')
 
     $releaseVersion = (Get-Content -LiteralPath (Join-Path $repoRoot 'VERSION') -Raw).Trim()
     $env:PYTHONDONTWRITEBYTECODE = '1'

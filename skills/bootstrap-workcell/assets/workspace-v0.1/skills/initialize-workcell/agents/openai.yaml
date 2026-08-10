@@ -1,0 +1,4 @@
+interface:
+  display_name: "Initialize Workcell"
+  short_description: "Initialize verified host facts and workspace lifecycle"
+  default_prompt: "Use $initialize-workcell to establish the first verified host snapshot for this workspace."

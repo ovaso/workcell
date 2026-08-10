@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:ai-native-standard-workspace:schema:task:0.1",
-  "title": "Standard Workspace Task V0.1",
+  "$id": "urn:workcell:schema:task:0.1",
+  "title": "Workcell Task V0.1",
   "type": "object",
   "additionalProperties": false,
   "required": ["task", "scope", "workflow", "gates", "evidence"],

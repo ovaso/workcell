@@ -7,7 +7,7 @@ repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
 
 if rg --hidden -n '[\p{Han}]' \
   --glob '!.git/**' \
-  --glob '!skills/bootstrap-standard-workspace/assets/workspace-v0.1/locales/**' \
+  --glob '!skills/bootstrap-workcell/assets/workspace-v0.1/locales/**' \
   "$repo_root"
 then
   printf 'Canonical product source contains Han-script text.\n' >&2

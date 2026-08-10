@@ -2,7 +2,7 @@
 
 ## 1. Definition
 
-A project plugin is the standard workspace's internal project-adaptation protocol; it is not an AI-platform plugin. It describes stable project differences. Current-machine paths, secrets, and dynamic Git state belong to the project instance.
+A project plugin is the Workcell workspace's internal project-adaptation protocol; it is not an AI-platform plugin. It describes stable project differences. Current-machine paths, secrets, and dynamic Git state belong to the project instance.
 
 ## 2. Minimum content
 

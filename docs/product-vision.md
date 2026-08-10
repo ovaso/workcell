@@ -2,9 +2,9 @@
 
 ## Definition
 
-AI Native Standard Workspace is a personal AI development workspace standard that is as platform-neutral as possible, text-only, versioned, distributable, and upgradable. The deterministic V0.1 bootstrap layer supports POSIX `sh` and Windows PowerShell 5.1 or PowerShell 7; host operating-system coverage and AI-platform compatibility remain independent product dimensions.
+Workcell is a personal AI development workspace standard that is as platform-neutral as possible, text-only, versioned, distributable, and upgradable. The deterministic V0.1 bootstrap layer supports POSIX `sh` and Windows PowerShell 5.1 or PowerShell 7; host operating-system coverage and AI-platform compatibility remain independent product dimensions.
 
-The primary deliverable is not a fixed project archive or a plugin bound to one AI platform. It is a self-contained Bootstrap Skill: an AI reads its protocols, scripts, specifications, and assets, then expands a standard workspace into an empty directory. The workspace uses its own Skills to establish environment, project, diagnostic, and task facts.
+The primary deliverable is not a fixed project archive or a plugin bound to one AI platform. It is a self-contained Bootstrap Skill: an AI reads its protocols, scripts, specifications, and assets, then expands a Workcell workspace into an empty directory. The workspace uses its own Skills to establish environment, project, diagnostic, and task facts.
 
 ## Goals
 

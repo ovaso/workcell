@@ -1,0 +1,4 @@
+interface:
+  display_name: "Start Standard Task"
+  short_description: "Create task records, module roles, and lifecycle gates"
+  default_prompt: "Use $start-workcell-task to create a standard task for this request with lifecycle, module roles, authorization, and gates."

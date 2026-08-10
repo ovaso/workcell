@@ -2,7 +2,7 @@
 
 ## Model
 
-AI Native Standard Workspace uses a maintainer-led governance model. The current project maintainer is [@ovaso](https://github.com/ovaso).
+Workcell uses a maintainer-led governance model. The current project maintainer is [@ovaso](https://github.com/ovaso).
 
 Maintainers are responsible for repository access, issue and pull-request triage, specification integrity, security response, releases, and enforcement of project policies. Contributors propose and review changes through GitHub issues and pull requests.
 

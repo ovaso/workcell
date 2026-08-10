@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workcell Doctor"
+  short_description: "Check workspace structure, safety, and READY gates"
+  default_prompt: "Use $workcell-doctor to run a read-only health check on this Workcell and report READY gate issues."

@@ -1,7 +1,7 @@
 #Requires -Version 5.1
 [CmdletBinding()]
 param(
-    [string]$DistDirectory = $env:STD_WORKSPACE_DIST_DIR
+    [string]$DistDirectory = $env:WORKCELL_DIST_DIR
 )
 
 Set-StrictMode -Version Latest
@@ -9,7 +9,7 @@ $ErrorActionPreference = 'Stop'
 
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $version = (Get-Content -LiteralPath (Join-Path $repoRoot 'VERSION') -Raw).Trim()
-$skillName = 'bootstrap-standard-workspace'
+$skillName = 'bootstrap-workcell'
 if ([string]::IsNullOrWhiteSpace($DistDirectory)) {
     $DistDirectory = Join-Path $repoRoot 'dist'
 }
@@ -18,7 +18,7 @@ $archive = Join-Path $distRoot "$skillName-$version.zip"
 
 & (Join-Path $repoRoot 'scripts/build-bootstrap-assets.ps1')
 & (Join-Path $repoRoot 'scripts/validate-product.ps1')
-& (Join-Path $repoRoot 'skills/bootstrap-standard-workspace/scripts/validate-bundle.ps1') | Out-Null
+& (Join-Path $repoRoot 'skills/bootstrap-workcell/scripts/validate-bundle.ps1') | Out-Null
 
 New-Item -ItemType Directory -Path $distRoot -Force | Out-Null
 if (Test-Path -LiteralPath $archive) { Remove-Item -LiteralPath $archive -Force }

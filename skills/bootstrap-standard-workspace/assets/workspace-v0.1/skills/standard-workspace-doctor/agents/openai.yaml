@@ -1,4 +1,0 @@
-interface:
-  display_name: "Standard Workspace Doctor"
-  short_description: "Check workspace structure, safety, and READY gates"
-  default_prompt: "Use $standard-workspace-doctor to run a read-only health check on this Standard Workspace and report READY gate issues."

@@ -37,6 +37,16 @@ function Require-Path {
     }
 }
 
+function Require-ExactLine {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][string]$Expected
+    )
+    if (@(Get-Content -LiteralPath $Path) -cnotcontains $Expected) {
+        Fail "Release version metadata mismatch in $Path: expected $Expected"
+    }
+}
+
 function Find-TextMatch {
     param(
         [Parameter(Mandatory = $true)][string]$Root,
@@ -54,7 +64,7 @@ function Find-TextMatch {
 
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $script:RepoRoot = $repoRoot
-$skillRoot = Join-Path $repoRoot 'skills/bootstrap-standard-workspace'
+$skillRoot = Join-Path $repoRoot 'skills/bootstrap-workcell'
 $assetRoot = Join-Path $skillRoot 'assets/workspace-v0.1'
 $manifest = Join-Path $assetRoot '.ai-workspace/distribution.manifest'
 
@@ -78,23 +88,23 @@ foreach ($requiredPath in @(
     'schemas/examples/release-manifest.example.json',
     'schemas/workspace.schema.json',
     'specs/workspace-spec-v0.1.md',
-    'skills/bootstrap-standard-workspace/SKILL.md',
-    'skills/bootstrap-standard-workspace/LICENSE',
-    'skills/bootstrap-standard-workspace/scripts/create-workspace.ps1',
-    'skills/bootstrap-standard-workspace/scripts/validate-workspace.ps1',
-    'skills/bootstrap-standard-workspace/assets/workspace-v0.1/AI_WORKSPACE.md',
-    'skills/bootstrap-standard-workspace/assets/workspace-v0.1/AGENTS.md',
-    'skills/bootstrap-standard-workspace/assets/workspace-v0.1/LICENSE',
-    'skills/bootstrap-standard-workspace/assets/workspace-v0.1/.ai-workspace/release-manifest.json',
-    'skills/bootstrap-standard-workspace/assets/workspace-v0.1/.ai-workspace/workspace.toml',
-    'skills/bootstrap-standard-workspace/assets/workspace-v0.1/.ai-workspace/versions.lock',
-    'skills/bootstrap-standard-workspace/assets/workspace-v0.1/knowledge/tool-capabilities.toml'
+    'skills/bootstrap-workcell/SKILL.md',
+    'skills/bootstrap-workcell/LICENSE',
+    'skills/bootstrap-workcell/scripts/create-workspace.ps1',
+    'skills/bootstrap-workcell/scripts/validate-workspace.ps1',
+    'skills/bootstrap-workcell/assets/workspace-v0.1/AI_WORKSPACE.md',
+    'skills/bootstrap-workcell/assets/workspace-v0.1/AGENTS.md',
+    'skills/bootstrap-workcell/assets/workspace-v0.1/LICENSE',
+    'skills/bootstrap-workcell/assets/workspace-v0.1/.ai-workspace/release-manifest.json',
+    'skills/bootstrap-workcell/assets/workspace-v0.1/.ai-workspace/workspace.toml',
+    'skills/bootstrap-workcell/assets/workspace-v0.1/.ai-workspace/versions.lock',
+    'skills/bootstrap-workcell/assets/workspace-v0.1/knowledge/tool-capabilities.toml'
 )) {
     Require-Path $requiredPath
 }
 
 if (-not (Test-Path -LiteralPath (Join-Path $repoRoot '.git') -PathType Container)) {
-    Fail 'std-workspace must be an independent Git repository.'
+    Fail 'workcell must be an independent Git repository.'
 }
 
 foreach ($line in Get-Content -LiteralPath $manifest) {
@@ -136,6 +146,16 @@ $env:PYTHONDONTWRITEBYTECODE = '1'
 Invoke-Python -Arguments @((Join-Path $repoRoot 'scripts/validate-toml.py'))
 Invoke-Python -Arguments @((Join-Path $repoRoot 'scripts/validate-github-config.py'))
 $releaseVersion = (Get-Content -LiteralPath (Join-Path $repoRoot 'VERSION') -Raw).Trim()
+Require-ExactLine -Path (Join-Path $repoRoot 'product.toml') -Expected "version = `"$releaseVersion`""
+Require-ExactLine -Path (Join-Path $skillRoot 'bundle.toml') -Expected "version = `"$releaseVersion`""
+foreach ($versionMetadata in @(
+    (Join-Path $assetRoot '.ai-workspace/workspace.toml'),
+    (Join-Path $assetRoot '.ai-workspace/versions.lock'),
+    (Join-Path $assetRoot '.ai-workspace/templates/workspace.toml'),
+    (Join-Path $assetRoot '.ai-workspace/templates/versions.lock')
+)) {
+    Require-ExactLine -Path $versionMetadata -Expected "product = `"$releaseVersion`""
+}
 Invoke-Python -Arguments @(
     (Join-Path $repoRoot 'scripts/generate-release-manifest.py'),
     '--asset-root', $assetRoot,

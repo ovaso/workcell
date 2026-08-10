@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:ai-native-standard-workspace:schema:environment-facts:0.1",
+  "$id": "urn:workcell:schema:environment-facts:0.1",
   "title": "Host Environment Facts V0.1",
   "type": "object",
   "additionalProperties": false,

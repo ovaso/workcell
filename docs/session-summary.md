@@ -1,4 +1,4 @@
-# Session Summary: AI Native Standard Workspace Product Concept
+# Session Summary: Workcell Product Concept
 
 ## 1. Starting point
 
@@ -10,7 +10,7 @@ The product objective therefore became a reusable, continuously upgradable perso
 
 The product was ultimately defined as:
 
-> A versioned, self-contained, text-only Bootstrap Skill that is as AI-platform-neutral as possible. It is both an AI-readable installation protocol and the distribution medium for a standard workspace. An AI expands its assets into an empty directory. The expanded workspace carries its own specifications, Skills, tools, schemas, and fact-management capabilities, then establishes host environment, project, and diagnostic facts through initialization. V0.1 deterministic scripts provide matching POSIX `sh` and PowerShell execution profiles.
+> A versioned, self-contained, text-only Bootstrap Skill that is as AI-platform-neutral as possible. It is both an AI-readable installation protocol and the distribution medium for a Workcell workspace. An AI expands its assets into an empty directory. The expanded workspace carries its own specifications, Skills, tools, schemas, and fact-management capabilities, then establishes host environment, project, and diagnostic facts through initialization. V0.1 deterministic scripts provide matching POSIX `sh` and PowerShell execution profiles.
 
 Recommended operating model:
 
@@ -18,7 +18,7 @@ Recommended operating model:
 single canonical source repository
   -> Tag / Release
   -> Bootstrap Skill directory or ZIP
-  -> expand standard workspace
+  -> expand Workcell workspace
   -> initialize host environment
   -> attach and adapt project
   -> configure diagnostic capabilities
@@ -44,7 +44,7 @@ generic workflow kernel
 
 Responsible for creation, validation, repair, and upgrade. Secure self-update is added only after production standards, the canonical repository, and the Release process are stable. Bootstrap is installation media and does not perform daily project work.
 
-### 3.2 Standard workflow kernel
+### 3.2 Workcell workflow kernel
 
 The kernel knows no specific project. It defines workspace and task lifecycles, workspace isolation, context assembly, the evidence model, security constraints, multi-agent ownership, and Doctor/Repair/Upgrade capabilities.
 
@@ -65,7 +65,7 @@ Provide cross-project support for Git, Maven, Spring Boot, Node, SQL, Docker, Ku
 
 Stores stable project differences, including identity, repositories, modules, dependencies, branches, build, tests, review, release, high-risk paths, project knowledge, and project-specific Skills.
 
-A project plugin is an internal standard-workspace protocol, not a Codex Plugin.
+A project plugin is an internal Workcell protocol, not a Codex Plugin.
 
 ### 3.6 Project instance
 
@@ -124,7 +124,7 @@ The Bootstrap Skill is a seed package:
 
 ```text
 Bootstrap Skill = installation medium
-Standard Workspace = installed runtime system
+Workcell = installed runtime system
 Workspace Skills = built-in system tools
 Project Plugin = project driver and adapter
 ```
@@ -147,7 +147,7 @@ EMPTY
 
 ### 6.1 Expansion
 
-Copy standard assets, record the release source and version, and validate structure. Do not inspect the environment or attach a project.
+Copy Workcell assets, record the release source and version, and validate structure. Do not inspect the environment or attach a project.
 
 ### 6.2 Environment initialization
 
@@ -244,7 +244,7 @@ release
 close
 ```
 
-Standard module roles:
+Workcell module roles:
 
 - `edit`: modification allowed;
 - `verify`: contract, compilation, and integration-path verification only;
@@ -312,7 +312,7 @@ Self-update is deferred until the canonical repository, formal Releases, and com
 
 ## 14. Cross-AI strategy
 
-The standard consists of `SKILL.md / bundle.toml / AI_WORKSPACE.md / references / schemas / assets / scripts / migrations`. AGENTS, CLAUDE, and similar files are derived adapters.
+The Workcell product consists of `SKILL.md / bundle.toml / AI_WORKSPACE.md / references / schemas / assets / scripts / migrations`. AGENTS, CLAUDE, and similar files are derived adapters.
 
 An AI with Skill support may trigger Skills automatically. Other AIs can read `SKILL.md` explicitly. A Codex Plugin may package the same Skill but cannot become a specification dependency.
 
@@ -320,6 +320,6 @@ English is canonical. Localized documentation and adapters are generated through
 
 ## 15. Current implementation boundary
 
-V0.1 implements the product skeleton, Bootstrap, foundational fact/plugin/diagnostic protocols, standard template, core Skills, and validation. Complete migrations, self-update, cross-platform bootstrappers, remote diagnostics, and automatic project development are outside this release.
+V0.1 implements the product skeleton, Bootstrap, foundational fact/plugin/diagnostic protocols, Workcell template, core Skills, and validation. Complete migrations, self-update, cross-platform bootstrappers, remote diagnostics, and automatic project development are outside this release.
 
 This summary records product decisions. It does not assert that facts about any current machine, project, endpoint, or tool have been validated through initialization.

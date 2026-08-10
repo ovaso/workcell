@@ -4,7 +4,7 @@ set -eu
 # Resolve deterministic repository and release-asset paths.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
-skill_root="$repo_root/skills/bootstrap-standard-workspace"
+skill_root="$repo_root/skills/bootstrap-workcell"
 asset_root="$skill_root/assets/workspace-v0.1"
 manifest="$asset_root/.ai-workspace/distribution.manifest"
 
@@ -13,6 +13,16 @@ require_path() {
   relative_path=$1
   if [ ! -e "$repo_root/$relative_path" ]; then
     printf 'Missing required path: %s\n' "$relative_path" >&2
+    exit 1
+  fi
+}
+
+# Require one canonical metadata line to prevent release-version drift.
+require_exact_line() {
+  expected_line=$1
+  metadata_file=$2
+  if ! grep -F -x "$expected_line" "$metadata_file" >/dev/null 2>&1; then
+    printf 'Release version metadata mismatch in %s: expected %s\n' "$metadata_file" "$expected_line" >&2
     exit 1
   fi
 }
@@ -40,25 +50,25 @@ for required_path in \
   scripts/build-bootstrap-assets.ps1 \
   scripts/package-bootstrap-skill.ps1 \
   scripts/validate-product.ps1 \
-  skills/bootstrap-standard-workspace/SKILL.md \
-  skills/bootstrap-standard-workspace/LICENSE \
-  skills/bootstrap-standard-workspace/scripts/create-workspace.ps1 \
-  skills/bootstrap-standard-workspace/scripts/plan-repair.ps1 \
-  skills/bootstrap-standard-workspace/scripts/validate-bundle.ps1 \
-  skills/bootstrap-standard-workspace/scripts/validate-workspace.ps1 \
-  skills/bootstrap-standard-workspace/assets/workspace-v0.1/AI_WORKSPACE.md \
-  skills/bootstrap-standard-workspace/assets/workspace-v0.1/AGENTS.md \
-  skills/bootstrap-standard-workspace/assets/workspace-v0.1/LICENSE \
-  skills/bootstrap-standard-workspace/assets/workspace-v0.1/.ai-workspace/release-manifest.json \
-  skills/bootstrap-standard-workspace/assets/workspace-v0.1/.ai-workspace/workspace.toml \
-  skills/bootstrap-standard-workspace/assets/workspace-v0.1/.ai-workspace/versions.lock \
-  skills/bootstrap-standard-workspace/assets/workspace-v0.1/knowledge/tool-capabilities.toml
+  skills/bootstrap-workcell/SKILL.md \
+  skills/bootstrap-workcell/LICENSE \
+  skills/bootstrap-workcell/scripts/create-workspace.ps1 \
+  skills/bootstrap-workcell/scripts/plan-repair.ps1 \
+  skills/bootstrap-workcell/scripts/validate-bundle.ps1 \
+  skills/bootstrap-workcell/scripts/validate-workspace.ps1 \
+  skills/bootstrap-workcell/assets/workspace-v0.1/AI_WORKSPACE.md \
+  skills/bootstrap-workcell/assets/workspace-v0.1/AGENTS.md \
+  skills/bootstrap-workcell/assets/workspace-v0.1/LICENSE \
+  skills/bootstrap-workcell/assets/workspace-v0.1/.ai-workspace/release-manifest.json \
+  skills/bootstrap-workcell/assets/workspace-v0.1/.ai-workspace/workspace.toml \
+  skills/bootstrap-workcell/assets/workspace-v0.1/.ai-workspace/versions.lock \
+  skills/bootstrap-workcell/assets/workspace-v0.1/knowledge/tool-capabilities.toml
 do
   require_path "$required_path"
 done
 
 if [ ! -d "$repo_root/.git" ]; then
-  printf 'std-workspace must be an independent Git repository.\n' >&2
+  printf 'workcell must be an independent Git repository.\n' >&2
   exit 1
 fi
 
@@ -114,6 +124,16 @@ node "$repo_root/scripts/validate-schema-examples.mjs"
 python3 "$repo_root/scripts/validate-toml.py"
 PYTHONDONTWRITEBYTECODE=1 python3 "$repo_root/scripts/validate-github-config.py"
 release_version=$(tr -d '[:space:]' < "$repo_root/VERSION")
+require_exact_line "version = \"$release_version\"" "$repo_root/product.toml"
+require_exact_line "version = \"$release_version\"" "$skill_root/bundle.toml"
+for version_metadata in \
+  "$asset_root/.ai-workspace/workspace.toml" \
+  "$asset_root/.ai-workspace/versions.lock" \
+  "$asset_root/.ai-workspace/templates/workspace.toml" \
+  "$asset_root/.ai-workspace/templates/versions.lock"
+do
+  require_exact_line "product = \"$release_version\"" "$version_metadata"
+done
 PYTHONDONTWRITEBYTECODE=1 python3 "$repo_root/scripts/generate-release-manifest.py" \
   --asset-root "$asset_root" \
   --release-version "$release_version" \

@@ -5,8 +5,8 @@ set -eu
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
 version=$(tr -d '[:space:]' < "$repo_root/VERSION")
-skill_name="bootstrap-standard-workspace"
-dist_dir=${STD_WORKSPACE_DIST_DIR:-"$repo_root/dist"}
+skill_name="bootstrap-workcell"
+dist_dir=${WORKCELL_DIST_DIR:-"$repo_root/dist"}
 archive="$dist_dir/$skill_name-$version.zip"
 
 if ! command -v zip >/dev/null 2>&1; then
@@ -16,7 +16,7 @@ fi
 
 "$repo_root/scripts/build-bootstrap-assets.sh"
 "$repo_root/scripts/validate-product.sh"
-"$repo_root/skills/bootstrap-standard-workspace/scripts/validate-bundle.sh" >/dev/null
+"$repo_root/skills/bootstrap-workcell/scripts/validate-bundle.sh" >/dev/null
 
 mkdir -p "$dist_dir"
 rm -f "$archive" "$archive.sha256"

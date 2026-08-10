@@ -212,7 +212,7 @@ def write_manifest(asset_root: Path, content: bytes) -> Path:
 def parse_args(argv: list[str]) -> argparse.Namespace:
     """Parse arguments for build or read-only validation."""
 
-    parser = argparse.ArgumentParser(description="Generate the installed-Release integrity manifest for a Standard Workspace")
+    parser = argparse.ArgumentParser(description="Generate the installed-Release integrity manifest for a Workcell")
     parser.add_argument("--asset-root", required=True, help="workspace-vX.Y Release asset root")
     parser.add_argument("--release-version", required=True, help="Product version of the immutable Release")
     parser.add_argument("--check", action="store_true", help="Only verify that the existing manifest is canonical for the current asset")

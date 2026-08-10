@@ -3,13 +3,13 @@
 param()
 
 $ErrorActionPreference = 'Stop'
-Import-Module (Join-Path $PSScriptRoot 'StdWorkspace.TestHelpers.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'Workcell.TestHelpers.psm1') -Force
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$testRoot = New-TestDirectory -Prefix 'std-workspace-package-test'
+$testRoot = New-TestDirectory -Prefix 'workcell-package-test'
 
 try {
     & (Join-Path $repoRoot 'scripts/package-bootstrap-skill.ps1') -DistDirectory $testRoot
-    $archives = @(Get-ChildItem -LiteralPath $testRoot -File -Filter 'bootstrap-standard-workspace-*.zip')
+    $archives = @(Get-ChildItem -LiteralPath $testRoot -File -Filter 'bootstrap-workcell-*.zip')
     if ($archives.Count -ne 1) { throw 'Package was not created uniquely.' }
     $archive = $archives[0]
     $checksumPath = "$($archive.FullName).sha256"
@@ -24,11 +24,11 @@ try {
     try {
         $entryNames = @($zip.Entries | ForEach-Object { $_.FullName.Replace('\', '/') })
         foreach ($required in @(
-            'bootstrap-standard-workspace/SKILL.md',
-            'bootstrap-standard-workspace/LICENSE',
-            'bootstrap-standard-workspace/assets/workspace-v0.1/LICENSE',
-            'bootstrap-standard-workspace/assets/workspace-v0.1/AI_WORKSPACE.md',
-            'bootstrap-standard-workspace/scripts/create-workspace.ps1'
+            'bootstrap-workcell/SKILL.md',
+            'bootstrap-workcell/LICENSE',
+            'bootstrap-workcell/assets/workspace-v0.1/LICENSE',
+            'bootstrap-workcell/assets/workspace-v0.1/AI_WORKSPACE.md',
+            'bootstrap-workcell/scripts/create-workspace.ps1'
         )) {
             if ($entryNames -cnotcontains $required) { throw "Package is missing $required" }
         }

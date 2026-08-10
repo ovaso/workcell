@@ -1,4 +1,0 @@
-interface:
-  display_name: "Initialize Standard Workspace"
-  short_description: "Initialize verified host facts and workspace lifecycle"
-  default_prompt: "Use $initialize-standard-workspace to establish the first verified host snapshot for this workspace."

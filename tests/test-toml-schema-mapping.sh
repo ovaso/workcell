@@ -4,9 +4,9 @@ set -eu
 # Map real TOML manifests to JSON and validate them with the same schemas.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
-skill_root="$repo_root/skills/bootstrap-standard-workspace"
+skill_root="$repo_root/skills/bootstrap-workcell"
 asset_root="$skill_root/assets/workspace-v0.1"
-test_root=$(mktemp -d "${TMPDIR:-/tmp}/std-workspace-toml-schema.XXXXXX")
+test_root=$(mktemp -d "${TMPDIR:-/tmp}/workcell-toml-schema.XXXXXX")
 
 # Clean temporary JSON produced by conversion.
 cleanup() {

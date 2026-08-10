@@ -4,9 +4,9 @@ set -eu
 # Verify source truth and distribution copies before and after build so tests cannot hide drift.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
-skill_root="$repo_root/skills/bootstrap-standard-workspace"
+skill_root="$repo_root/skills/bootstrap-workcell"
 asset_root="$skill_root/assets/workspace-v0.1"
-test_root=$(mktemp -d "${TMPDIR:-/tmp}/std-workspace-build-sync.XXXXXX")
+test_root=$(mktemp -d "${TMPDIR:-/tmp}/workcell-build-sync.XXXXXX")
 
 # Clean the isolated snapshot used by this deterministic-build test.
 cleanup() {
@@ -38,7 +38,7 @@ assert_generated_assets() {
     roadmap.md
   for document in architecture.md lifecycle.md product-vision.md roadmap.md; do
     cmp "$repo_root/docs/$document" "$skill_root/references/product-docs/$document"
-    cmp "$repo_root/docs/$document" "$asset_root/docs/standard/$document"
+    cmp "$repo_root/docs/$document" "$asset_root/docs/workcell/$document"
   done
   assert_exact_files "$skill_root/references/product-facts" \
     known-tool-capabilities.toml \

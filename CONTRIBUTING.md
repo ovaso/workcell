@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for helping improve AI Native Standard Workspace. Contributions are welcome through GitHub issues and pull requests.
+Thank you for helping improve Workcell. Contributions are welcome through GitHub issues and pull requests.
 
 ## Before contributing
 
@@ -12,7 +12,7 @@ Thank you for helping improve AI Native Standard Workspace. Contributions are we
 
 ## Choose the right change surface
 
-The root `docs/`, `specs/`, `schemas/`, and `facts/` directories are canonical sources. Several copies inside `skills/bootstrap-standard-workspace/` are generated. Do not edit generated copies directly; see `docs/repository-maintenance.md` for the complete list.
+The root `docs/`, `specs/`, `schemas/`, and `facts/` directories are canonical sources. Several copies inside `skills/bootstrap-workcell/` are generated. Do not edit generated copies directly; see `docs/repository-maintenance.md` for the complete list.
 
 Ownership rules apply inside the workspace template:
 

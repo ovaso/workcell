@@ -2,7 +2,7 @@
 
 ## Scope
 
-This file governs only the `std-workspace` product source. It does not modify or replace the business rules of any external project.
+This file governs only the Workcell product source. It does not modify or replace the business rules of any external project.
 
 ## Product principles
 

@@ -4,9 +4,9 @@ set -eu
 # Resolve the repository root; derive every synchronization target from it.
 script_dir=$(CDPATH='' cd "$(dirname "$0")" && pwd)
 repo_root=$(CDPATH='' cd "$script_dir/.." && pwd)
-skill_root="$repo_root/skills/bootstrap-standard-workspace"
+skill_root="$repo_root/skills/bootstrap-workcell"
 asset_root="$skill_root/assets/workspace-v0.1"
-stage_root=$(mktemp -d "${TMPDIR:-/tmp}/std-workspace-build.XXXXXX")
+stage_root=$(mktemp -d "${TMPDIR:-/tmp}/workcell-build.XXXXXX")
 
 # Clean the temporary directory used by this build.
 cleanup() {
@@ -28,7 +28,7 @@ replace_directory() {
     "$skill_root"/LICENSES|\
     "$asset_root"/.ai-workspace/schemas|\
     "$asset_root"/.ai-workspace/specs|\
-    "$asset_root"/docs/standard)
+    "$asset_root"/docs/workcell)
       ;;
     *)
       printf 'Refusing unsafe build target: %s\n' "$target_dir" >&2
@@ -87,7 +87,7 @@ mkdir -p "$stage_root/standard-docs"
 for document in product-vision.md architecture.md lifecycle.md roadmap.md; do
   cp "$repo_root/docs/$document" "$stage_root/standard-docs/$document"
 done
-replace_directory "$stage_root/standard-docs" "$asset_root/docs/standard"
+replace_directory "$stage_root/standard-docs" "$asset_root/docs/workcell"
 
 # Generate the installed receipt before outer checksums; it does not hash itself.
 release_version=$(tr -d '[:space:]' < "$repo_root/VERSION")

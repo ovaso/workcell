@@ -1,0 +1,34 @@
+[workspace]
+id = "uninitialized-workspace"
+name = "Uninitialized Workcell"
+status = "CREATED"
+managed_by = "workcell"
+
+[versions]
+product = "1.0.0"
+workspace_schema = "0.1"
+release_manifest_schema = "0.1"
+environment_facts_schema = "0.1"
+project_plugin_schema = "0.1"
+diagnostic_profile_schema = "0.1"
+task_schema = "0.1"
+feedback_report_schema = "0.1"
+
+[paths]
+environment = "environment"
+project = "project"
+requirements = "requirements"
+workspaces = "workspaces"
+skills = "skills"
+mirror = "mirror"
+remotes = "remotes"
+diagnostics = "diagnostics"
+knowledge = "knowledge"
+memory = "memory"
+feedback = "feedback"
+locales = "locales"
+
+[safety]
+remote_operations_default = "deny"
+bootstrap_network = "deny"
+overwrite_non_empty = false

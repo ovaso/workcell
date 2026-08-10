@@ -6,7 +6,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $gitRoot = [IO.Path]::GetFullPath((Join-Path $repoRoot '.git')).TrimEnd([IO.Path]::DirectorySeparatorChar, [IO.Path]::AltDirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar
-$localeRoot = [IO.Path]::GetFullPath((Join-Path $repoRoot 'skills/bootstrap-standard-workspace/assets/workspace-v0.1/locales')).TrimEnd([IO.Path]::DirectorySeparatorChar, [IO.Path]::AltDirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar
+$localeRoot = [IO.Path]::GetFullPath((Join-Path $repoRoot 'skills/bootstrap-workcell/assets/workspace-v0.1/locales')).TrimEnd([IO.Path]::DirectorySeparatorChar, [IO.Path]::AltDirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar
 $hanPattern = '[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]'
 $matches = New-Object Collections.Generic.List[string]
 

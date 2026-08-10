@@ -1,0 +1,4 @@
+interface:
+  display_name: "Extract Standard Feedback"
+  short_description: "Generate redacted and reviewable standard feedback"
+  default_prompt: "Use $extract-workcell-feedback to generate a redacted feedback candidate from authorized workspace evidence without uploading it or changing the standard."

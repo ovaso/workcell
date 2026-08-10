@@ -11,4 +11,4 @@ $expected = @('known-tool-capabilities.toml', 'session-decisions.toml')
 if (($actual -join "`n") -cne ($expected -join "`n")) { throw 'Facts directory must only contain reusable standard facts.' }
 
 & (Join-Path $repoRoot 'scripts/validate-product.ps1')
-& (Join-Path $repoRoot 'skills/bootstrap-standard-workspace/scripts/validate-bundle.ps1') | Out-Null
+& (Join-Path $repoRoot 'skills/bootstrap-workcell/scripts/validate-bundle.ps1') | Out-Null

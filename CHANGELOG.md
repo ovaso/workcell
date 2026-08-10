@@ -1,8 +1,13 @@
 # Changelog
 
-This file records release-level changes to the AI Native Standard Workspace product. Design-session history is preserved in `docs/session-summary.md` and is not repeated here.
+This file records release-level changes to the Workcell product. Design-session history is preserved in `docs/session-summary.md` and is not repeated here.
 
 ## [Unreleased]
+
+## [1.0.0] - 2026-08-10
+
+- Rebrand the product and Bootstrap distribution as Workcell while preserving the V0.1 release safeguards and dual-host tooling.
+- Establish Workcell as a new, incompatible product release; existing AI Native Standard Workspace V0.1 installations are not eligible for in-place migration and must use a new Workcell, transferring only workspace-owned material under explicit authorization.
 
 ## [0.1.0] - 2026-08-08
 

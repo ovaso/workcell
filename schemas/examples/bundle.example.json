@@ -1,7 +1,7 @@
 {
   "bundle": {
-    "id": "bootstrap-standard-workspace",
-    "version": "0.1.0",
+    "id": "bootstrap-workcell",
+    "version": "1.0.0",
     "status": "stable",
     "format": "text-only-skill-bundle"
   },

@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-The standard workspace uses both TOML and JSON. Prefer TOML for small configurations maintained by people, and JSON for deeply nested data that requires strict schemas and deterministic generation. JSON Schema validates JSON directly or validates the JSON-equivalent structure produced by parsing TOML.
+The Workcell workspace uses both TOML and JSON. Prefer TOML for small configurations maintained by people, and JSON for deeply nested data that requires strict schemas and deterministic generation. JSON Schema validates JSON directly or validates the JSON-equivalent structure produced by parsing TOML.
 
 ## 2. Format responsibilities
 

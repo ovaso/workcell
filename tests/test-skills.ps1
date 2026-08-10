@@ -3,10 +3,10 @@
 param()
 
 $ErrorActionPreference = 'Stop'
-Import-Module (Join-Path $PSScriptRoot 'StdWorkspace.TestHelpers.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'Workcell.TestHelpers.psm1') -Force
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$skillRoot = Join-Path $repoRoot 'skills/bootstrap-standard-workspace'
-$quickValidate = $env:STD_WORKSPACE_QUICK_VALIDATE
+$skillRoot = Join-Path $repoRoot 'skills/bootstrap-workcell'
+$quickValidate = $env:WORKCELL_QUICK_VALIDATE
 $explicitQuickValidate = -not [string]::IsNullOrWhiteSpace($quickValidate)
 if ([string]::IsNullOrWhiteSpace($quickValidate)) {
     $codexHome = $env:CODEX_HOME
@@ -15,7 +15,7 @@ if ([string]::IsNullOrWhiteSpace($quickValidate)) {
 }
 $officialValidatorAvailable = Test-Path -LiteralPath $quickValidate -PathType Leaf
 if ($explicitQuickValidate -and -not $officialValidatorAvailable) { throw "Skill Creator quick_validate.py is unavailable: $quickValidate" }
-if ($env:STD_WORKSPACE_REQUIRE_OFFICIAL_SKILL_VALIDATOR -eq '1' -and -not $officialValidatorAvailable) {
+if ($env:WORKCELL_REQUIRE_OFFICIAL_SKILL_VALIDATOR -eq '1' -and -not $officialValidatorAvailable) {
     throw "Skill Creator quick_validate.py is required but unavailable: $quickValidate"
 }
 
@@ -34,7 +34,7 @@ function Test-OneSkill {
 }
 
 Test-OneSkill -SkillPath $skillRoot
-Test-OneSkill -SkillPath (Join-Path $repoRoot 'skills/integrate-workspace-feedback')
+Test-OneSkill -SkillPath (Join-Path $repoRoot 'skills/integrate-workcell-feedback')
 foreach ($skill in Get-ChildItem -LiteralPath (Join-Path $skillRoot 'assets/workspace-v0.1/skills') -Directory -Force) {
     Test-OneSkill -SkillPath $skill.FullName
 }

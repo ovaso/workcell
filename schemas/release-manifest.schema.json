@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:ai-native-standard-workspace:schema:release-manifest:0.1",
-  "title": "Standard Workspace Installed Release Manifest V0.1",
+  "$id": "urn:workcell:schema:release-manifest:0.1",
+  "title": "Workcell Installed Release Manifest V0.1",
   "type": "object",
   "additionalProperties": false,
   "required": ["schema_version", "release_version", "files"],

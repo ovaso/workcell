@@ -1,0 +1,4 @@
+interface:
+  display_name: "Integrate Workcell Feedback"
+  short_description: "Validate feedback and draft Workcell evolution proposals"
+  default_prompt: "Use $integrate-workcell-feedback to validate imported feedback and create a reviewable standard-evolution proposal without adopting changes automatically."

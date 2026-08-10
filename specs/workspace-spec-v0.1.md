@@ -1,4 +1,4 @@
-# Standard Workspace Specification V0.1
+# Workcell Specification V0.1
 
 ## 1. Purpose
 

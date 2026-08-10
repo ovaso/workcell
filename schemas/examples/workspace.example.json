@@ -3,12 +3,12 @@
     "id": "personal-ai-workspace",
     "name": "Personal AI Workspace",
     "status": "CREATED",
-    "managed_by": "ai-native-standard-workspace",
+    "managed_by": "workcell",
     "created_at": "2026-07-31T00:00:00Z",
     "updated_at": "2026-07-31T00:00:00Z"
   },
   "versions": {
-    "product": "0.1.0",
+    "product": "1.0.0",
     "workspace_schema": "0.1",
     "release_manifest_schema": "0.1",
     "environment_facts_schema": "0.1",

@@ -4,4 +4,4 @@ param()
 
 $ErrorActionPreference = 'Stop'
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-& (Join-Path $repoRoot 'skills/bootstrap-standard-workspace/tests/test-bootstrap.ps1')
+& (Join-Path $repoRoot 'skills/bootstrap-workcell/tests/test-bootstrap.ps1')

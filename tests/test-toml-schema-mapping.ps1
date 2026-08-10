@@ -3,11 +3,11 @@
 param()
 
 $ErrorActionPreference = 'Stop'
-Import-Module (Join-Path $PSScriptRoot 'StdWorkspace.TestHelpers.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'Workcell.TestHelpers.psm1') -Force
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$skillRoot = Join-Path $repoRoot 'skills/bootstrap-standard-workspace'
+$skillRoot = Join-Path $repoRoot 'skills/bootstrap-workcell'
 $assetRoot = Join-Path $skillRoot 'assets/workspace-v0.1'
-$testRoot = New-TestDirectory -Prefix 'std-workspace-toml-schema'
+$testRoot = New-TestDirectory -Prefix 'workcell-toml-schema'
 
 function Test-TomlInstance {
     param([string]$SchemaName, [string]$TomlPath)

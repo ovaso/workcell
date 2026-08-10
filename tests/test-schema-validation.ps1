@@ -3,7 +3,7 @@
 param()
 
 $ErrorActionPreference = 'Stop'
-Import-Module (Join-Path $PSScriptRoot 'StdWorkspace.TestHelpers.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'Workcell.TestHelpers.psm1') -Force
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $powerShell = Get-PowerShellExecutable
 

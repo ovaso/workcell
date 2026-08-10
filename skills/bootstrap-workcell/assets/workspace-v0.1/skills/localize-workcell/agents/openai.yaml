@@ -1,0 +1,4 @@
+interface:
+  display_name: "Localize Workcell"
+  short_description: "Generate reviewed workspace content in a target language"
+  default_prompt: "Use $localize-workcell to generate reviewed workspace documentation in my target language."

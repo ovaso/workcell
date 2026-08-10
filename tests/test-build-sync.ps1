@@ -3,11 +3,11 @@
 param()
 
 $ErrorActionPreference = 'Stop'
-Import-Module (Join-Path $PSScriptRoot 'StdWorkspace.TestHelpers.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'Workcell.TestHelpers.psm1') -Force
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$skillRoot = Join-Path $repoRoot 'skills/bootstrap-standard-workspace'
+$skillRoot = Join-Path $repoRoot 'skills/bootstrap-workcell'
 $assetRoot = Join-Path $skillRoot 'assets/workspace-v0.1'
-$testRoot = New-TestDirectory -Prefix 'std-workspace-build-sync'
+$testRoot = New-TestDirectory -Prefix 'workcell-build-sync'
 
 function Assert-ExactFiles {
     param([string]$Directory, [string[]]$Expected)
@@ -23,7 +23,7 @@ function Assert-GeneratedAssets {
     Assert-ExactFiles -Directory (Join-Path $skillRoot 'references/product-docs') -Expected @('architecture.md', 'lifecycle.md', 'product-vision.md', 'roadmap.md')
     foreach ($document in @('architecture.md', 'lifecycle.md', 'product-vision.md', 'roadmap.md')) {
         Assert-FilesEqual -Left (Join-Path $repoRoot "docs/$document") -Right (Join-Path $skillRoot "references/product-docs/$document")
-        Assert-FilesEqual -Left (Join-Path $repoRoot "docs/$document") -Right (Join-Path $assetRoot "docs/standard/$document")
+        Assert-FilesEqual -Left (Join-Path $repoRoot "docs/$document") -Right (Join-Path $assetRoot "docs/workcell/$document")
     }
     Assert-ExactFiles -Directory (Join-Path $skillRoot 'references/product-facts') -Expected @('known-tool-capabilities.toml', 'session-decisions.toml')
     foreach ($fact in @('known-tool-capabilities.toml', 'session-decisions.toml')) {

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Bootstrap Standard Workspace"
-  short_description: "Create and validate a portable AI workspace bundle"
-  default_prompt: "Use $bootstrap-standard-workspace to create a standard workspace in an explicit empty directory and validate the result."

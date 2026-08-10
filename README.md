@@ -1,29 +1,29 @@
-# AI Native Standard Workspace
+# Workcell
 
 [![CI](https://github.com/ovaso/workcell/actions/workflows/ci.yml/badge.svg)](https://github.com/ovaso/workcell/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/ovaso/workcell/actions/workflows/codeql.yml/badge.svg)](https://github.com/ovaso/workcell/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-This repository contains the V0.1 release source for the AI Native Standard Workspace product. It is not a business project and is not bound to any specific project or AI platform.
+This repository contains the V0.1 release source for the Workcell product. It is not a business project and is not bound to any specific project or AI platform.
 
-The primary deliverable is a text-only, versioned, self-contained Bootstrap Skill. An AI uses the Skill to expand the standard template into an empty directory. The expanded workspace carries its own Skills, specifications, schemas, fact management, project adaptation, diagnostic integration, and validation capabilities.
+The primary deliverable is a text-only, versioned, self-contained Bootstrap Skill. An AI uses the Skill to expand the Workcell template into an empty directory. The expanded workspace carries its own Skills, specifications, schemas, fact management, project adaptation, diagnostic integration, and validation capabilities.
 
 ## Current capabilities
 
-- Define a standard workspace structure and lifecycle that are as independent as possible from AI platforms.
+- Define a Workcell workspace structure and lifecycle that are as independent as possible from AI platforms.
 - Define fact models for the host environment, project plugins, diagnostic capabilities, and tasks.
 - Provide Skills for bootstrapping, initialization, environment inspection, project adaptation, diagnostic configuration, Doctor checks, task creation, and upgrades.
 - Provide a reproducible V0.1 workspace template.
 - Provide Bootstrap safety validation, an installed Release receipt, structural Doctor checks, and upgrade-impact previews.
 - Provide versioned seed knowledge about tool capabilities for environment fact collection and non-binding optimization recommendations.
-- Provide a controlled feedback loop from workspace practice to standard proposals and version evolution.
+- Provide a controlled feedback loop from workspace practice to Workcell proposals and version evolution.
 - Provide equivalent offline Bootstrap, validation, repair-planning, build, test, and packaging entry points for POSIX shell and PowerShell hosts.
 
 ## Product layers
 
 ```text
 Bootstrap Skill
-  -> expand the standard workspace
+  -> expand the Workcell workspace
   -> initialize host environment facts
   -> attach and adapt a project
   -> configure project capability plugins
@@ -62,24 +62,24 @@ Bootstrap creation and validation do not require Python or Node.js on either hos
 
 ## Intended use
 
-1. Use `skills/bootstrap-standard-workspace` to expand the template into an empty directory.
-2. In the new workspace, use `initialize-standard-workspace` to establish host environment facts.
+1. Use `skills/bootstrap-workcell` to expand the template into an empty directory.
+2. In the new workspace, use `initialize-workcell` to establish host environment facts.
 3. Use `adapt-project-workspace` to attach code mirrors, remotes, and the project plugin.
 4. Use `configure-project-diagnostics` when diagnostic capabilities are needed.
-5. Run `standard-workspace-doctor`; after all gates pass, mark the workspace `READY`.
-6. At task completion or during periodic retrospectives, use `extract-standard-feedback` to generate redacted candidates; review them in the standard repository before incorporating them into a later version.
-7. Use `localize-standard-workspace` to generate reviewed, non-authoritative language adaptations without changing the canonical English control plane.
+5. Run `workcell-doctor`; after all gates pass, mark the workspace `READY`.
+6. At task completion or during periodic retrospectives, use `extract-workcell-feedback` to generate redacted candidates; review them in the Workcell repository before incorporating them into a later version.
+7. Use `localize-workcell` to generate reviewed, non-authoritative language adaptations without changing the canonical English control plane.
 
 ## Repository and distribution
 
-`std-workspace` is the independent canonical Git repository for specifications, schemas, documentation, and build logic. The formal distribution is the `bootstrap-standard-workspace` Skill ZIP built from this repository; they are not two parallel products.
+`workcell` is the independent canonical Git repository for specifications, schemas, documentation, and build logic. The formal distribution is the `bootstrap-workcell` Skill ZIP built from this repository; they are not two parallel products.
 
 ```text
-std-workspace Git repository
+workcell Git repository
   -> build + validate
-  -> bootstrap-standard-workspace Skill
+  -> bootstrap-workcell Skill
   -> expand into an empty directory
-  -> self-hosted standard workspace
+  -> self-hosted Workcell workspace
 ```
 
 The root-level `docs/session-summary.md` preserves design history and is not included in the Bootstrap Skill ZIP. The distribution carries only generic specifications, product documentation, and reusable seed knowledge.

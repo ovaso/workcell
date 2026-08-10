@@ -1,0 +1,4 @@
+interface:
+  display_name: "Upgrade Workcell"
+  short_description: "Preview and safely upgrade a Workcell"
+  default_prompt: "Use $upgrade-workcell to preview and safely plan this workspace upgrade, protecting user content before requesting confirmation."

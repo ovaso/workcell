@@ -8,7 +8,7 @@ single canonical Git source repository
 -> validation and packaging
 -> Bootstrap Skill ZIP
 -> installation and expansion
--> independent standard workspace instance
+-> independent Workcell workspace instance
 ```
 
 ## 2. Versions
