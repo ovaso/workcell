@@ -174,7 +174,7 @@ class UpgradePreviewTest(unittest.TestCase):
                 preview_upgrade(*paths)
 
     def test_cross_product_and_version_without_migration_conflicts(self) -> None:
-        """Block Standard Workspace V0.1 from being treated as a Workcell V1 migration."""
+        """Block Standard Workspace V0.1 from being treated as a Workcell V0.2 migration."""
 
         with tempfile.TemporaryDirectory() as directory:
             paths = self.prepare(
@@ -182,7 +182,7 @@ class UpgradePreviewTest(unittest.TestCase):
                 b"old",
                 b"new",
                 current_version="0.1.0",
-                candidate_version="1.0.0",
+                candidate_version="0.2.0",
                 current_product="ai-native-standard-workspace",
                 candidate_product="workcell",
             )
@@ -208,7 +208,7 @@ class UpgradePreviewTest(unittest.TestCase):
             )
             self.write_manifest(
                 paths[3],
-                "1.0.0",
+                "0.2.0",
                 [
                     self.workspace_entry(paths[2]),
                     {"path": ".ai-workspace/versions.lock", "owner": "workspace", "sha256": checksum(b"candidate lock")},
@@ -266,7 +266,7 @@ class UpgradePreviewTest(unittest.TestCase):
                 b"old",
                 b"new",
                 current_version="0.1.0",
-                candidate_version="1.0.0",
+                candidate_version="0.2.0",
             )
             result = preview_upgrade(*paths)
             self.assertFalse(result["safe_to_apply"])

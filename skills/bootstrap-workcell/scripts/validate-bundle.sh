@@ -357,7 +357,7 @@ fi
 
 validate_bundle_metadata
 require_exact_line 'id = "bootstrap-workcell"' "$bundle_file"
-require_exact_line 'version = "1.0.0"' "$bundle_file"
+require_exact_line 'version = "0.2.0"' "$bundle_file"
 require_exact_line 'status = "stable"' "$bundle_file"
 require_exact_line 'format = "text-only-skill-bundle"' "$bundle_file"
 require_exact_line 'workspace = "0.1"' "$bundle_file"

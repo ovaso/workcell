@@ -1,7 +1,7 @@
 [product]
 id = "workcell"
 name = "Workcell"
-version = "1.0.0"
+version = "0.2.0"
 status = "stable"
 distribution = "bootstrap-skill"
 text_only = true

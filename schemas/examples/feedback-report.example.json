@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "feedback": {"id": "feedback-2026-07-31-task-blocking", "workspace_release": "1.0.0", "source_fingerprint": "d9f429f2e0a3e8f88612e3b5aa03a7390afb5c6d50e228d8690f0acb7f0eb3c1", "redaction_confirmed": true, "created_at": "2026-07-31T12:00:00+08:00"},
+  "feedback": {"id": "feedback-2026-07-31-task-blocking", "workspace_release": "0.2.0", "source_fingerprint": "d9f429f2e0a3e8f88612e3b5aa03a7390afb5c6d50e228d8690f0acb7f0eb3c1", "redaction_confirmed": true, "created_at": "2026-07-31T12:00:00+08:00"},
   "collection": {"mode": "periodic", "authorized_sources": ["task-records", "workspace-control-plane"]},
   "candidates": [{"id": "task-blocking-evidence", "kind": "specification", "area": "task-lifecycle", "scope": "standard-candidate", "title": "Record reasons and evidence for external blockers", "summary": "Multiple completed tasks needed to preserve external blockers and recovery conditions, which the current task state cannot express structurally.", "confidence": "confirmed", "occurrences": 3, "evidence": [{"kind": "task", "summary": "Redacted task records show the same state-model gap recurring."}, {"kind": "review", "summary": "The retrospective confirmed that the conclusion does not depend on project terminology or the local environment."}]}]
 }

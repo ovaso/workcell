@@ -359,7 +359,7 @@ case "$workspace_status" in
 esac
 
 for version_pair in \
-    'product:1.0.0' \
+    'product:0.2.0' \
     'workspace_schema:0.1' \
     'release_manifest_schema:0.1' \
     'environment_facts_schema:0.1' \

@@ -36,7 +36,7 @@ The product identity is the `managed_by` value in `.ai-workspace/workspace.toml`
 
 A formal Migration must be a separately reviewed, immutable, verified operation that declares its source and target products and versions, its ownership effects, data-transfer rules, recovery plan, and validation gates. The V0.1 preview does not load, execute, or infer such a Migration, so it cannot make a cross-product or cross-version plan safe merely because file hashes look compatible.
 
-Workcell 1.0.0 provides no in-place Migration from Standard Workspace v0.1. Create a new Workcell, then transfer only the user-approved `workspace`-owned material through an explicit, recoverable transfer procedure.
+Workcell 0.2.0 provides no in-place Migration from Standard Workspace v0.1. Create a new Workcell, then transfer only the user-approved `workspace`-owned material through an explicit, recoverable transfer procedure.
 
 ## Ownership handling
 

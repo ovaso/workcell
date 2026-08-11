@@ -16,7 +16,7 @@ SPEC.loader.exec_module(MODULE)
 
 
 def report() -> dict:
-    return {"schema_version": "0.1", "feedback": {"id": "feedback-test", "workspace_release": "1.0.0", "source_fingerprint": "a" * 64, "redaction_confirmed": True}, "collection": {"mode": "manual", "authorized_sources": ["task-records"]}, "candidates": [{"id": "candidate-test", "kind": "constraint", "area": "skills", "scope": "standard-candidate", "title": "Generic candidate", "summary": "Redacted conclusion.", "confidence": "confirmed", "occurrences": 2, "evidence": [{"kind": "review", "summary": "Redacted evidence."}]}]}
+    return {"schema_version": "0.1", "feedback": {"id": "feedback-test", "workspace_release": "0.2.0", "source_fingerprint": "a" * 64, "redaction_confirmed": True}, "collection": {"mode": "manual", "authorized_sources": ["task-records"]}, "candidates": [{"id": "candidate-test", "kind": "constraint", "area": "skills", "scope": "standard-candidate", "title": "Generic candidate", "summary": "Redacted conclusion.", "confidence": "confirmed", "occurrences": 2, "evidence": [{"kind": "review", "summary": "Redacted evidence."}]}]}
 
 
 class FeedbackIntegrationTest(unittest.TestCase):

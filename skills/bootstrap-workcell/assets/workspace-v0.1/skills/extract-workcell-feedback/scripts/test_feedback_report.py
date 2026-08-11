@@ -9,7 +9,7 @@ from validate_feedback_report import validate
 
 
 def report(summary: str = "A redacted generic conclusion.") -> dict:
-    return {"schema_version": "0.1", "feedback": {"id": "feedback-test", "workspace_release": "1.0.0", "source_fingerprint": "a" * 64, "redaction_confirmed": True, "created_at": "2026-07-31T12:00:00Z"}, "collection": {"mode": "manual", "authorized_sources": ["task-records"]}, "candidates": [{"id": "candidate-test", "scope": "standard-candidate", "evidence": [{"kind": "task", "summary": summary}]}]}
+    return {"schema_version": "0.1", "feedback": {"id": "feedback-test", "workspace_release": "0.2.0", "source_fingerprint": "a" * 64, "redaction_confirmed": True, "created_at": "2026-07-31T12:00:00Z"}, "collection": {"mode": "manual", "authorized_sources": ["task-records"]}, "candidates": [{"id": "candidate-test", "scope": "standard-candidate", "evidence": [{"kind": "task", "summary": summary}]}]}
 
 
 class FeedbackReportTest(unittest.TestCase):

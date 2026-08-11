@@ -16,7 +16,7 @@ Treat an upgrade as a controlled migration, not a file overwrite. Replace only `
 - The installed receipt is `.ai-workspace/release-manifest.json`. It does not hash itself and must gain trust from the matching Release's outer Bootstrap checksum.
 - Fail closed when the current manifest, candidate manifest, ownership, Migration chain, checksums, or recovery plan is missing.
 - Treat `managed_by` in `.ai-workspace/workspace.toml` and the Release version as compatibility gates. This preview can declare only a same-product, same-version file replacement safe; it does not implement or infer Migrations.
-- Workcell 1.0.0 has no in-place Migration from Standard Workspace v0.1. Create a new Workcell instead, then transfer only selected `workspace`-owned material after explicit user authorization.
+- Workcell 0.2.0 has no in-place Migration from Standard Workspace v0.1. Create a new Workcell instead, then transfer only selected `workspace`-owned material after explicit user authorization.
 
 ## Preflight and preview
 

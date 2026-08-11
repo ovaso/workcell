@@ -57,7 +57,7 @@ The bundled repair script is intentionally plan-only. Do not turn it into an imp
 5. Apply migrations in order, recompile generated files, validate, and run the Doctor.
 6. Roll back on any failed gate.
 
-V0.1 defines the upgrade protocol but ships no cross-version migration and no self-update. Workcell 1.0.0 also has no in-place Migration from Standard Workspace v0.1: do not reinterpret a Standard Workspace as a Workcell or silently preserve its workspace metadata. Create a new Workcell and, only after explicit user authorization, transfer the selected `workspace`-owned material through a recoverable procedure. Stop on every product or version difference until a formal Migration exists.
+V0.1 defines the upgrade protocol but ships no cross-version migration and no self-update. Workcell 0.2.0 also has no in-place Migration from Standard Workspace v0.1: do not reinterpret a Standard Workspace as a Workcell or silently preserve its workspace metadata. Create a new Workcell and, only after explicit user authorization, transfer the selected `workspace`-owned material through a recoverable procedure. Stop on every product or version difference until a formal Migration exists.
 
 ## Interpret results
 
