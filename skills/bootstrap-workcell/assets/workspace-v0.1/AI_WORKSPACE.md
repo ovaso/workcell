@@ -67,7 +67,7 @@ The presence of commands, credentials, or network access is only a capability fa
 - `knowledge/`: verified reusable knowledge.
 - `memory/`: workspace evolution memory; not a dynamic fact source.
 - `feedback/`: redacted workspace-practice candidates; not adopted standards.
-- `locales/`: reviewed localized content that remains subordinate to canonical English.
+- `locales/`: reviewed `overlay` localized content that remains subordinate to canonical English. Approved `replace` records and snapshots are workspace-owned under `.ai-workspace/` and remain auditable exceptions to Release byte integrity.
 - `skills/`: runtime Skills carried by the expanded workspace.
 
 ## Runtime Skills
@@ -80,6 +80,6 @@ The presence of commands, credentials, or network access is only a capability fa
 - `start-workcell-task`: create machine-readable tasks and isolation boundaries.
 - `upgrade-workcell`: preview, snapshot, and apply controlled upgrades.
 - `extract-workcell-feedback`: generate redacted feedback candidates from authorized practice.
-- `localize-workcell`: generate reviewed target-language documentation and adapters without changing canonical English sources.
+- `localize-workcell`: choose the default `overlay` language layer or explicit, preview-first `replace` localization for selected readable documents; preserve stable tokens and record rollback-ready integrity exceptions.
 
 If the platform does not discover Skills automatically, read the applicable `SKILL.md` explicitly before executing it.

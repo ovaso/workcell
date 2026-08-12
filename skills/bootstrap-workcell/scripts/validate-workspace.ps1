@@ -229,7 +229,7 @@ $allowedStatuses = @('CREATED', 'ENVIRONMENT_INITIALIZED', 'PROJECT_ATTACHED', '
 if (-not $workspaceValues.ContainsKey('workspace.status') -or $allowedStatuses -notcontains $workspaceValues['workspace.status']) { Fail 'unsupported or missing workspace status' }
 
 $versions = @{
-    product = '0.2.0'; workspace_schema = '0.1'; release_manifest_schema = '0.1'; environment_facts_schema = '0.1';
+    product = '0.3.0'; workspace_schema = '0.1'; release_manifest_schema = '0.1'; environment_facts_schema = '0.1';
     project_plugin_schema = '0.1'; diagnostic_profile_schema = '0.1'; task_schema = '0.1'; feedback_report_schema = '0.1'
 }
 foreach ($key in $versions.Keys) {

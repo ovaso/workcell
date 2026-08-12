@@ -4,7 +4,9 @@ This file records release-level changes to the Workcell product. Design-session 
 
 ## [Unreleased]
 
-- Prepare the unreleased pre-1.0 minor version `0.2.0`; no `v0.2.0` tag or published Release exists.
+- Prepare the unreleased pre-1.0 minor version `0.3.0`; no `v0.3.0` tag or published Release exists.
+
+- Extend `localize-workcell` with explicit, preview-first `overlay` and recoverable `replace` modes. `replace` records approved source and translation digests in workspace-owned metadata, and Doctor distinguishes registered localization drift from unknown distribution-file corruption.
 
 - Rebrand the product and Bootstrap distribution as Workcell while preserving the V0.1 release safeguards and dual-host tooling.
 - Establish Workcell as a new, incompatible product release; existing AI Native Standard Workspace V0.1 installations are not eligible for in-place migration and must use a new Workcell, transferring only workspace-owned material under explicit authorization.

@@ -101,6 +101,10 @@ SENSITIVE_KEYS = {
 REFERENCE_PREFIXES = ("env://", "keychain://", "file-ref://", "vault://", "secret-ref://")
 WORKSPACE_MANAGER = "workcell"
 RELEASE_SOURCE = "bootstrap-workcell"
+LOCALIZATION_OVERRIDES = ".ai-workspace/localization-overrides.toml"
+LOCALIZATION_SNAPSHOT_ROOT = ".ai-workspace/localization-snapshots"
+LOCALIZATION_LOCALE = re.compile(r"^[a-z]{2,3}(?:-[A-Z][A-Za-z0-9]{1,7})*$")
+SHA256 = re.compile(r"^[0-9a-f]{64}$")
 JSON_SCHEMA_TARGETS = (
     (
         ".ai-workspace/schemas/environment-facts.schema.json",
@@ -144,6 +148,8 @@ class WorkspaceDoctor:
         self.workspace_state: str | None = None
         self.product_version: str | None = None
         self.validated_json_instances: set[str] = set()
+        self.localization_overrides: dict[str, dict[str, str]] = {}
+        self.localization_override_severity = "WARN"
 
     def add(self, severity: str, code: str, path: Path | str, message: str) -> None:
         """Append a check result expressed with a workspace-relative path."""
@@ -182,6 +188,7 @@ class WorkspaceDoctor:
         self.check_json_schema_instances()
         self.check_workspace_manifest()
         self.check_versions_lock()
+        self.check_localization_overrides()
         self.check_release_receipt()
         self.check_runtime_skills()
         self.check_tasks()
@@ -352,6 +359,7 @@ class WorkspaceDoctor:
         if not isinstance(entries, list):
             return
         seen_paths: set[str] = set()
+        distribution_paths: set[str] = set()
         for index, entry in enumerate(entries):
             if not isinstance(entry, dict):
                 continue
@@ -366,6 +374,7 @@ class WorkspaceDoctor:
             seen_paths.add(relative)
             if relative == receipt_relative or owner != "distribution":
                 continue
+            distribution_paths.add(relative)
             if not is_portable_safe_relative_path(relative):
                 self.add("ERROR", "release.path-unsafe", receipt_path, f"Receipt contains an unsafe path: {relative!r}")
                 continue
@@ -388,12 +397,100 @@ class WorkspaceDoctor:
             if actual is None:
                 continue
             if isinstance(expected, str) and actual != expected:
+                if self.is_registered_localization_override(relative, expected, actual):
+                    self.add(
+                        self.localization_override_severity,
+                        "release.distribution-file-localization-override",
+                        managed_path,
+                        "Known localize-workcell replace override; Release byte integrity intentionally differs "
+                        f"from {expected} to {actual}",
+                    )
+                else:
+                    self.add(
+                        "ERROR",
+                        "release.distribution-file-drift",
+                        managed_path,
+                        f"Distribution file SHA-256 drift: expected {expected}, got {actual}",
+                    )
+        for relative in sorted(set(self.localization_overrides) - distribution_paths):
+            self.add(
+                "ERROR",
+                "localization.override-not-distribution",
+                self.root / LOCALIZATION_OVERRIDES,
+                f"Registered replace override is not a distribution file in this Release: {relative}",
+            )
+
+    def check_localization_overrides(self) -> None:
+        """Load localize-workcell replacement records without relaxing unregistered drift."""
+
+        policy_path = self.root / ".ai-workspace/policies/core.toml"
+        if policy_path.is_file():
+            policy = self.load_toml(policy_path, "localization.policy-invalid")
+            localization = policy.get("localization") if isinstance(policy, dict) else None
+            severity = localization.get("registered_replace_severity", "WARN") if isinstance(localization, dict) else "WARN"
+            if severity not in {"WARN", "INFO"}:
                 self.add(
                     "ERROR",
-                    "release.distribution-file-drift",
-                    managed_path,
-                    f"Distribution file SHA-256 drift: expected {expected}, got {actual}",
+                    "localization.policy-severity-invalid",
+                    policy_path,
+                    "localization.registered_replace_severity must be WARN or INFO",
                 )
+            else:
+                self.localization_override_severity = severity
+        path = self.root / LOCALIZATION_OVERRIDES
+        if not path.exists():
+            return
+        if self.has_symlink_component(path) or path.is_symlink() or not path.is_file():
+            self.add("ERROR", "localization.override-registry-unsafe", path, "Override registry must be a regular workspace-local TOML file")
+            return
+        document = self.load_toml(path, "localization.override-registry-invalid")
+        if document is None:
+            return
+        entries = document.get("overrides")
+        if document.get("schema_version") != "0.1" or not isinstance(entries, list):
+            self.add("ERROR", "localization.override-registry-invalid", path, "Registry requires schema_version 0.1 and an overrides array")
+            return
+        required = {"locale", "mode", "source_release", "path", "source_sha256", "translation_sha256", "applied_at", "approval", "snapshot"}
+        for index, entry in enumerate(entries):
+            if not isinstance(entry, dict) or set(entry) != required or not all(isinstance(entry.get(field), str) and entry[field] for field in required):
+                self.add("ERROR", "localization.override-record-invalid", path, f"overrides[{index}] has missing, unknown, or non-string fields")
+                continue
+            relative = entry["path"]
+            if (
+                entry["mode"] != "replace"
+                or not LOCALIZATION_LOCALE.fullmatch(entry["locale"])
+                or not is_portable_safe_relative_path(relative)
+                or not is_localization_replace_path(relative)
+                or not SHA256.fullmatch(entry["source_sha256"])
+                or not SHA256.fullmatch(entry["translation_sha256"])
+                or not entry["snapshot"].startswith("20")
+            ):
+                self.add("ERROR", "localization.override-record-invalid", path, f"overrides[{index}] violates the replace-override contract")
+                continue
+            if relative in self.localization_overrides:
+                self.add("ERROR", "localization.override-record-duplicate", path, f"Multiple overrides record {relative}")
+                continue
+            self.localization_overrides[relative] = {field: entry[field] for field in required}
+
+    def is_registered_localization_override(self, relative: str, expected: str, actual: str) -> bool:
+        """Validate that a drift exactly matches an approved, current replacement record."""
+
+        record = self.localization_overrides.get(relative)
+        if record is None:
+            return False
+        valid = (
+            record["source_release"] == self.product_version
+            and record["source_sha256"] == expected
+            and record["translation_sha256"] == actual
+        )
+        if not valid:
+            self.add(
+                "ERROR",
+                "localization.override-hash-mismatch",
+                self.root / LOCALIZATION_OVERRIDES,
+                f"Override for {relative} no longer matches the installed Release or replacement bytes",
+            )
+        return valid
 
     def compute_stable_sha256(self, path: Path, before: os.stat_result) -> str | None:
         """Hash a regular file by streaming and reject replacement during validation."""
@@ -773,6 +870,21 @@ def is_portable_safe_relative_path(value: str) -> bool:
     if value.startswith("/") or value in {".", ".."} or "//" in value:
         return False
     return all(part not in {"", ".", ".."} for part in value.split("/"))
+
+
+def is_localization_replace_path(value: str) -> bool:
+    """Restrict replace overrides to human-readable documents and display-only adapters."""
+
+    if value in {"AI_WORKSPACE.md", "README.md"}:
+        return True
+    if value.startswith("docs/") and value.endswith(".md"):
+        return True
+    parts = value.split("/")
+    if len(parts) >= 3 and parts[0] == "skills" and parts[-1] == "SKILL.md":
+        return True
+    if len(parts) >= 4 and parts[0] == "skills" and parts[2] == "references" and value.endswith(".md"):
+        return True
+    return len(parts) == 4 and parts[0] == "skills" and parts[2] == "agents" and parts[-1].endswith((".yaml", ".yml"))
 
 
 def same_file_identity(left: os.stat_result, right: os.stat_result) -> bool:

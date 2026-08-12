@@ -442,6 +442,58 @@ class DoctorTest(unittest.TestCase):
             result = run_doctor(root)
             self.assertEqual("PASS", result["status"])
 
+    def test_registered_localization_replace_is_warned_but_unregistered_drift_fails(self) -> None:
+        """Distinguish approved localized replacement from an unknown distribution edit."""
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.create_workspace(root)
+            document = root / "AI_WORKSPACE.md"
+            receipt = release_manifest_document(root)
+            expected = receipt["files"][0]["sha256"]
+            document.write_text("# Localized Workspace\n", encoding="utf-8")
+            translation = sha256_file(document)
+            (root / ".ai-workspace/localization-overrides.toml").write_text(
+                'schema_version = "0.1"\n\n[[overrides]]\n'
+                'locale = "zh-CN"\nmode = "replace"\nsource_release = "0.1.0"\n'
+                'path = "AI_WORKSPACE.md"\n'
+                f'source_sha256 = "{expected}"\ntranslation_sha256 = "{translation}"\n'
+                'applied_at = "2026-08-12T00:00:00Z"\napproval = "ticket LOC-42"\n'
+                'snapshot = "20260812T000000Z-zh-CN"\n',
+                encoding="utf-8",
+            )
+            result = run_doctor(root)
+            self.assertEqual("PASS_WITH_WARNINGS", result["status"])
+            self.assertTrue(any(item["code"] == "release.distribution-file-localization-override" and item["severity"] == "WARN" for item in result["findings"]))
+
+            (root / ".ai-workspace/localization-overrides.toml").unlink()
+            drift = run_doctor(root)
+            self.assertEqual("FAIL", drift["status"])
+            self.assertTrue(any(item["code"] == "release.distribution-file-drift" for item in drift["findings"]))
+
+    def test_localization_policy_may_show_registered_replace_as_info(self) -> None:
+        """Allow product policy to make an otherwise validated record informational."""
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.create_workspace(root)
+            policy = root / ".ai-workspace/policies/core.toml"
+            policy.parent.mkdir(parents=True)
+            policy.write_text('[localization]\nregistered_replace_severity = "INFO"\n', encoding="utf-8")
+            document = root / "AI_WORKSPACE.md"
+            expected = sha256_file(document)
+            document.write_text("# Localized\n", encoding="utf-8")
+            (root / ".ai-workspace/localization-overrides.toml").write_text(
+                'schema_version = "0.1"\n\n[[overrides]]\n'
+                'locale = "zh-CN"\nmode = "replace"\nsource_release = "0.1.0"\npath = "AI_WORKSPACE.md"\n'
+                f'source_sha256 = "{expected}"\ntranslation_sha256 = "{sha256_file(document)}"\n'
+                'applied_at = "2026-08-12T00:00:00Z"\napproval = "ticket LOC-44"\nsnapshot = "20260812T000000Z-zh-CN"\n',
+                encoding="utf-8",
+            )
+            result = run_doctor(root)
+            self.assertEqual("PASS", result["status"])
+            self.assertTrue(any(item["code"] == "release.distribution-file-localization-override" and item["severity"] == "INFO" for item in result["findings"]))
+
     def test_json_schema_subset_covers_v01_keywords(self) -> None:
         """Confirm every V0.1 schema keyword has actual validation semantics."""
 

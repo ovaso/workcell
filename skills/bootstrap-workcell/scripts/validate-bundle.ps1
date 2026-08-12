@@ -228,7 +228,7 @@ if ((Get-Content -LiteralPath (Join-Path $skillDirectory 'SKILL.md') -Raw).Conta
 
 $bundle = Read-BundleToml -Path $bundleFile
 $expectedValues = @{
-    'bundle.id' = 'bootstrap-workcell'; 'bundle.version' = '0.2.0'; 'bundle.status' = 'stable'; 'bundle.format' = 'text-only-skill-bundle';
+    'bundle.id' = 'bootstrap-workcell'; 'bundle.version' = '0.3.0'; 'bundle.status' = 'stable'; 'bundle.format' = 'text-only-skill-bundle';
     'versions.workspace' = '0.1'; 'versions.release_manifest' = '0.1'; 'versions.environment_facts' = '0.1';
     'versions.project_plugin' = '0.1'; 'versions.diagnostic_profile' = '0.1'; 'versions.task' = '0.1';
     'versions.feedback_report' = '0.1'; 'versions.project_plugin_api' = '0.1'; 'versions.diagnostic_plugin_api' = '0.1';

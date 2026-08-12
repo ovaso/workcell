@@ -68,7 +68,7 @@ Bootstrap creation and validation do not require Python or Node.js on either hos
 4. Use `configure-project-diagnostics` when diagnostic capabilities are needed.
 5. Run `workcell-doctor`; after all gates pass, mark the workspace `READY`.
 6. At task completion or during periodic retrospectives, use `extract-workcell-feedback` to generate redacted candidates; review them in the Workcell repository before incorporating them into a later version.
-7. Use `localize-workcell` to generate reviewed, non-authoritative language adaptations without changing the canonical English control plane.
+7. Use `localize-workcell` in its default `overlay` mode for reviewed, non-authoritative language adaptations. Use its explicit, preview-first `replace` mode only when a locale should become the working language for selected readable documents; it records the intentional Release-integrity drift and a rollback snapshot.
 
 ## Repository and distribution
 

@@ -9,7 +9,7 @@ This personal Workcell was created by `bootstrap-workcell`. It provides a generi
 3. Use `adapt-project-workspace` to attach code, remotes, and project rules.
 4. If the project needs diagnostic capabilities, configure them interactively with `configure-project-diagnostics`.
 5. Use `workcell-doctor` to inspect facts, policies, and structure. The workspace may enter `READY` only after it passes.
-6. Use `localize-workcell` when reviewed documentation or AI guidance is needed in another language.
+6. Use `localize-workcell` in default `overlay` mode when reviewed documentation or AI guidance is needed in another language. Use explicit, preview-first `replace` only for selected readable documents when the locale is the workspace's working language.
 
 Runtime deterministic tools written in Python use one cross-platform implementation. On Windows, invoke them with `py -3`, `python`, or another Python 3 command verified by `inspect-host-environment`; no POSIX shell is required inside the expanded workspace.
 
@@ -20,7 +20,7 @@ Runtime deterministic tools written in Python use one cross-platform implementat
 - When diagnostic capabilities are unconfigured, only local code and existing files may be analyzed.
 - Structured facts and policies are authoritative; platform files such as `AGENTS.md` are compiled adapters.
 - `requirements/` stores task records, `workspaces/` stores isolated execution directories, and `mirror/` stores read-only reference mirrors.
-- English is canonical. Localized content under `locales/` is a reviewed, non-authoritative reading aid.
+- English is canonical by default. Localized content under `locales/` is a reviewed, non-authoritative reading aid; an approved `replace` is a tracked, rollback-ready local integrity exception rather than a silent source-of-truth change.
 
 This workspace template is distributed under the terms in `LICENSE`.
 

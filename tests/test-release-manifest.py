@@ -72,16 +72,16 @@ owner = "distribution"
 
         with tempfile.TemporaryDirectory() as directory:
             asset = self.prepare_asset(Path(directory))
-            first = GENERATOR.canonical_bytes(GENERATOR.build_manifest(asset, "0.2.0"))
+            first = GENERATOR.canonical_bytes(GENERATOR.build_manifest(asset, "0.3.0"))
             manifest_path = GENERATOR.write_manifest(asset, first)
-            second = GENERATOR.canonical_bytes(GENERATOR.build_manifest(asset, "0.2.0"))
+            second = GENERATOR.canonical_bytes(GENERATOR.build_manifest(asset, "0.3.0"))
             self.assertEqual(first, second)
             self.assertEqual(first, manifest_path.read_bytes())
 
             document = json.loads(first)
             entries = {entry["path"]: entry for entry in document["files"]}
             self.assertEqual("0.1", document["schema_version"])
-            self.assertEqual("0.2.0", document["release_version"])
+            self.assertEqual("0.3.0", document["release_version"])
             self.assertNotIn(GENERATOR.MANIFEST_PATH, entries)
             self.assertEqual(
                 sorted(entries, key=lambda value: value.encode("utf-8")),
@@ -109,7 +109,7 @@ owner = "distribution"
             asset = self.prepare_asset(Path(directory))
             GENERATOR.write_manifest(
                 asset,
-                GENERATOR.canonical_bytes(GENERATOR.build_manifest(asset, "0.2.0")),
+                GENERATOR.canonical_bytes(GENERATOR.build_manifest(asset, "0.3.0")),
             )
             (asset / "exact.txt").write_text(
                 "changed\n", encoding="utf-8", newline="\n"
@@ -120,7 +120,7 @@ owner = "distribution"
                         "--asset-root",
                         str(asset),
                         "--release-version",
-                        "0.2.0",
+                        "0.3.0",
                         "--check",
                     ]
                 )
@@ -137,7 +137,7 @@ owner = "distribution"
             except (NotImplementedError, OSError):
                 self.skipTest("The current platform cannot create the test symlink")
             with self.assertRaises(GENERATOR.ReleaseManifestError):
-                GENERATOR.build_manifest(asset, "0.2.0")
+                GENERATOR.build_manifest(asset, "0.3.0")
 
 
 if __name__ == "__main__":

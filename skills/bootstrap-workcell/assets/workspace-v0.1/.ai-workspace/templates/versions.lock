@@ -1,5 +1,5 @@
 [versions]
-product = "0.2.0"
+product = "0.3.0"
 workspace_schema = "0.1"
 release_manifest_schema = "0.1"
 environment_facts_schema = "0.1"

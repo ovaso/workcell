@@ -76,7 +76,9 @@ An upgrade may replace only `distribution`, recompile `generated`, and must pres
 
 ## Localization layer
 
-English is the canonical language for product and control-plane content. `localize-workcell` may generate reviewed target-language documentation and adapter text under workspace-owned or generated localization paths. It must preserve stable IDs, schemas, commands, paths, policy semantics, and the English source, and it must never turn a translation into an independent source of truth.
+English is the canonical language for product and control-plane content. `localize-workcell` makes the workflow choice explicit: its safe default `overlay` generates a reviewed, subordinate reading layer under `locales/<locale>/`; its opt-in `replace` supports a locale as the workspace's primary working language for selected human-readable documents.
+
+`replace` is preview-first, requires a separate confirmation and approval record, protects frontmatter names, commands, paths, URLs, IDs, state values, enum values, code blocks, and hashes, and creates a recoverable snapshot. It excludes configuration, schemas, manifests, scripts, code, credentials, logs, and evidence by default. A registered direct replacement is a known local localization drift recorded outside the Release receipt; Doctor may report it as `WARN` or policy-controlled `INFO`, while unregistered distribution edits remain `ERROR`.
 
 ## Practice feedback and Workcell evolution
 

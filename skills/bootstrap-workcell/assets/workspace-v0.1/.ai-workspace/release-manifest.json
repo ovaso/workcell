@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "release_version": "0.2.0",
+  "release_version": "0.3.0",
   "files": [
     {
       "path": ".ai-workspace/distribution.manifest",
@@ -20,7 +20,7 @@
     {
       "path": ".ai-workspace/policies/core.toml",
       "owner": "distribution",
-      "sha256": "f90c8ea58bd6b9602e19513c9811a98e2974929758603ebca82e9c563f47b5ff"
+      "sha256": "0c2fa9585e96ff9d854522b294c3c34ab42f0462420ad902ce86df35f1ff62bb"
     },
     {
       "path": ".ai-workspace/policies/diagnostics.toml",
@@ -45,7 +45,7 @@
     {
       "path": ".ai-workspace/schemas/examples/bundle.example.json",
       "owner": "distribution",
-      "sha256": "999dc637eaf8db939ea571260b7a9786fd40d6f6f9039b8c3186232f4ce35407"
+      "sha256": "6a6fc685d88a0a67956394a12908ee83dac16023cabd7de4d205ce363c1fb910"
     },
     {
       "path": ".ai-workspace/schemas/examples/diagnostic-profile.example.json",
@@ -60,7 +60,7 @@
     {
       "path": ".ai-workspace/schemas/examples/feedback-report.example.json",
       "owner": "distribution",
-      "sha256": "c32e878e162fde1882674f4cc95696e86965e7d34c7f94a998d43dcf6fb2de20"
+      "sha256": "3c3ca9a55a94852cfbf27f7ff62729532642963fa181d38914ae28554fac1aad"
     },
     {
       "path": ".ai-workspace/schemas/examples/project-plugin.example.json",
@@ -70,7 +70,7 @@
     {
       "path": ".ai-workspace/schemas/examples/release-manifest.example.json",
       "owner": "distribution",
-      "sha256": "22cd66ae705785ab2ed116c89b854abe7ac391d49b9a3c12e6303454a1e53536"
+      "sha256": "cf2a351a2a825fffb50098fc14e168a0a9b11553e8ae88ba5d2bba6b41962c11"
     },
     {
       "path": ".ai-workspace/schemas/examples/task.example.json",
@@ -80,7 +80,7 @@
     {
       "path": ".ai-workspace/schemas/examples/workspace.example.json",
       "owner": "distribution",
-      "sha256": "ce131ba9cc516e604937973926c8d8d92dc553b498721a8f7a7fff7b10782a38"
+      "sha256": "a4b981920ebd0980113e80d809e6c526c08afb0c2e399ddac18510764efb4321"
     },
     {
       "path": ".ai-workspace/schemas/feedback-report.schema.json",
@@ -185,22 +185,22 @@
     {
       "path": ".ai-workspace/templates/versions.lock",
       "owner": "distribution",
-      "sha256": "adb77e68601b86c37edcfb1ffbdeb47cc95926400cf438d22e72e2ded2c53b12"
+      "sha256": "13c1aab655e089da6cdb6063fdc7602aa60e0c80945cf7d2b437049620345609"
     },
     {
       "path": ".ai-workspace/templates/workspace.toml",
       "owner": "distribution",
-      "sha256": "539088a6685601b799e5ff2bd450e05e07ec67df5fbe2e86ce426a28ec0d87f1"
+      "sha256": "8a5156f56c3d9033bb8a99ac5ee71a0818f0a39a59ea3b799bebadfddce535fc"
     },
     {
       "path": ".ai-workspace/versions.lock",
       "owner": "workspace",
-      "sha256": "adb77e68601b86c37edcfb1ffbdeb47cc95926400cf438d22e72e2ded2c53b12"
+      "sha256": "13c1aab655e089da6cdb6063fdc7602aa60e0c80945cf7d2b437049620345609"
     },
     {
       "path": ".ai-workspace/workspace.toml",
       "owner": "workspace",
-      "sha256": "3279f111492796217eb5bb541316e1de7c4569a5004a8b7a6d62f106d1118cf1"
+      "sha256": "b23f9b9f929e943679ad49ec080f2439d6d128bb486522149643196639cd00ed"
     },
     {
       "path": ".editorconfig",
@@ -225,7 +225,7 @@
     {
       "path": "AI_WORKSPACE.md",
       "owner": "distribution",
-      "sha256": "5303c5e3858817e1a9c5e1b2cc01429019bde6836b18ca7b65f17b0c1ccbb932"
+      "sha256": "2243128dd817929659adac72729c34b0b3d91f3f77dbb0394da28c8cde4ecc73"
     },
     {
       "path": "LICENSE",
@@ -235,7 +235,7 @@
     {
       "path": "README.md",
       "owner": "workspace",
-      "sha256": "1c2a1f34f73808d2a4f6903eaa16e9ae04ac74ae8a235b5519e635a063fe6139"
+      "sha256": "4d538ae1c08f7e068d2d92d5d8003b8c772d7c9c264b09873091dcfece5c31fa"
     },
     {
       "path": "diagnostics/knowledge/.gitkeep",
@@ -265,7 +265,7 @@
     {
       "path": "docs/workcell/architecture.md",
       "owner": "distribution",
-      "sha256": "81d2fa2558b508e5ccda489b4c6d61e575cf332a72d587d4132d949ded659ab5"
+      "sha256": "5ae3a2f6645cd9a5fed695794adfdb83ab8cbdc50ad2b48a157b008d27ba4e08"
     },
     {
       "path": "docs/workcell/lifecycle.md",
@@ -475,12 +475,27 @@
     {
       "path": "skills/localize-workcell/SKILL.md",
       "owner": "distribution",
-      "sha256": "347d77567bb51b09288d0d64d49aede03dea48c7a2389c0e49a29034b4f56dfd"
+      "sha256": "79844abc194dfe9f7d02d2f3dde577c0bcdd52d5fe0980cec3020c40d4cadcc6"
     },
     {
       "path": "skills/localize-workcell/agents/openai.yaml",
       "owner": "distribution",
       "sha256": "5f3dd75a4b9a5defe4fd5c1ea357a3591c21a247eebac45a2b19d5ae111e6b91"
+    },
+    {
+      "path": "skills/localize-workcell/references/replace-workflow.md",
+      "owner": "distribution",
+      "sha256": "591ca783d058998582aaf691f01b96f9476cc69abfaeb4bf8cf08aade608a5d5"
+    },
+    {
+      "path": "skills/localize-workcell/scripts/localize.py",
+      "owner": "distribution",
+      "sha256": "e504c9afe42f66c377df0be6e6a3177d5246085a5823000d9b4548e3c56415bc"
+    },
+    {
+      "path": "skills/localize-workcell/scripts/test_localize.py",
+      "owner": "distribution",
+      "sha256": "9b2d61cdbd826b060c14ac1051ab91bba2f31cbb42b379510bde82fab1e13c54"
     },
     {
       "path": "skills/start-workcell-task/SKILL.md",
@@ -505,7 +520,7 @@
     {
       "path": "skills/upgrade-workcell/SKILL.md",
       "owner": "distribution",
-      "sha256": "d70c366b0737384ac3f94e2367f1df919982eeaf49b19e02304b0686708f889b"
+      "sha256": "9ebe92d0a0813a3ef3986d9c26c9f4aeaa0acae873cc62cb81e645dbc5d863b0"
     },
     {
       "path": "skills/upgrade-workcell/agents/openai.yaml",
@@ -515,7 +530,7 @@
     {
       "path": "skills/upgrade-workcell/references/upgrade-protocol.md",
       "owner": "distribution",
-      "sha256": "a629ac1ae5a5bf023eabf1d963eb66b1641937b25a99623bfb1de5c168fa4073"
+      "sha256": "50dddc24acd4d067461dd14e89a99e3fcfb65188f8ff43b178884fe9096b7292"
     },
     {
       "path": "skills/upgrade-workcell/scripts/preview_upgrade.py",
@@ -540,12 +555,12 @@
     {
       "path": "skills/workcell-doctor/references/checks.md",
       "owner": "distribution",
-      "sha256": "0299583f96088089c2a0c2568cf0fd3844b4f6ae20ba47c0962555b9036c7d9e"
+      "sha256": "2aadc6bf43eab9569a914597a14b97f34ba4e40664d29c7fcb83f1f90caff637"
     },
     {
       "path": "skills/workcell-doctor/scripts/doctor.py",
       "owner": "distribution",
-      "sha256": "2f331d537286b1345cb28205b56d0ac3c93953e64d88dd65fae2df924912bfda"
+      "sha256": "f37d7d850f92876d06e924c64e4bee66945759eec36fa4c3a41963f6df9485a2"
     },
     {
       "path": "skills/workcell-doctor/scripts/json_schema_subset.py",
@@ -555,7 +570,7 @@
     {
       "path": "skills/workcell-doctor/scripts/test_doctor.py",
       "owner": "distribution",
-      "sha256": "e2218576ce31ca9a723762dd6909c4eacf3e32fdb94aa8c7770f98546e2219f6"
+      "sha256": "15bedd5f2208c1bee03ac750fdcfdabfce4c3586b1e8fc9d283da05f37d7e448"
     },
     {
       "path": "tools/.gitkeep",

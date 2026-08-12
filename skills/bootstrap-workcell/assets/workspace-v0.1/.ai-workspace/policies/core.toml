@@ -25,3 +25,7 @@ commit_values = false
 automatic_commit = false
 automatic_push = false
 destructive_history_rewrite = false
+
+[localization]
+# A registered replace remains visible without being confused with file corruption.
+registered_replace_severity = "WARN"

@@ -106,7 +106,7 @@ fi
 
 cp "$workspace_metadata_original" "$invalid_metadata_workspace/.ai-workspace/workspace.toml"
 awk '
-    /^\[release\]$/ { print "product = \"0.2.0\"" }
+    /^\[release\]$/ { print "product = \"0.3.0\"" }
     { print }
 ' "$versions_metadata_original" > "$invalid_metadata_workspace/.ai-workspace/versions.lock"
 if "$script_directory/validate-workspace.sh" --metadata-only "$invalid_metadata_workspace" >/dev/null 2>&1; then

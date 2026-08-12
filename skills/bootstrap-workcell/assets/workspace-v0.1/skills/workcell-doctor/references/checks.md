@@ -53,10 +53,12 @@
 
 ## Localization checks
 
-- Canonical control-plane content remains English and is not overwritten by locale output.
+- `overlay` locale directories use normalized identifiers and do not overwrite canonical English sources.
+- `replace` is limited to registered, user-readable Markdown and display-only adapter fields. Before Doctor accepts its different bytes, the independent override record must name the current Release, source receipt digest, translation digest, locale, approval, and recovery snapshot.
+- A valid registered replacement produces `release.distribution-file-localization-override` at `WARN`, or at policy-controlled `INFO`; it remains visible as an intentional local integrity exception. An unregistered, stale, malformed, or post-registration modification is `ERROR`.
 - Locale directories use normalized identifiers and contain only workspace-owned or declared generated content.
 - Localized adapters preserve stable tokens and hard safety semantics, reference their canonical English source, and fail review when equivalence cannot be established.
-- Localization does not change lifecycle state, schemas, manifests, policies, commands, or stable IDs.
+- Localization does not change lifecycle state, schemas, Release manifests, commands, or stable IDs. Configuration and data translation require separately selected authority.
 
 ## Read-only manual checks
 
